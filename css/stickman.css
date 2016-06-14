@@ -8,20 +8,9 @@ body{
 	
 	article{
 		margin: 0 auto;
-		margin-top:80px;
-		width:850px;
 		border:4px outset #4D6382;
 		border-radius: 12px;
 	}
-
-		#game{
-			width: 850px;
-			height: 580px;
-			cursor: none;
-			float: left;
-			position: relative;
-			z-index: 2;
-		}
 		
 		#overlay{
 			width: 850px;
