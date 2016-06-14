@@ -3,9 +3,6 @@ $(function(){
     $('#overlay').fadeTo(1000,0, function(){
         $('#overlay').css('z-index','1');
     });
-     
-    WebFontConfig = {google: {families: ['Exo']}}; // google webfont
-    font = 'Exo';
 
     WIDTH = 850; 
     HEIGHT = 580;
@@ -35,16 +32,14 @@ boot.prototype = {
     
     create: function(){
         game.stage.backgroundColor = '#002745';
-        font = 'Creepster';
+        font = 'Fontdiner Swanky';
         //bannerNotCraeted = true;
         
         if (this.game.device.desktop){
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             
-            var factor = 1.1;
-            
-            this.scale.maxWidth = w / factor; 
-            this.scale.maxHeight = h / factor; 
+            this.scale.maxWidth = w; 
+            this.scale.maxHeight = h; 
             
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.setScreenSize(true);
