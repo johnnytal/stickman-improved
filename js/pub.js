@@ -24,7 +24,7 @@ pub.prototype = {
         sfxRain.stop();
         sfxRain_indoors.play();
 
-        showManText('This pub has been abonded,\n much like the rest of this town',1750);
+        showManText('This pub has been abonded, much like the rest of this town',1750);
     },
     
     update: function(){

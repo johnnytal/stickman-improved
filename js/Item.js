@@ -19,7 +19,7 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible) {
     sprite.events.onInputDown.add(this.interact, this);
     
     if (isLayered || isTakeable){
-        sprite.events.onInputOver.add(function(_obj){ _obj.tint = 0xfaafaa; });
+        sprite.events.onInputOver.add(function(_obj){ _obj.tint = 0xfb925e; });
         sprite.events.onInputOut.add(function(_obj){ _obj.tint = 0xffffff;  });
     }
     

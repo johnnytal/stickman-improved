@@ -31,9 +31,12 @@ game_main.prototype = {
 };
 
 function take_from_inventory(item){
-    item.fixedToCamera = false;
-    item.x = game.input.x + game.camera.x;
-    item.y = game.input.y + game.camera.y + item.width - 50;  
+   item.tint = '0x00ffff';
+   item.scale.set(1.25, 1.25);
+   
+   // item.fixedToCamera = false;
+   // item.x = game.input.x + game.camera.x;
+   // item.y = game.input.y + game.camera.y + item.width - 50;  
 }
 
 function stop_man(){    
@@ -74,7 +77,7 @@ function interact_item(_static_item_clicked){
             showManText("It's me, Stickman", 0);
         break;
         case 'ladder_b':
-            if (!window_mission()) showManText("Breaking & entry is no good\n unless i break something first", 0);
+            if (!window_mission()) showManText("Breaking & entry is no good unless i break something first", 0);
         break;
         case 'window':
              showManText("I can't reach", 0);
@@ -88,17 +91,17 @@ function interact_item(_static_item_clicked){
             showManText("No, it's raining outside", 0);
         break;
         case 'barrel':
-            showManText("Wouldn't mind getting drunk,\n but i'd had to open it first", 0);
+            showManText("Wouldn't mind getting drunk, but i'd had to open it first", 0);
         break;
         case 'dart_board':
-            showManText("It's a dartboard.\n hmm, there's something funny about that bullseye", 0);
+            showManText("It's a dartboard. hmm, there's something funny about that bullseye", 0);
         break;
         case 'barrel_glass':
             showManText("Now I need something to hit the glass with... hmmm...", 0);
         break;
         case 'secret_door':
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
-            showManText("OK, I'm going in.\n It's not like I have anything better to do", 4100);
+            showManText("OK, I'm going in. It's not like I have anything better to do", 4100);
             
             setTimeout(function(){ 
                 fadeOverlay(); 
@@ -109,7 +112,7 @@ function interact_item(_static_item_clicked){
         break;
         case 'switch':
             fog.destroy();
-            showManText("Too bad there was no switch\n on the other side", 700);
+            showManText("Too bad there was no switch on the other side", 700);
         break;
     }   
     static_item_clicked = null;
@@ -138,14 +141,14 @@ function take_item(item){
             showManText('This ladder fits right in my pocket!',500);
         break;
         case 'rock':
-           if (!(ladderMission && stoneMission)) showManText('I will take that rock.\n because it rocks.', 0); 
+           if (!(ladderMission && stoneMission)) showManText('I will take that rock. because it rocks.', 0); 
            else { showManText('Rock, you are my only friend in this world', 0); }
         break;
         case 'glass':
             showManText('This shred of glass seems so useful', 0);
         break;
         case 'dart':
-            showManText("It's a dart.\n I took stupider things then this i suppose", 0);
+            showManText("It's a dart. I took stupider things then this i suppose", 0);
         break;
     }  
     
@@ -158,6 +161,8 @@ function take_item(item){
 }
 
 function use_item(inventory_item, static_item){
+    inventory_item.scale.set(1, 1);
+    
     if (static_item != null){
         var combined_items = inventory_item.key + ' + ' + static_item.key;
         
@@ -210,7 +215,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('rock + pub_door'):
-                showManText("Stickmen who lives in an abonded pub\n shouldn't throw stones", 0);
+                showManText("Stickmen who lives in an abonded pub shouldn't throw stones", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
@@ -243,7 +248,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('dart + barrel'):
-                showManText("That won't open the barrel,\n It's more likely I'll just break the dart", 0);
+                showManText("That won't open the barrel, It's more likely I'll just break the dart", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
@@ -253,7 +258,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('rock + barrel'):
-                showManText("That's a bad way to open a barrel,\n I should use something sharp... hmmm...", 0);
+                showManText("That's a bad way to open a barrel, I should use something sharp... hmmm...", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
@@ -314,7 +319,7 @@ function use_item(inventory_item, static_item){
         }
     } 
     else{
-        showManText("These objects\n can't possibly interact", 0);
+        showManText("These objects can't possibly interact", 0);
         add_item_to_inventory(inventory_item);     
     }
     
@@ -339,7 +344,7 @@ function add_item_to_inventory(item){
         inventory[i].x = WIDTH - ((i + 1) * 50);    
     } 
 
-    item.y = 8;
+    item.y = 25;
     item.tint = 0xffffff;
     item.fixedToCamera = true;    
     
@@ -357,7 +362,7 @@ function create_man(x, y){
     man.animations.add('right', [0, 1, 2, 3], 15, true);
     man.animations.add('left', [4, 5, 6, 7], 15, true); 
     
-    manText = game.add.text(0, 0, '' , {font: "16px " + font, fill: "#f9d5b2"});
+    manText = game.add.text(0, 0, '' , {font: "18px " + font, fill: "#f9d5b2", align:'center'});
     manText.anchor.setTo(0.5, 0.5);
     
     walkingIcon = game.add.sprite(450, 350, 'walkingIcon');
@@ -367,7 +372,7 @@ function walk_update(){
     walkingIcon.x = game.input.x + game.camera.x; 
     walkingIcon.y = game.input.y - 10 + game.camera.y;   
     
-    if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y > 50){
+    if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y > 100){
         placeToGoX = game.input.x + game.camera.x;
         placeToGoY = game.input.y - 10 + game.camera.y;
     }  
@@ -378,12 +383,12 @@ function walk_update(){
 function showManText(textToShow, timeToWait){    
     try{ clearTimeout(textTimer); }catch(e){}
 
-    var textLocation = (man.x > game.world.centerX) ? man.x - textToShow.length : man.x + (textToShow.length / 2);
+    //var textLocation = (man.x > game.world.centerX) ? man.x - textToShow.length : man.x + (textToShow.length / 2);
     
     setTimeout(function(){
         manText.text = textToShow;
-        manText.x = textLocation;
-        manText.y = man.body.y - 50;
+        manText.x = game.world.centerX;
+        manText.y = 70;
         textTimer = setTimeout(function(){ manText.text = '';}, 400 + textToShow.length * 60);
     }, timeToWait);
 }
