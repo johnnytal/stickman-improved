@@ -31,12 +31,8 @@ game_main.prototype = {
 };
 
 function take_from_inventory(item){
-   item.tint = '0x00ffff';
+   item.tint = '0xc9a279';
    item.scale.set(1.25, 1.25);
-   
-   // item.fixedToCamera = false;
-   // item.x = game.input.x + game.camera.x;
-   // item.y = game.input.y + game.camera.y + item.width - 50;  
 }
 
 function stop_man(){    
@@ -103,9 +99,8 @@ function interact_item(_static_item_clicked){
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
             showManText("OK, I'm going in. It's not like I have anything better to do", 4100);
             
-            setTimeout(function(){ 
-                fadeOverlay(); 
-            },6500);
+            setTimeout(function(){ },6500);
+            
             setTimeout(function(){
                 game.state.start("Maze");
             },9000);
@@ -121,9 +116,7 @@ function interact_item(_static_item_clicked){
 function window_mission(){
     if (ladderMission && stoneMission){
         showManText("Broken window, here I come!"); 
-        
-        fadeOverlay();
-        
+
         setTimeout(function(){
             game.state.start("Pub");
         },3000);
@@ -324,6 +317,9 @@ function use_item(inventory_item, static_item){
     }
     
     static_item_clicked = null;
+    
+    inventory_item.tint = 0xffffff;
+    static_item.tint = 0xffffff;
 }
 
 function kill_inventory_item(inventory_item){
@@ -341,10 +337,10 @@ function add_item_to_inventory(item){
     if (inventory.indexOf(item) == -1) inventory.push(item);
     
     for (i=0; i<inventory.length; i++){
-        inventory[i].x = WIDTH - ((i + 1) * 50);    
+        inventory[i].x = ((i + 1) * 50);    
     } 
 
-    item.y = 25;
+    item.y = 520;
     item.tint = 0xffffff;
     item.fixedToCamera = true;    
     
@@ -372,7 +368,7 @@ function walk_update(){
     walkingIcon.x = game.input.x + game.camera.x; 
     walkingIcon.y = game.input.y - 10 + game.camera.y;   
     
-    if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y > 100){
+    if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y < 470){
         placeToGoX = game.input.x + game.camera.x;
         placeToGoY = game.input.y - 10 + game.camera.y;
     }  
@@ -381,14 +377,13 @@ function walk_update(){
 }
 
 function showManText(textToShow, timeToWait){    
-    try{ clearTimeout(textTimer); }catch(e){}
+    try{ clearTimeout(textTimer); } catch(e){}
 
-    //var textLocation = (man.x > game.world.centerX) ? man.x - textToShow.length : man.x + (textToShow.length / 2);
-    
     setTimeout(function(){
         manText.text = textToShow;
-        manText.x = game.world.centerX;
+        manText.x = game.world.centerX - textToShow.length * 2;
         manText.y = 70;
+        manText.fixedToCamera = true;
         textTimer = setTimeout(function(){ manText.text = '';}, 400 + textToShow.length * 60);
     }, timeToWait);
 }
@@ -433,18 +428,6 @@ function create_rain(){
     emitter.maxRotation = 0;
 
     emitter.start(false, 1600, 5, 0);
-}
-
-function fadeOverlay(){
-    $('#message').html('');
-    
-    setTimeout(function(){ $('#overlay').fadeTo(1000,1).css('z-index','200'); },1500); 
-    
-    setTimeout(function(){
-        $('#overlay').fadeTo(1000,0, function(){
-            $('#overlay').css('z-index','1');   
-        }); 
-    },3000);
 }
 
 function loadSfx(){

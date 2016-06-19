@@ -28,7 +28,7 @@ maze.prototype = {
             createWall(mazeWalls[w]); 
         }
         
-        create_item( game, 'switch', true, false, 842, 358, true );
+        create_item( game, 'switch', true, false, 831, 358, true );
         
         create_man(30, 185);
         man.scale.set(0.33, 0.29); 

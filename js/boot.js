@@ -1,10 +1,8 @@
-$(function(){
-    $('#game').focus();
-    $('#overlay').fadeTo(1000,0, function(){
-        $('#overlay').css('z-index','1');
-    });
+//document.addEventListener("deviceready", start, false);
+window.onload = start;
 
-    WIDTH = 850; 
+function start(){
+    WIDTH = 703; 
     HEIGHT = 580;
     
     w = window.innerWidth * window.devicePixelRatio;
@@ -21,7 +19,7 @@ $(function(){
     game.state.add("Maze", maze);
     
     game.state.start("Boot");  
-});
+}
 
 var boot = function(game){};
   
