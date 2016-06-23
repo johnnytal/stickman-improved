@@ -392,7 +392,7 @@ function create_man(x, y, where){
     man.animations.add('right', [0, 1, 2, 3], 15, true);
     man.animations.add('left', [4, 5, 6, 7], 15, true); 
     
-    manText = game.add.text(0, 0, '' , {font: "18px " + font, fill: "#f9d5b2", align:'center'});
+    manText = game.add.text(0, 0, '' , {font: "18px " + font, fill: "#f9d5b2", align:'center', stroke: "0x000000", strokeThickness: 2});
     manText.anchor.setTo(0.5, 0.5);
 
     walkingIcon = game.add.sprite(450, 350, 'walkingIcon');

@@ -1,6 +1,6 @@
 var street = function(game){
     MAN_VEL_X = 120;
-    MAN_VEL_Y = 48;
+    MAN_VEL_Y = 24;
     
     MIDDLE = (TOTAL_WIDTH / 2) - 27;
 };
