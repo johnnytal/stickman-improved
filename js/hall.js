@@ -1,33 +1,23 @@
-var street = function(game){
-    MAN_VEL_X = 120;
+var hall = function(game){
+    MAN_VEL_X = 200;
     MAN_VEL_Y = 48;
     
     MIDDLE = (TOTAL_WIDTH / 2) - 27;
 };
 
-street.prototype = {
+hall.prototype = {
     preload: function(){},
     
     create: function(){
-        street = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'street');    
-
-        floor = game.add.sprite(TOTAL_WIDTH/2-27, 450, null);
-        game.physics.enable(floor, Phaser.Physics.ARCADE);
-        floor.body.setSize(0, 100);
-        floor.body.immovable = true;
+        hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');   
+        create_man(60, 470, 'hall');
+        showManText('That was kinda fun', 1000);
         
-        create_street_items();
-        create_man(107, 291, 'street');
-        
-        create_rain();
-
         fadeInScreen();
     },
-    
     update: function(){
-        
         walk_update();
-
+        
         if (placeToGoX != null){  
                         
             if (!(sfxSteps.isPlaying)){
@@ -60,21 +50,7 @@ street.prototype = {
             manWalk = man.animations.play(dir);    
         }
         
-        factor = -2.25 + (man.body.y / 100);
-        if (factor < 1.1) man.scale.set(factor, factor); //scale man size
-        sfxSteps.volume = factor; // change step volume by distance from camera   
-
-        game.physics.arcade.collide(man, floor, null, null, this);
+        factor = (1.7 + (man.body.y / 100)) * 0.2; //scale man size
+        man.scale.set(factor, factor);  
     },
 };
-
-function create_street_items(){
-    drawLine();
-    
-    create_item( game, 'ladder_s', true, true, 640, 290, true );
-    create_item( game, 'door', false, false, 520, 264, true );
-    create_item( game, 'window', false, false, 491, 172, true );
-    create_item( game, 'broken_window', true, false, 491, 172, false );
-    create_item( game, 'ladder_b', true, false, 488, 245, false );
-    create_item( game, 'rock', true, true, 260, 340, true ); 
-}

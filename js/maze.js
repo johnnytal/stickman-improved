@@ -30,7 +30,7 @@ maze.prototype = {
         
         create_item( game, 'switch', true, false, 831, 358, true );
         
-        create_man(30, 185);
+        create_man(30, 185, 'maze');
         man.scale.set(0.33, 0.29); 
 
         fog = game.add.group();
@@ -42,6 +42,8 @@ maze.prototype = {
                 black = fog.create(0+x*50, 0+y*50, 'black');   
             }
         }
+        
+        fadeInScreen();
     },
     
     update: function(){
@@ -111,10 +113,7 @@ function createWall(cords){
 
     wall = walls.create(startX, startY, '');
     wall.body.setSize(sizeX, sizeY);
-    wall.body.immovable = true;   
-
-    walkingIcon = game.add.sprite(450, 350, 'walkingIcon');
-    walkingIcon.scale.set(0.3,0.3);
+    wall.body.immovable = true;
 }
 
 function checkOverlap_man_black(_man, _black) {

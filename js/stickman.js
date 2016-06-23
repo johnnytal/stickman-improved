@@ -24,19 +24,25 @@ game_main.prototype = {
         
         loadSfx();
 
-        game.state.start("Street");
+        game.state.start("Maze");
     },
     
     update: function(){},
 };
 
 function take_from_inventory(item){
+   for(var i = 0; i < inventory.length; i++) {
+       inventory[i].tint = '0xffffff';
+       inventory[i].scale.set(1, 1);
+   }
    item.tint = '0xc9a279';
    item.scale.set(1.25, 1.25);
 }
 
 function stop_man(){    
-    if (sfxSteps.isPlaying) sfxSteps.stop();
+    if (sfxSteps.isPlaying){
+         sfxSteps.stop();
+     }
     if (sfxSteps_pub.isPlaying) sfxSteps_pub.stop();
     
     man.animations.stop();
@@ -98,19 +104,32 @@ function interact_item(_static_item_clicked){
         case 'secret_door':
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
             showManText("OK, I'm going in. It's not like I have anything better to do", 4100);
-            
-            setTimeout(function(){ },6500);
-            
+
             setTimeout(function(){
-                game.state.start("Maze");
+                bigBlack = game.add.sprite(0, 0, 'bigBlack');
+                bigBlack.alpha = 0;
+                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
+                theTween.onComplete.add(function(){
+                   game.state.start("Maze");   
+                }, this);
             },9000);
         break;
         case 'switch':
             fog.destroy();
             showManText("Too bad there was no switch on the other side", 700);
+            
+            setTimeout(function(){
+                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
+                theTween.onComplete.add(function(){
+                   game.state.start("Hall");   
+                }, this);
+            },2500);
         break;
     }   
     static_item_clicked = null;
+    
+    if (_static_item_clicked.tint != '0xffffff') _static_item_clicked.tint = '0xffffff';
+    else { _static_item_clicked.alpha = 0; }
 }
 
 function window_mission(){
@@ -118,8 +137,13 @@ function window_mission(){
         showManText("Broken window, here I come!"); 
 
         setTimeout(function(){
-            game.state.start("Pub");
-        },3000);
+            bigBlack = game.add.sprite(0, 0, 'bigBlack');
+            bigBlack.alpha = 0;
+            theTween = game.add.tween(bigBlack).to( { alpha: 1}, 1000, Phaser.Easing.Sinusoidal.InOut, true); 
+            theTween.onComplete.add(function(){
+                game.state.start("Pub");  
+            });
+        }, 3000);
         
         return true;
     }
@@ -163,22 +187,28 @@ function use_item(inventory_item, static_item){
             case("ladder_s + door"):
                 showManText("I can reach it without the ladder", 0);
                 add_item_to_inventory(inventory_item); 
+                static_item.alpha = 0;
             break;
             
             case("ladder_s + window"):
             case("ladder_s + broken_window"):
                 sfxPut_ladder.play();
             
-                showManText("That's a perfect place for a ladder", 300);
+                showManText("I'm sure that won't look suspicious to anyone", 300);
                 get_item('name', 'ladder_b').visible = true;
                 kill_inventory_item(inventory_item);
                 
-                ladderMission = true; 
+                ladderMission = true;
+                
+                if (static_item.key == 'window'){
+                    static_item.alpha = 0; 
+                }
             break;
             
             case("rock + door"):
                 showManText("Stoning the door won't help", 0);
                 add_item_to_inventory(inventory_item);  
+                static_item.alpha = 0;
             break;
             
             case("rock + ladder_b"):
@@ -205,59 +235,61 @@ function use_item(inventory_item, static_item){
             case ('glass + pub_door'):
                 showManText('"Stickman was here". There. I did it.', 200);
                 add_item_to_inventory(inventory_item); 
+                static_item.alpha = 0;
             break;
             
             case ('rock + pub_door'):
                 showManText("Stickmen who lives in an abonded pub shouldn't throw stones", 0);
                 add_item_to_inventory(inventory_item); 
+                static_item.alpha = 0;
             break;
             
             case ('dart + dart_board'):
                 sfxDart.play();
                 
                 if (!drunkMission){
-                    setTimeout(function(){             
-                        inventory_item.x = 480;
-                        inventory_item.y = 217;
+                    setTimeout(function(){   
+                        create_item( game, 'dart', true, true, 480, 217, true );
                     },300);
 
                     showManText("I suck at this", 1000);
                 }
                 
                 else{
-                    inventory_item.x = 547;
-                    inventory_item.y = 191;
+                    create_item( game, 'dart', true, false, 547, 191, true );
                     
                     showManText("Bullseye! guess i'm better at this when i'm drunk", 500);
+                    showManText("What's that noise?", 4500);
                     
                     setTimeout(function(){ sfxSecret_door.play(); }, 2000);
-                    showManText("Hey, what is this noise?", 4000);
                     setTimeout(function(){ get_item('name', 'secret_door').visible = true; }, 5300);
                 }
                 
-                inventory.splice(inventory.indexOf(inventory_item), 1);
+                kill_inventory_item(inventory_item);
                 static_item_clicked = null;
                 itemToTake = null;
             break;
             
             case ('dart + barrel'):
-                showManText("That won't open the barrel, It's more likely I'll just break the dart", 0);
+                showManText("I guess it makes sense", 0);
+                showManText("Nope. poking the barrel just makes it angry", 3000);
                 add_item_to_inventory(inventory_item); 
             break;
             
             case ('dart + pub_door'):
-                showManText("I'm afraid the owener will catch me", 0);
+                showManText("The owner might catch me do it", 0);
                 add_item_to_inventory(inventory_item); 
+                static_item.alpha = 0;
             break;
             
             case ('rock + barrel'):
-                showManText("That's a bad way to open a barrel, I should use something sharp... hmmm...", 0);
+                showManText("That's a bad way to open a barrel, I need something sharp... hmmm...", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
             case ('glass + dart_board'):
             case ('rock + dart_board'):
-                showManText("That doesn't feel right", 0);
+                showManText("That might damage the dart board", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
@@ -265,9 +297,6 @@ function use_item(inventory_item, static_item){
                 showManText("It's worth a shot", 0);
                 setTimeout(function(){
                     sfxPut_glass.play();
-                    
-                    inventory_item.x = 727;
-                    inventory_item.y = 240;
                     kill_inventory_item(inventory_item);
                     
                     get_item('name', 'barrel').kill();
@@ -286,31 +315,36 @@ function use_item(inventory_item, static_item){
                 setTimeout(function(){
                     get_item('name', 'barrel_glass').kill();
                     get_item('name', 'barrel_open').visible = true;
+
+                    timePassedText = game.add.text(300, 200, '2 Hours Later' , {font: "72px " + font, fill: "#f7f7f7", align:'center'});
+                    timePassedText.alpha = 0;
+                    
+                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+                    game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+
+                    theTween.onComplete.add(function(){
+                       game.add.tween(bigBlack).to( { alpha: 0}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
+                       game.add.tween(timePassedText).to( { alpha: 0}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
+                    }, this);
+                    
                 }, 2750);
                 
-                showManText("I'll just have a little sip...", 3500);
-               
+                showManText("I'll just have a little sip...", 3000);
+
                 setTimeout(function(){
-                    $('#overlay').fadeTo(1000,1).css('z-index','200');
-                    $('#message').html('2 hours later...');
-                }, 7000);
-                
-                setTimeout(function(){
-                    $('#overlay').fadeTo(1000,0, function(){
-                        $('#overlay').css('z-index','1');  
-                    });
-                    
                     get_item('name', 'barrel_open').kill();
                     get_item('name', 'barrel_empty').visible = true;
-                    
-                }, 9000);
+                }, 8000);
                 
-                showManText("I'm Bobbin. Are you my mother? *Hic*", 10000); //lucasatrs reference
+                showManText("I'm Bobbin. Are you my mother? * Hic *", 9500); //lucasatrs reference
                 
                 drunkMission = true;
             break;
         }
+        
+        static_item.tint = 0xffffff;
     } 
+    
     else{
         showManText("These objects can't possibly interact", 0);
         add_item_to_inventory(inventory_item);     
@@ -319,7 +353,6 @@ function use_item(inventory_item, static_item){
     static_item_clicked = null;
     
     inventory_item.tint = 0xffffff;
-    static_item.tint = 0xffffff;
 }
 
 function kill_inventory_item(inventory_item){
@@ -336,18 +369,19 @@ function add_item_to_inventory(item){
     item.isTaken = true;
     if (inventory.indexOf(item) == -1) inventory.push(item);
     
-    for (i=0; i<inventory.length; i++){
-        inventory[i].x = ((i + 1) * 50);    
+    for (i = 0; i < inventory.length; i++){
+        inventory[i].x = ((i + 1) * 50) + 20;    
     } 
 
-    item.y = 520;
+    item.y = 535;
     item.tint = 0xffffff;
     item.fixedToCamera = true;    
+    item.anchor.set(0.5, 0.5);
     
     itemToTake = null;
 }
 
-function create_man(x, y){
+function create_man(x, y, where){
     man = game.add.sprite(x, y, 'man');
     man.events.onInputDown.add(function(){ Item.interact(); }, this);
     man.frame = 3;
@@ -360,8 +394,13 @@ function create_man(x, y){
     
     manText = game.add.text(0, 0, '' , {font: "18px " + font, fill: "#f9d5b2", align:'center'});
     manText.anchor.setTo(0.5, 0.5);
-    
+
     walkingIcon = game.add.sprite(450, 350, 'walkingIcon');
+    if (where == 'maze'){
+        walkingIcon.scale.set(0.45, 0.45);
+    }
+    
+    game.camera.follow(man, Phaser.Camera.topdownFollow);
 }
 
 function walk_update(){
@@ -435,11 +474,22 @@ function loadSfx(){
     sfxDart = game.add.audio('sfxDart');
     sfxPocket = game.add.audio('sfxPocket');
     sfxPut_ladder = game.add.audio('sfxPut_ladder');
-    sfxRain = game.add.audio('sfxRain', true);
+    sfxRain = game.add.audio('sfxRain', true, 0.7);
     sfxSteps = game.add.audio('sfxSteps', true);
     sfxOpen_barrel = game.add.audio('sfxOpen_barrel');
     sfxPut_glass = game.add.audio('sfxPut_glass');
-    sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.5, true);
+    sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.6, true);
     sfxSecret_door = game.add.audio('sfxSecret_door');
     sfxSteps_pub = game.add.audio('sfxSteps_pub', true);
+}
+
+function fadeInScreen(){
+    bigBlack = game.add.sprite(0, 0, 'bigBlack');
+    game.add.tween(bigBlack).to( { alpha: 0}, 1000, Phaser.Easing.Sinusoidal.InOut, true);  
+}
+
+function drawLine(){
+    line = game.add.sprite(26, TOTAL_HEIGHT - 100, 'line');
+    line.alpha = 0.4;
+    line.fixedToCamera = true;
 }

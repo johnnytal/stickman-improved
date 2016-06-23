@@ -17,6 +17,7 @@ function start(){
     game.state.add("Street", street);
     game.state.add("Pub", pub);
     game.state.add("Maze", maze);
+    game.state.add("Hall", hall);
     
     game.state.start("Boot");  
 }

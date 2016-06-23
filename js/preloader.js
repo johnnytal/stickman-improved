@@ -16,9 +16,12 @@ preloader.prototype = {
 
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
     
+        game.load.image('bigBlack', 'images/stickman/blackBig.png');
+        game.load.image('line', 'images/stickman/line.png');
         game.load.image('street', 'images/stickman/drawing.jpg');
         game.load.image('pub', 'images/stickman/pub.jpg');
         game.load.image('maze', 'images/stickman/maze.jpg');
+        game.load.image('hall', 'images/stickman/hall.jpg');
         game.load.image('door', 'images/stickman/door.png');
         game.load.image('ladder_s', 'images/stickman/ladder_s.png');
         game.load.image('window', 'images/stickman/window.png');

@@ -18,18 +18,14 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible) {
     sprite.events.onInputOut.add(function(){ walkingIcon.frame = 0; });
     sprite.events.onInputDown.add(this.interact, this);
 
-    if (!isLayered){
+    if (!isLayered){ // an image similar to the bg element only tinted
         sprite.alpha = 0;
     }
     else{
-        sprite.events.onInputDown.add(function(){
+        sprite.events.onInputDown.add(function(){ // an image different from the bg elemnt, not tinted unless clicked
             this.sprite.tint = 0xc9a279;  
         }, this);
     }
-};
-
-Item.prototype.look = function() {
-
 };
 
 Item.prototype.interact = function() {   
@@ -42,6 +38,10 @@ Item.prototype.interact = function() {
         this.sprite.alpha = 0.9;
         this.sprite.tint = 0xffffff;  
     }
+};
+
+Item.prototype.look = function() {
+
 };
 
 Item.prototype.use = function() {
