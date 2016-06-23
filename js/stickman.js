@@ -26,7 +26,7 @@ game_main.prototype = {
         
         loadSfx();
 
-        game.state.start("Hall");
+        game.state.start("Street");
     },
     
     update: function(){},
