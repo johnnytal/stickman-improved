@@ -15,6 +15,8 @@ var game_main = function(game){
      inventory = [];
      items = [];
      
+     dir = 'right';
+     
      var emitter;
 };
 
@@ -24,7 +26,7 @@ game_main.prototype = {
         
         loadSfx();
 
-        game.state.start("Street");
+        game.state.start("Hall");
     },
     
     update: function(){},
@@ -124,6 +126,9 @@ function interact_item(_static_item_clicked){
                    game.state.start("Hall");   
                 }, this);
             },2500);
+        break;
+        case 'hall_door':
+            showManText("This door is way too heavy to open without a key", 200);
         break;
     }   
     static_item_clicked = null;

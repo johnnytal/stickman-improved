@@ -41,6 +41,7 @@ preloader.prototype = {
         game.load.image('dart', 'images/stickman/dart.png');
         game.load.image('secret_door', 'images/stickman/secret_door.png');
         game.load.image('switch', 'images/stickman/switch.png');
+        game.load.image('hall_door', 'images/stickman/hall_door.png');
         
         game.load.spritesheet('man', 'images/stickman/man.png', 54, 72.5);
         game.load.spritesheet('walkingIcon', 'images/stickman/man_icon.png',20, 32);

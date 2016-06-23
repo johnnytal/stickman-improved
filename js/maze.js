@@ -24,7 +24,7 @@ maze.prototype = {
         walls.enableBody = true;
         walls.physicsBodyType = Phaser.Physics.ARCADE;
         
-        for(w=0; w<mazeWalls.length; w++){ 
+        for(w = 0; w < mazeWalls.length; w++){ 
             createWall(mazeWalls[w]); 
         }
         
