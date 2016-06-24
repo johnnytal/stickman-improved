@@ -27,7 +27,7 @@ game_main.prototype = {
         
         loadSfx();
 
-        game.state.start("Street");
+        game.state.start("Hall");
     },
     
     update: function(){},
@@ -574,17 +574,55 @@ function drawLine(){
 
 function endTheGame(){
     setTimeout(function(){
+        man.kill();
         game.add.tween(bigBlack).to( { alpha: 1}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
         
-        timePassedText = game.add.text(270, 200, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+        timePassedText = game.add.text(275, 150, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
         timePassedText.alpha = 0;
         
-        timePassedText2 = game.add.text(250, 320, 'When StickMan reaches\n5,000 downloads...' , {font: "54px " + font, fill: "#f7f7f7", align:'center'});
+        timePassedText2 = game.add.text(275, 275, 'When StickMan reaches\n5,000 downloads...' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
         timePassedText2.alpha = 0;
         
         game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);               
+        
         setTimeout(function(){
             game.add.tween(timePassedText2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
-        });             
-    }, 7000);
+        }, 3000); 
+        
+        image1 = game.add.image(0, 0, 'image1');
+        image2 = game.add.image(351, 0, 'image2');
+        image3 = game.add.image(0, 0, 'image3');
+        image4 = game.add.image(351, 0, 'image4');
+        image1.alpha = 0;
+        image2.alpha = 0;
+        image3.alpha = 0;
+        image4.alpha = 0;
+        image1.fixedToCamera = true;
+        image2.fixedToCamera = true;
+        image3.fixedToCamera = true;
+        image4.fixedToCamera = true;
+        
+        setTimeout(function(){
+            game.add.tween(timePassedText).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(timePassedText2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(image1).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(image2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+        }, 8000);  
+        
+        setTimeout(function(){
+            game.add.tween(image1).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(image2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);
+            game.add.tween(image3).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(image4).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);  
+        }, 16000);   
+        
+        setTimeout(function(){
+            game.add.tween(image3).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            game.add.tween(image4).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
+            
+            gameOverTxt = game.add.text(275, 150, 'Game Over', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+            gameOverTxt.alpha = 0;
+            game.add.tween(gameOverTxt).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
+        }, 24000);              
+    }, 7200);
 }

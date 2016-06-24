@@ -44,6 +44,11 @@ preloader.prototype = {
         game.load.image('hall_door', 'images/stickman/hall_door.png');
         game.load.image('hall_window', 'images/stickman/hall_window.png');
         game.load.image('hall_window_broken', 'images/stickman/hall_window_broken.png');
+       
+        game.load.image('image1', 'images/stickman/image1.jpg');
+        game.load.image('image2', 'images/stickman/image2.jpg');
+        game.load.image('image3', 'images/stickman/image3.jpg');
+        game.load.image('image4', 'images/stickman/image4.jpg');
         
         game.load.spritesheet('man', 'images/stickman/man.png', 54, 72.5);
         game.load.spritesheet('walkingIcon', 'images/stickman/man_icon.png',20, 32);
