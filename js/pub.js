@@ -12,12 +12,7 @@ pub.prototype = {
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
         pub_bound_u.body.setSize(TOTAL_WIDTH, 275);
         pub_bound_u.body.immovable = true;
-    
-       /* pub_bound_d = game.add.sprite(0, TOTAL_HEIGHT, null);
-        game.physics.enable(pub_bound_d, Phaser.Physics.ARCADE);
-        pub_bound_d.body.setSize(TOTAL_WIDTH, 5);
-        pub_bound_d.body.immovable = true;*/
-       
+
         create_pub_items();
         create_man(665, 375, 'pub');
         
@@ -25,9 +20,10 @@ pub.prototype = {
         sfxRain_indoors.play();
         
         fadeInScreen();
+        walkingIcon.visible = false;
 
-        showManText('This pub has been abonded, much like the rest of this town', 1450);
-        
+        showManText('This pub has been abonded, much like the rest of this town', 1400);
+        setTimeout(function(){ walkingIcon.visible = true; }, 2400);
     },
     
     update: function(){
@@ -75,8 +71,7 @@ pub.prototype = {
         factor = (1.7 + (man.body.y / 100)) * 0.2; //scale man size
         man.scale.set(factor, factor);  
 
-        game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this);
-        //game.physics.arcade.collide(man, pub_bound_d, hitPubBounds, null, this);    
+        game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
     },
 };
 

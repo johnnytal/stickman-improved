@@ -4,6 +4,7 @@ var game_main = function(game){
 
      ladderMission = false;
      stoneMission = false;
+     stoneMission2 = false;
      drunkMission = false; 
 
      placeToGoX = null;
@@ -77,9 +78,6 @@ function interact_item(_static_item_clicked){
             showManText("The door is locked", 200);
             _static_item_clicked.alpha = 0;
         break;
-        case 'man':
-            showManText("It's me, Stickman", 0);
-        break;
         case 'ladder_b':
             if (ladderMission && !stoneMission) showManText("It ain't breaking & entry if i don't break something first", 0);
         break;
@@ -95,16 +93,20 @@ function interact_item(_static_item_clicked){
              _static_item_clicked.alpha = 0.4;
         break;
         case 'pub_door':
-            showManText("No, it's raining outside", 0);
+            showManText("Naa, it's raining outside", 0);
         break;
         case 'barrel':
             showManText("Wouldn't mind getting drunk,\nbut i'd had to open it first", 0);
         break;
         case 'dart_board':
-            showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);
+            if (!drunkMission) showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);
+            else { showManText("I knew there was something funny about that bullseye!", 0); }
         break;
         case 'barrel_glass':
             showManText("Now I need something to hit the glass with... hmmm...", 0);
+        break;
+        case 'barrel_empty':
+            showManText("I'ts empty now. someone drank it! * Hic *", 0);
         break;
         case 'secret_door':
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
@@ -132,6 +134,14 @@ function interact_item(_static_item_clicked){
         break;
         case 'hall_door':
             showManText("This door is way too heavy to open without a key", 200);
+        break;
+        case 'hall_window':
+            showManText("It's a closed window", 0);
+        break;
+        case 'hall_window_broken':
+            stoneMission2 = true;
+            showManText("I don't know where it leads.\nBut it looks like someone wants me to take this leap.\nI've got nothing to lose.\nSo... here we go", 0);
+            endTheGame();
         break;
     }   
     static_item_clicked = null;
@@ -168,8 +178,9 @@ function take_item(item){
             showManText('This ladder fits right in my pocket!',500);
         break;
         case 'rock':
-           if (!(ladderMission && stoneMission)) showManText('I will take that rock. because it rocks.', 0); 
-           else { showManText('Rock, you are my only friend in this world', 0); }
+           if (!(ladderMission && stoneMission)) showManText('I will take this rock. because it rocks.', 0); 
+           else if (ladderMission && stoneMission) { showManText("Rock, you're my only friend in this world", 0); }
+           else if (drunkMission) { showManText("Stone ex machina.\nHow did it even get here?!", 0); }
         break;
         case 'glass':
             showManText('This shred of glass seems so useful', 0);
@@ -311,7 +322,7 @@ function use_item(inventory_item, static_item){
             
             case ('glass + dart_board'):
             case ('rock + dart_board'):
-                showManText("That might damage the dart board", 0);
+                showManText("That might damage the dartboard", 0);
                 add_item_to_inventory(inventory_item); 
             break;
             
@@ -344,27 +355,45 @@ function use_item(inventory_item, static_item){
                     timePassedText = game.add.text(300, 200, '2 Hours Later' , {font: "72px " + font, fill: "#f7f7f7", align:'center'});
                     timePassedText.alpha = 0;
                     
-                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4100, Phaser.Easing.Sinusoidal.InOut, true); 
-                    game.add.tween(timePassedText).to( { alpha: 1}, 4300, Phaser.Easing.Sinusoidal.InOut, true); 
+                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4200, Phaser.Easing.Sinusoidal.InOut, true); 
+                    game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
 
                     theTween.onComplete.add(function(){
-                       game.add.tween(bigBlack).to( { alpha: 0}, 2700, Phaser.Easing.Sinusoidal.InOut, true);  
+                       game.add.tween(bigBlack).to( { alpha: 0}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
                        game.add.tween(timePassedText).to( { alpha: 0}, 2900, Phaser.Easing.Sinusoidal.InOut, true);  
                     }, this);
                     
                 }, 2750);
                 
-                showManText("Just a little sip...", 2850);
+                showManText("Just a little sip...", 2800);
 
                 setTimeout(function(){
                     get_item('name', 'barrel_open').kill();
                     get_item('name', 'barrel_empty').visible = true;
                     walkingIcon.visible = true;
-                }, 8000);
+                }, 7000);
                 
                 showManText("I'm Bobbin. Are you my mother? * Hic *", 9500); //lucasatrs reference
                 
                 drunkMission = true;
+            break;
+            
+            case ('rock + hall_window'):
+                walkingIcon.visible = false;
+                showManText("That feels awfully familiar", 200);
+                
+                setTimeout(function(){
+                    sfxBreak_window.play();
+                },700);
+                
+                setTimeout(function(){                    
+                    kill_inventory_item(inventory_item);
+                    stoneMission2 = true;
+                    static_item.destroy();
+
+                    get_item('name', 'hall_window_broken').visible = true;
+                    walkingIcon.visible = true;
+                }, 1150);
             break;
         }
         
@@ -409,16 +438,20 @@ function add_item_to_inventory(item){
 
 function create_man(x, y, where){
     man = game.add.sprite(x, y, 'man');
-    man.events.onInputDown.add(function(){ Item.interact(); }, this);
     man.frame = 3;
     game.physics.enable(man, Phaser.Physics.ARCADE);
     man.enableBody = true;
+    man.inputEnabled = true;
     man.anchor.setTo(0.5, 0.5);
+    
+    man.events.onInputDown.add(function(){ 
+        showManText("It's me, Stickman.\nBut who am i? and what does all that mean?!", 0);
+    }, this);
     
     man.animations.add('right', [0, 1, 2, 3], 15, true);
     man.animations.add('left', [4, 5, 6, 7], 15, true); 
     
-    manText = game.add.text(0, 0, '' , {font: "20px " + font, fill: "#f9d5b2", align:'center', stroke: "0x000000", strokeThickness: 3});
+    manText = game.add.text(0, 70, '' , {font: "20px " + font, fill: "#f9d5b2", align:'center', stroke: "0x000000", strokeThickness: 3});
     manText.anchor.setTo(0.5, 0.5);
 
     walkingIcon = game.add.sprite(450, 350, 'walkingIcon');
@@ -448,8 +481,16 @@ function showManText(textToShow, timeToWait){
 
     setTimeout(function(){
         manText.text = textToShow;
-        manText.x = game.world.centerX - textToShow.length * 2;
-        manText.y = 70;
+        
+        if (!stoneMission2) {
+            manText.x = game.world.centerX - textToShow.length * 2;
+            manText.y = 70;
+        }
+        else { 
+            manText.x = 370; 
+            manText.y = 120; 
+        }
+        
         manText.fixedToCamera = true;
         
         game.add.tween(manText).from( { alpha: 0}, 400, Phaser.Easing.Sinusoidal.InOut, true); 
@@ -529,4 +570,21 @@ function drawLine(){
     line = game.add.sprite(26, TOTAL_HEIGHT - 100, 'line');
     line.alpha = 0.4;
     line.fixedToCamera = true;
+}
+
+function endTheGame(){
+    setTimeout(function(){
+        game.add.tween(bigBlack).to( { alpha: 1}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
+        
+        timePassedText = game.add.text(270, 200, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+        timePassedText.alpha = 0;
+        
+        timePassedText2 = game.add.text(250, 320, 'When StickMan reaches\n5,000 downloads...' , {font: "54px " + font, fill: "#f7f7f7", align:'center'});
+        timePassedText2.alpha = 0;
+        
+        game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);               
+        setTimeout(function(){
+            game.add.tween(timePassedText2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+        });             
+    }, 7000);
 }

@@ -4,7 +4,7 @@ var hall = function(game){
    hallWalls = [
        [0, 375, 91, 310], [91, 361, 51, 244], [51, 244, 169, 253], 
        [169, 253, 433, 304], [433, 304, 475, 338], [475, 338, 477, 311], [477, 311, 786, 230], [786, 210, 950, 231],
-       [0, TOTAL_HEIGHT - 100, TOTAL_WIDTH, TOTAL_HEIGHT - 100]
+       [0, TOTAL_HEIGHT - 70, TOTAL_WIDTH, TOTAL_HEIGHT - 70], [TOTAL_WIDTH, 0, TOTAL_WIDTH, TOTAL_HEIGHT]
    ]; 
 };
 
@@ -33,19 +33,19 @@ hall.prototype = {
                
         walk_update();
         
-        var pub_vel_x = 60 + (Math.abs(man.body.x - placeToGoX) / 1.35);
-        var pub_vel_y = 60 + (Math.abs(man.body.y - placeToGoY) / 1.6);
+        var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
+        var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
 
         if (placeToGoX != null){ 
             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
-               man.body.velocity.x = VELOCITY; 
+               man.body.velocity.x = pub_vel_x; 
                dir = 'right';
                manWalk = man.animations.play(dir);
             } 
             else if (man.body.x - placeToGoX > DISTANCE){
-               man.body.velocity.x = -VELOCITY; 
+               man.body.velocity.x = -pub_vel_x; 
                dir = 'left';
                manWalk = man.animations.play(dir);
             } 
@@ -56,11 +56,11 @@ hall.prototype = {
             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
-                man.body.velocity.y = VELOCITY; 
+                man.body.velocity.y = pub_vel_y; 
                 manWalk = man.animations.play(dir);
             }
             else if (man.body.y - placeToGoY > DISTANCE){
-                man.body.velocity.y = -VELOCITY;  
+                man.body.velocity.y = -pub_vel_y;  
                 manWalk = man.animations.play(dir); 
             }
             else{ placeToGoY = 'null'; } 
@@ -106,4 +106,7 @@ function create_hall_items(){
     drawLine();
     
     create_item( game, 'hall_door', false, false, 269, 184, true );
+    create_item( game, 'hall_window', false, false, 887, 163, true );
+    create_item( game, 'hall_window_broken', true, false, 887, 163, false );
+    create_item( game, 'rock', true, true, 800, 340, true ); 
 }
