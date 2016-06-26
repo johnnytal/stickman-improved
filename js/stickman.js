@@ -144,7 +144,7 @@ function interact_item(_static_item_clicked){
         break;
         case 'hall_window_broken':
             stoneMission2 = true;
-            showManText("I don't know where it leads.\nBut it looks like someone wants me to take this leap.\nI've got nothing to lose.\nSo... here we go", 0);
+            showManText("It looks like someone really wanted me to take this jump.\nHere goes nothing...", 0);
             endTheGame();
         break;
     }   
@@ -231,6 +231,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case("rock + door"):
+            case("rock + hall_door"):
                 showManText("Stoning the door won't help", 0);
                 add_item_to_inventory(inventory_item);  
                 static_item.alpha = 0;
@@ -485,16 +486,10 @@ function showManText(textToShow, timeToWait){
 
     setTimeout(function(){
         manText.text = textToShow;
-        
-        if (!stoneMission2) {
-            manText.x = game.world.centerX - textToShow.length * 2;
-            manText.y = 70;
-        }
-        else { 
-            manText.x = 370; 
-            manText.y = 120; 
-        }
-        
+
+        manText.x = game.world.centerX - textToShow.length * 2;
+        manText.y = 70;
+
         manText.fixedToCamera = true;
         
         game.add.tween(manText).from( { alpha: 0}, 400, Phaser.Easing.Sinusoidal.InOut, true); 
@@ -624,14 +619,22 @@ function endTheGame(){
             game.add.tween(image3).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
             game.add.tween(image4).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
             
-            gameOverTxt = game.add.text(275, 150, 'The StickMan Adventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
-            gameOverTxt2 = game.add.text(275, 275, 'Created by Johnny Tal - iLyich Games', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
+            gameOverTxt = game.add.text(325, 100, 'The StickMan\nAdventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+            gameOverTxt2 = game.add.text(325, 320, 'Created by Johnny Tal -\niLyich Games', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
             gameOverTxt.alpha = 0;
             gameOverTxt2.alpha = 0;
             game.add.tween(gameOverTxt).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
             setTimeout(function(){
                 game.add.tween(gameOverTxt2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
             }, 2000); 
+            
+            setTimeout(function(){
+                game.add.tween(gameOverTxt).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);
+                tween = game.add.tween(gameOverTxt2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+                tween.onComplete.add(function(){
+                   game.state.start("Preloader");   
+                }, this);
+            }, 10000); 
         }, 24000);              
-    }, 7200);
+    }, 6500);
 }

@@ -85,7 +85,10 @@ maze.prototype = {
             }
             
             if (man.x > 878){
-                interact_item(get_item('name', 'switch'));
+                item = get_item('name', 'switch');
+                
+                item.tint = 0xc9a279;   
+                interact_item(item);
             }
             
             if (placeToGoX == 'null' && placeToGoY == 'null') stop_man();
