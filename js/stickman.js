@@ -183,7 +183,7 @@ function take_item(item){
         break;
         case 'rock':
            if (!(ladderMission && stoneMission)) showManText('I will take this rock. because it rocks.', 0); 
-           else if (ladderMission && stoneMission) { showManText("Rock, you're my only friend in this world", 0); }
+           else if (ladderMission && stoneMission && !drunkMission) { showManText("Rock, you're my only friend in this world", 0); }
            else if (drunkMission) { showManText("Stone ex machina.\nHow did it even get here?!", 0); }
         break;
         case 'glass':
