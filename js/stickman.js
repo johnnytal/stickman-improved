@@ -6,6 +6,7 @@ var game_main = function(game){
      stoneMission = false;
      stoneMission2 = false;
      drunkMission = false; 
+     switchMission = false;
 
      placeToGoX = null;
      placeToGoY = null;
@@ -27,7 +28,7 @@ game_main.prototype = {
         
         loadSfx();
 
-        game.state.start("Hall");
+        game.state.start("Street");
     },
     
     update: function(){},
@@ -55,7 +56,7 @@ function stop_man(){
     if ( dir == 'right' ) man.frame = 3;
     else{ man.frame = 4; }   
 
-    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 20)){
+    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 25)){
         take_item(itemToTake);      
     }
     
@@ -122,15 +123,18 @@ function interact_item(_static_item_clicked){
             },9000);
         break;
         case 'switch':
-            fog.destroy();
-            showManText("Too bad there was no switch on the other side", 750);
-            
-            setTimeout(function(){
-                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
-                theTween.onComplete.add(function(){
-                   game.state.start("Hall");   
-                }, this);
-            },3000);
+            if (!switchMission){
+                switchMission = true;
+                fog.destroy();
+                showManText("Too bad there was no switch on the other side", 750);
+                
+                setTimeout(function(){
+                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
+                    theTween.onComplete.add(function(){
+                       game.state.start("Hall");   
+                    }, this);
+                },3000);
+            }
         break;
         case 'hall_door':
             showManText("This door is way too heavy to open without a key", 200);
@@ -620,9 +624,14 @@ function endTheGame(){
             game.add.tween(image3).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
             game.add.tween(image4).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
             
-            gameOverTxt = game.add.text(275, 150, 'Game Over', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+            gameOverTxt = game.add.text(275, 150, 'The StickMan Adventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+            gameOverTxt2 = game.add.text(275, 275, 'Created by Johnny Tal - iLyich Games', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
             gameOverTxt.alpha = 0;
+            gameOverTxt2.alpha = 0;
             game.add.tween(gameOverTxt).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);   
+            setTimeout(function(){
+                game.add.tween(gameOverTxt2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+            }, 2000); 
         }, 24000);              
     }, 7200);
 }

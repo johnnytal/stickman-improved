@@ -30,7 +30,7 @@ boot.prototype = {
     },
     
     create: function(){
-        game.stage.backgroundColor = '#002745';
+        game.stage.backgroundColor = '#000000';
         font = 'Fontdiner Swanky';
         //bannerNotCraeted = true;
         

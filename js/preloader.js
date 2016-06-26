@@ -2,20 +2,6 @@ var preloader = function(game){};
  
 preloader.prototype = {
     preload: function(){ 
-        // create progress % text
-        this.progress = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 30, '0%',{
-             font: '25px ' + font, fill: 'green', fontWeight: 'normal', align: 'center'
-        });
-        this.progress.anchor.setTo(0.5, 0.5);
-        this.game.load.onFileComplete.add(this.fileComplete, this);
-    
-        // create progress bar
-        var loadingBar = this.add.sprite(this.game.world.centerX - 55,  this.game.world.centerY + 30, "loading");
-        loadingBar.anchor.setTo(0, 0.5);
-        this.load.setPreloadSprite(loadingBar);
-
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-    
         game.load.image('bigBlack', 'images/stickman/blackBig.png');
         game.load.image('line', 'images/stickman/line.png');
         game.load.image('street', 'images/stickman/drawing.jpg');
@@ -69,9 +55,4 @@ preloader.prototype = {
     create: function(){
         this.game.state.start("Game");  
     }
-};
-
-preloader.prototype.fileComplete = function (progress, cacheKey, success, totalLoaded, totalFiles) {
-    this.progress.text = progress+"%";
-    // console.log(progress, cacheKey, success);
 };

@@ -84,6 +84,10 @@ maze.prototype = {
                 else{ placeToGoY = 'null'; } 
             }
             
+            if (man.x > 878){
+                interact_item(get_item('name', 'switch'));
+            }
+            
             if (placeToGoX == 'null' && placeToGoY == 'null') stop_man();
             
         game.physics.arcade.collide(man, walls, function(){

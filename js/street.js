@@ -60,7 +60,7 @@ street.prototype = {
             manWalk = man.animations.play(dir);    
         }
         
-        factor = -2.25 + (man.body.y / 100);
+        factor = -2.25 + (man.body.y / 90);
         if (factor < 1.1) man.scale.set(factor, factor); //scale man size
         sfxSteps.volume = factor; // change step volume by distance from camera   
 
