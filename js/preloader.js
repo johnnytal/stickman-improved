@@ -2,6 +2,22 @@ var preloader = function(game){};
  
 preloader.prototype = {
     preload: function(){ 
+        game.load.audio('sfxBreak_window', 'sounds/stickman/break_window.mp3');
+        game.load.audio('sfxDart', 'sounds/stickman/dart.mp3');
+        game.load.audio('sfxPocket', 'sounds/stickman/pocket.mp3');
+        game.load.audio('sfxPut_ladder', 'sounds/stickman/put_ladder.mp3');
+        game.load.audio('sfxRain', 'sounds/stickman/rain.mp3');
+        game.load.audio('sfxSteps', 'sounds/stickman/steps.mp3');
+        game.load.audio('sfxOpen_barrel', 'sounds/stickman/open_barrel.mp3');
+        game.load.audio('sfxPut_glass', 'sounds/stickman/put_glass.mp3');
+        game.load.audio('sfxRain_indoors', 'sounds/stickman/rain_indoors.mp3');
+        game.load.audio('sfxSecret_door', 'sounds/stickman/secret_door.mp3');
+        game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.mp3');
+        game.load.audio('sfxLight_switch', 'sounds/stickman/light_switch.mp3');
+
+        game.load.spritesheet('man', 'images/stickman/man.png', 54, 72.5);
+        game.load.spritesheet('walkingIcon', 'images/stickman/man_icon.png',20, 32);
+        
         game.load.image('bigBlack', 'images/stickman/blackBig.png');
         game.load.image('line', 'images/stickman/line.png');
         game.load.image('street', 'images/stickman/drawing.jpg');
@@ -30,27 +46,11 @@ preloader.prototype = {
         game.load.image('hall_door', 'images/stickman/hall_door.png');
         game.load.image('hall_window', 'images/stickman/hall_window.png');
         game.load.image('hall_window_broken', 'images/stickman/hall_window_broken.png');
-       
+   
         game.load.image('image1', 'images/stickman/image1.jpg');
         game.load.image('image2', 'images/stickman/image2.jpg');
         game.load.image('image3', 'images/stickman/image3.jpg');
         game.load.image('image4', 'images/stickman/image4.jpg');
-        
-        game.load.spritesheet('man', 'images/stickman/man.png', 54, 72.5);
-        game.load.spritesheet('walkingIcon', 'images/stickman/man_icon.png',20, 32);
-        
-        game.load.audio('sfxBreak_window', 'sounds/stickman/break_window.mp3');
-        game.load.audio('sfxDart', 'sounds/stickman/dart.mp3');
-        game.load.audio('sfxPocket', 'sounds/stickman/pocket.mp3');
-        game.load.audio('sfxPut_ladder', 'sounds/stickman/put_ladder.mp3');
-        game.load.audio('sfxRain', 'sounds/stickman/rain.mp3');
-        game.load.audio('sfxSteps', 'sounds/stickman/steps.mp3');
-        game.load.audio('sfxOpen_barrel', 'sounds/stickman/open_barrel.mp3');
-        game.load.audio('sfxPut_glass', 'sounds/stickman/put_glass.mp3');
-        game.load.audio('sfxRain_indoors', 'sounds/stickman/rain_indoors.mp3');
-        game.load.audio('sfxSecret_door', 'sounds/stickman/secret_door.mp3');
-        game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.mp3');
-        game.load.audio('sfxLight_switch', 'sounds/stickman/light_switch.mp3');
     },
     
     create: function(){

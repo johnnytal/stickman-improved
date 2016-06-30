@@ -22,6 +22,8 @@ street.prototype = {
         create_rain();
 
         fadeInScreen();
+        
+        loadSfx();
 
         try{
             Cocoon.Ad.AdMob.configure({

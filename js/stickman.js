@@ -27,7 +27,7 @@ game_main.prototype = {
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         
         loadSfx();
-
+        
         game.state.start("Street");
     }
 };
