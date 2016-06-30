@@ -45,7 +45,7 @@ preloader.prototype = {
         game.load.audio('sfxRain_indoors', 'sounds/stickman/rain_indoors.mp3');
         game.load.audio('sfxSecret_door', 'sounds/stickman/secret_door.mp3');
         game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.mp3');
-        game.load.audio('sfxLight_switch', 'sounds/stickman/light_switch.mp3');
+        game.load.audio('sfxLight_switch', 'sounds/stickman/switch.mp3');
 
         game.load.image('image1', 'images/stickman/image1.jpg');
         game.load.image('image2', 'images/stickman/image2.jpg');

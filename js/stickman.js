@@ -554,18 +554,18 @@ function create_rain(){
 }
 
 function loadSfx(){
-    sfxBreak_window = game.add.audio('sfxBreak_window');
-    sfxDart = game.add.audio('sfxDart');
-    sfxPocket = game.add.audio('sfxPocket');
-    sfxPut_ladder = game.add.audio('sfxPut_ladder');
-    sfxRain = game.add.audio('sfxRain', true, 0.7);
-    sfxSteps = game.add.audio('sfxSteps', true);
-    sfxOpen_barrel = game.add.audio('sfxOpen_barrel');
-    sfxPut_glass = game.add.audio('sfxPut_glass');
+    sfxBreak_window = game.add.audio('sfxBreak_window', 1, false);
+    sfxDart = game.add.audio('sfxDart', 1, false);
+    sfxPocket = game.add.audio('sfxPocket', 1, false);
+    sfxPut_ladder = game.add.audio('sfxPut_ladder', 1, false);
+    sfxRain = game.add.audio('sfxRain', 0.7, true);
+    sfxSteps = game.add.audio('sfxSteps', 1, true);
+    sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
+    sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
     sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.6, true);
-    sfxSecret_door = game.add.audio('sfxSecret_door');
-    sfxSteps_pub = game.add.audio('sfxSteps_pub', true);
-    sfxLight_switch = game.add.audio('sfxLight_switch', 0.6);
+    sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
+    sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
+    sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
 }
 
 function fadeInScreen(){
