@@ -27,6 +27,7 @@ var boot = function(game){};
 boot.prototype = {
     create: function(){
         font = 'Fontdiner Swanky';
+        var interstitial;
 
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
