@@ -78,7 +78,7 @@ hall.prototype = {
         
         game.physics.arcade.collide(man, walls, function(){
             if (man.body.touching.left || man.body.touching.right) placeToGoX = 'null';
-            
+             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
             else { placeToGoY = 'null'; }
         }, null, this);
         
