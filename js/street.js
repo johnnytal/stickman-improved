@@ -26,7 +26,7 @@ street.prototype = {
         try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
-                      interstitial:"ca-app-pub-9795366520625065/3684264237"
+                      interstitial:"ca-app-pub-9795366520625065/2229270238"
                 }
             });
             
