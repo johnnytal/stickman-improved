@@ -639,6 +639,11 @@ function endTheGame(){
             setTimeout(function(){
                 game.add.tween(gameOverTxt).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);
                 tween = game.add.tween(gameOverTxt2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+                tween.onComplete.add(function(){
+                    try{
+                        interstitial.show();
+                    } catch(e){}   
+                }, this);
             }, 10000); 
         }, 24000);              
     }, 6500);
