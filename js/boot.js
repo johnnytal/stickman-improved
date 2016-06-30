@@ -25,34 +25,17 @@ function start(){
 var boot = function(game){};
   
 boot.prototype = {
-    preload: function(){
-        this.game.load.image("loading", "images/stickman/loading.png");
-    },
-    
     create: function(){
-        game.stage.backgroundColor = '#000000';
         font = 'Fontdiner Swanky';
-        
-        if (this.game.device.desktop){
-            this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            
-            this.scale.maxWidth = w; 
-            this.scale.maxHeight = h; 
-            
-            this.game.scale.pageAlignHorizontally = true;
-            this.game.scale.setScreenSize(true);
-        } 
-        
-        else {
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-            this.scale.maxWidth = w;
-            this.scale.maxHeight = h;
-            
-            this.scale.forceOrientation(false, true);
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-            this.scale.setScreenSize(true);
-        }
+        this.scale.maxWidth = w;
+        this.scale.maxHeight = h;
+        
+        this.scale.forceOrientation(false, true);
+
+        this.scale.setScreenSize(true);
 
         game.state.start('Preloader');
     }
