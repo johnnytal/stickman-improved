@@ -17,7 +17,7 @@ hall.prototype = {
         walls = game.add.group();
         walls.enableBody = true;
         walls.physicsBodyType = Phaser.Physics.ARCADE;
-        
+
         for(w = 0; w < hallWalls.length; w++){ 
             createWall(hallWalls[w]); 
         }
@@ -27,7 +27,15 @@ hall.prototype = {
 
         fadeInScreen();
         
-        showManText('That was kinda fun', 1000);
+        showManText('That was kinda fun!', 1000);
+        walkingIcon.visible = false; 
+        
+        setTimeout(function(){
+            try{
+                walkingIcon.visible = true; 
+                interstitial.show();
+            } catch(e){}
+        }, 3000);
     },
     update: function(){
                
