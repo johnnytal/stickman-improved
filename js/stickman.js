@@ -44,9 +44,6 @@ function take_from_inventory(item){
 }
 
 function stop_man(){    
-    if (sfxLight_switch.isDecoded) alert('fine');
-    if (sfxRain.isPlaying) alert('superfine');
-    
     if (sfxSteps.isPlaying){
          sfxSteps.stop();
      }
@@ -572,6 +569,8 @@ function loadSfx(){
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
+    
+    alert('loadedSfx!');
 }
 
 function fadeInScreen(){
@@ -646,9 +645,9 @@ function endTheGame(){
                 game.add.tween(gameOverTxt).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);
                 tween = game.add.tween(gameOverTxt2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
                 tween.onComplete.add(function(){
-                  /*  try{
+                    try{
                         interstitial.show();
-                    } catch(e){}   */
+                    } catch(e){}   
                 }, this);
             }, 10000); 
         }, 24000);              

@@ -22,8 +22,12 @@ street.prototype = {
         create_rain();
 
         fadeInScreen();
+        
+        setTimeout(function(){
+            loadSfx();
+        }, 5000);
 
-      /*  try{
+        try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
                     interstitial:"ca-app-pub-9795366520625065/2229270238"
@@ -31,7 +35,7 @@ street.prototype = {
             });
             interstitial = Cocoon.Ad.AdMob.createInterstitial();
             interstitial.load();
-        } catch(e){}*/
+        } catch(e){}
     },
     
     update: function(){

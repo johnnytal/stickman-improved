@@ -30,12 +30,12 @@ hall.prototype = {
         showManText('That was kinda fun!', 1000);
         walkingIcon.visible = false; 
         
-       /* setTimeout(function(){
+        setTimeout(function(){
             try{
                 walkingIcon.visible = true; 
                 interstitial.show();
             } catch(e){}
-        }, 3000);*/
+        }, 3000);
     },
     
     update: function(){
