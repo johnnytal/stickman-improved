@@ -38,7 +38,7 @@ preloader.prototype = {
         game.load.audio('sfxDart', 'sounds/stickman/dart.mp3');
         game.load.audio('sfxPocket', 'sounds/stickman/pocket.mp3');
         game.load.audio('sfxPut_ladder', 'sounds/stickman/put_ladder.mp3');
-        game.load.audio('sfxRain', 'sounds/stickman/rain.mp3');
+        game.load.audio('sfxRain', ['sounds/stickman/rain.ogg', 'sounds/stickman/rain.wav', 'sounds/stickman/rain.mp3']);
         game.load.audio('sfxSteps', 'sounds/stickman/steps.mp3');
         game.load.audio('sfxOpen_barrel', 'sounds/stickman/open_barrel.mp3');
         game.load.audio('sfxPut_glass', 'sounds/stickman/put_glass.mp3');

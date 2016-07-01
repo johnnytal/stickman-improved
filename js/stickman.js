@@ -23,6 +23,9 @@ var game_main = function(game){
 };
 
 game_main.prototype = {
+    preload: function(){
+        game.load.audio('sfxDart', 'sounds/stickman/dart.mp3');
+    },
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         
@@ -44,6 +47,11 @@ function take_from_inventory(item){
 }
 
 function stop_man(){    
+        
+    if (sfxRain.isDecoded) alert('rain decoded');
+    if (sfxLight_switch.isDecoded) alert('switch decoded');
+    if (sfxDart.isDecoded) alert('dart decoded');
+    
     if (sfxSteps.isPlaying){
          sfxSteps.stop();
      }
@@ -569,8 +577,6 @@ function loadSfx(){
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
-    
-    alert('loadedSfx!');
 }
 
 function fadeInScreen(){
