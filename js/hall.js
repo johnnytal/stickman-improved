@@ -27,7 +27,7 @@ hall.prototype = {
 
         fadeInScreen();
         
-        showManText('That was kinda fun', 1000);
+        showManText('That was kinda fun!', 1000);
     },
     update: function(){
                

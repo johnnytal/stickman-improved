@@ -556,13 +556,9 @@ function loadSfx(){
     sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
     sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
     sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.6, true);
-
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
-
-    sfxSecret_door = game.add.audio('sfxSecret_door');
-    sfxSteps_pub = game.add.audio('sfxSteps_pub', true);
 }
 
 function fadeInScreen(){
