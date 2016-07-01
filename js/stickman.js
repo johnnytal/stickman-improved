@@ -47,11 +47,6 @@ function take_from_inventory(item){
 }
 
 function stop_man(){    
-        
-    if (sfxRain.isDecoded) alert('rain decoded');
-    if (sfxLight_switch.isDecoded) alert('switch decoded');
-    if (sfxDart.isDecoded) alert('dart decoded');
-    
     if (sfxSteps.isPlaying){
          sfxSteps.stop();
      }
