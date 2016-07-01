@@ -22,15 +22,8 @@ pub.prototype = {
         fadeInScreen();
         walkingIcon.visible = false;
 
-        showManText('This pub looks abonded, just like the rest of this town', 1400);
-        setTimeout(function(){ 
-           
-            try{
-                interstitial.show();
-            } catch(e){}
-            
-            walkingIcon.visible = true; 
-        }, 5650);
+        showManText('This pub has been abonded, much like the rest of this town', 1400);
+        setTimeout(function(){ walkingIcon.visible = true; }, 2400);
     },
     
     update: function(){
@@ -90,10 +83,10 @@ function hitPubBounds(){
 function create_pub_items(){
     drawLine();
     
-    create_item( game, 'glass', true, true, 607, 370, true );
+    create_item( game, 'glass', true, true, 615, 375, true );
     create_item( game, 'barrel', true, false, 635, 243, true );
     create_item( game, 'pub_door', false, false, 400, 177, true );
-    create_item( game, 'dart', true, true, 220, 350, true );
+    create_item( game, 'dart', true, true, 235, 350, true );
     create_item( game, 'dart_board', true, false, 540, 170, true );
     create_item( game, 'rock', true, true, 590, 435, true );
     create_item( game, 'barrel_glass', true, false, 635, 243, false );

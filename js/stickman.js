@@ -29,7 +29,9 @@ game_main.prototype = {
         loadSfx();
         
         game.state.start("Street");
-    }
+    },
+    
+    update: function(){},
 };
 
 function take_from_inventory(item){
@@ -54,7 +56,7 @@ function stop_man(){
     if ( dir == 'right' ) man.frame = 3;
     else{ man.frame = 4; }   
 
-    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 40)){
+    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 25)){
         take_item(itemToTake);      
     }
     
@@ -124,7 +126,6 @@ function interact_item(_static_item_clicked){
             if (!switchMission){
                 switchMission = true;
                 fog.destroy();
-                sfxLight_switch.play();
                 showManText("Too bad there was no switch on the other side", 750);
                 
                 setTimeout(function(){
@@ -186,10 +187,10 @@ function take_item(item){
            else if (drunkMission) { showManText("Stone ex machina.\nHow did it even get here?!", 0); }
         break;
         case 'glass':
-            showManText("At least I'd clean after myself", 0);
+            showManText('This shred of glass seems so useful', 0);
         break;
         case 'dart':
-            showManText("Someone left a dart here", 0);
+            showManText("It's a dart. I took stupider things then this i suppose", 0);
         break;
     }  
     
@@ -286,10 +287,8 @@ function use_item(inventory_item, static_item){
                 
                 else{
                     walkingIcon.visible = false;
-                        
-                    create_item( game, 'dart', true, false, 538, 185, true );
-                    get_item('name', 'dart').tint = 0xffddff; 
-
+                    create_item( game, 'dart', true, false, 547, 191, true );
+                    
                     showManText("Bullseye! guess i'm better at this when i'm drunk", 500);
                     showManText("What's that noise?", 4500);
                     
@@ -306,7 +305,6 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('dart + barrel'):
-            case ('dart + barrel_glass'):
                 walkingIcon.visible = false;
                 showManText("I guess it makes sense", 0);
                 showManText("Nope. poking the barrel just makes it angry", 3000);
@@ -378,15 +376,10 @@ function use_item(inventory_item, static_item){
                     get_item('name', 'barrel_open').kill();
                     get_item('name', 'barrel_empty').visible = true;
                     walkingIcon.visible = true;
-                    
-                    man.x = 728;
-                    man.y = 313;
-                    man.frame = 4;
-                    dir == 'left';
                 }, 7000);
-
+                
                 showManText("I'm Bobbin. Are you my mother? * Hic *", 9500); //lucasatrs reference
-
+                
                 drunkMission = true;
             break;
             
@@ -563,9 +556,14 @@ function loadSfx(){
     sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
     sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
     sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.6, true);
+<<<<<<< HEAD
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
+=======
+    sfxSecret_door = game.add.audio('sfxSecret_door');
+    sfxSteps_pub = game.add.audio('sfxSteps_pub', true);
+>>>>>>> parent of f5a5ee6... ads
 }
 
 function fadeInScreen(){

@@ -44,13 +44,6 @@ maze.prototype = {
         }
         
         fadeInScreen();
-        sfxRain_indoors.stop();
-        
-        setTimeout(function(){
-            try{
-                interstitial.show();
-            } catch(e){}
-        }, 1000);
     },
     
     update: function(){
