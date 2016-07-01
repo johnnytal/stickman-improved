@@ -26,14 +26,11 @@ street.prototype = {
         try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
-                      interstitial:"ca-app-pub-9795366520625065/2229270238"
+                    interstitial:"ca-app-pub-9795366520625065/2229270238"
                 }
             });
-            
             interstitial = Cocoon.Ad.AdMob.createInterstitial();
             interstitial.load();
-            
-            bannerNotCraeted = false;
         } catch(e){}
     },
     

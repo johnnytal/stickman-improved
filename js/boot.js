@@ -1,19 +1,15 @@
-//document.addEventListener("deviceready", start, false);
-window.onload = start;
+document.addEventListener("deviceready", start, false);
+//window.onload = start;
 
 function start(){
     WIDTH = 703; 
     HEIGHT = 580;
-    
-    w = window.innerWidth * window.devicePixelRatio;
-    h = window.innerHeight * window.devicePixelRatio;
-    
-    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, "game");    
+
+    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, "");    
       
     game.state.add("Boot", boot);
     game.state.add("Preloader", preloader);
     game.state.add("Game", game_main);
-    
     game.state.add("Street", street);
     game.state.add("Pub", pub);
     game.state.add("Maze", maze);
@@ -32,10 +28,8 @@ boot.prototype = {
 
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
-        this.scale.maxWidth = w;
-        this.scale.maxHeight = h;
+        this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;
+        this.scale.maxHeight = window.innerHeight * window.devicePixelRatio;
         
         this.scale.forceOrientation(false, true);
 
