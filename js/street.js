@@ -22,7 +22,6 @@ street.prototype = {
         create_rain();
 
         fadeInScreen();
-<<<<<<< HEAD
 
         try{
             Cocoon.Ad.AdMob.configure({
@@ -36,9 +35,6 @@ street.prototype = {
             
             bannerNotCraeted = false;
         } catch(e){}
-           
-=======
->>>>>>> parent of f5a5ee6... ads
     },
     
     update: function(){

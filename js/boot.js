@@ -1,5 +1,5 @@
-document.addEventListener("deviceready", start, false);
-//window.onload = start;
+//document.addEventListener("deviceready", start, false);
+window.onload = start;
 
 function start(){
     WIDTH = 703; 
@@ -27,24 +27,10 @@ var boot = function(game){};
 boot.prototype = {
     create: function(){
         font = 'Fontdiner Swanky';
-<<<<<<< HEAD
+
         var interstitial;
-=======
-        //bannerNotCraeted = true;
-        
-        if (this.game.device.desktop){
-            this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-            
-            this.scale.maxWidth = w; 
-            this.scale.maxHeight = h; 
-            
-            this.game.scale.pageAlignHorizontally = true;
-            this.game.scale.setScreenSize(true);
-        } 
-        
-        else {
-            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
->>>>>>> parent of f5a5ee6... ads
+
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 

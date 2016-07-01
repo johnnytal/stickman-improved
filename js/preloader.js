@@ -51,9 +51,7 @@ preloader.prototype = {
         game.load.image('image2', 'images/stickman/image2.jpg');
         game.load.image('image3', 'images/stickman/image3.jpg');
         game.load.image('image4', 'images/stickman/image4.jpg');
-<<<<<<< HEAD
-=======
-        
+
         game.load.spritesheet('man', 'images/stickman/man.png', 54, 72.5);
         game.load.spritesheet('walkingIcon', 'images/stickman/man_icon.png',20, 32);
         
@@ -68,7 +66,7 @@ preloader.prototype = {
         game.load.audio('sfxRain_indoors', 'sounds/stickman/rain_indoors.wav');
         game.load.audio('sfxSecret_door', 'sounds/stickman/secret_door.wav');
         game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.wav');
->>>>>>> parent of f5a5ee6... ads
+
     },
     
     create: function(){
