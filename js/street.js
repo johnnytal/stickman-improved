@@ -81,7 +81,7 @@ street.prototype = {
 function create_street_items(){
     drawLine();
     
-    create_item( game, 'ladder_s', true, true, 640, 290, true );
+    create_item( game, 'ladder_s', true, true, 635, 285, true );
     create_item( game, 'door', false, false, 520, 264, true );
     create_item( game, 'window', false, false, 491, 172, true );
     create_item( game, 'broken_window', true, false, 491, 172, false );

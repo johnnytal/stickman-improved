@@ -28,7 +28,16 @@ hall.prototype = {
         fadeInScreen();
         
         showManText('That was kinda fun!', 1000);
+        walkingIcon.visible = false; 
+        
+        setTimeout(function(){
+            try{
+                walkingIcon.visible = true; 
+                interstitial.show();
+            } catch(e){}
+        }, 3000);
     },
+    
     update: function(){
                
         walk_update();
