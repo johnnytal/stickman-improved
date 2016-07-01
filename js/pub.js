@@ -26,11 +26,11 @@ pub.prototype = {
         dir == 'left';
         showManText('The pub looks abonded, just like the rest of this town', 1400);
         
-        setTimeout(function(){ 
+       /* setTimeout(function(){ 
             try{
                 interstitial.show();
             } catch(e){}
-        }, 4150);
+        }, 4150);*/
         
         setTimeout(function(){ 
             walkingIcon.visible = true; 

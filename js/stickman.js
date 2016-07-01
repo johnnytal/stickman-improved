@@ -44,6 +44,9 @@ function take_from_inventory(item){
 }
 
 function stop_man(){    
+    if (sfxLight_switch.isDecoded) alert('fine');
+    if (sfxRain.isPlaying) alert('superfine');
+    
     if (sfxSteps.isPlaying){
          sfxSteps.stop();
      }
@@ -536,7 +539,7 @@ function create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible){
 
 function create_rain(){
     sfxRain.play();
-    
+ 
     emitter = game.add.emitter(game.world.centerX, -100, 500);
 
     emitter.width = game.world.width;
@@ -643,9 +646,9 @@ function endTheGame(){
                 game.add.tween(gameOverTxt).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true);
                 tween = game.add.tween(gameOverTxt2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
                 tween.onComplete.add(function(){
-                    try{
+                  /*  try{
                         interstitial.show();
-                    } catch(e){}   
+                    } catch(e){}   */
                 }, this);
             }, 10000); 
         }, 24000);              
