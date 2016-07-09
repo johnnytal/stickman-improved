@@ -23,9 +23,6 @@ var game_main = function(game){
 };
 
 game_main.prototype = {
-    preload: function(){
-        game.load.audio('sfxDart', 'sounds/stickman/dart.mp3');
-    },
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         
@@ -128,7 +125,6 @@ function interact_item(_static_item_clicked){
         case 'switch':
             if (!switchMission){
                 switchMission = true;
-                fog.destroy();
                 sfxLight_switch.play();
                 
                 showManText("Too bad there was no switch on the other side", 750);
@@ -504,16 +500,15 @@ function showManText(textToShow, timeToWait){
         manText.y = 70;
 
         manText.fixedToCamera = true;
+        manText.alpha = 1;
+         
+        showTextTween = game.add.tween(manText).from( { alpha: 0}, 400, Phaser.Easing.Sinusoidal.InOut, true); 
         
-        game.add.tween(manText).from( { alpha: 0}, 400, Phaser.Easing.Sinusoidal.InOut, true); 
-        
-        textTimer = setTimeout(function(){ 
-            alphaOut = game.add.tween(manText).to( { alpha: 0}, 150, Phaser.Easing.Sinusoidal.InOut, true); 
-            alphaOut.onComplete.add(function(){
-                manText.text = '';   
-                manText.alpha = 1;
-            }, this);
-        }, 400 + textToShow.length * 62);
+        showTextTween.onComplete.add(function(){
+            textTimer = setTimeout(function(){ 
+                alphaOut = game.add.tween(manText).to( { alpha: 0}, 150, Phaser.Easing.Sinusoidal.InOut, true); 
+            }, textToShow.length * 65);
+        });
     }, timeToWait);
 }
 
@@ -543,15 +538,15 @@ function create_rain(){
     emitter = game.add.emitter(game.world.centerX, -100, 500);
 
     emitter.width = game.world.width;
-    emitter.angle = 15;
+    emitter.angle = 17;
 
     emitter.makeParticles('rain');
 
     emitter.minParticleScale = 0.1;
     emitter.maxParticleScale = 0.5;
 
-    emitter.setYSpeed(300, 500);
-    emitter.setXSpeed(-5, 5);
+    emitter.setYSpeed(350, 650);
+    emitter.setXSpeed(-7, 7);
 
     emitter.minRotation = 0;
     emitter.maxRotation = 0;
@@ -593,7 +588,7 @@ function endTheGame(){
         timePassedText = game.add.text(275, 150, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
         timePassedText.alpha = 0;
         
-        timePassedText2 = game.add.text(275, 275, 'When StickMan reaches\n5,000 downloads...' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
+        timePassedText2 = game.add.text(275, 275, 'When StickMan reaches\n1,000 downloads...' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
         timePassedText2.alpha = 0;
         
         game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true);               

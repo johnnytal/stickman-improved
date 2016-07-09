@@ -12,6 +12,8 @@ var maze = function(game){
     
     VELOCITY = 60;
     DISTANCE = 3;
+
+    gameStop = false;
 };
 
 maze.prototype = {
@@ -29,35 +31,43 @@ maze.prototype = {
         }
         
         create_item( game, 'switch', true, false, 831, 358, true );
-        
-        create_man(30, 185, 'maze');
-        man.scale.set(0.33, 0.29); 
 
-        fog = game.add.group();
-        fog.enableBody = true;
-        fog.physicsBodyType = Phaser.Physics.ARCADE;
-        
-        for (y=0; y<12; y++){ //create the fog
-            for (x=0; x<19; x++){
-                black = fog.create(0+x*50, 0+y*50, 'black');   
-            }
-        }
-        
         fadeInScreen();
         sfxRain_indoors.stop();
 
         try{
             interstitial.show();
         } catch(e){}
+
+        this.LIGHT_RADIUS = 70;
+        LIGHT_RADIUS = this.LIGHT_RADIUS;
+
+        // Create the shadow texture
+        this.shadowTexture = this.game.add.bitmapData(TOTAL_WIDTH, TOTAL_HEIGHT);
+
+        // Create an object that will use the bitmap as a texture
+        var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+
+        // Set the blend mode to MULTIPLY. This will darken the colors of
+        // everything below this sprite.
+        lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+
+        // Create a white rectangle that we'll use to represent the flash
+        this.flash = this.game.add.graphics(0, 0);
+        this.flash.beginFill(0xffffff, 1);
+        this.flash.drawRect(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
+        this.flash.endFill();
+        this.flash.alpha = 0;
+
+        create_man(30, 185, 'maze');
+        man.scale.set(0.33, 0.29); 
+
+        mazeText = showManText('Sure is dark here!', 600);   
     },
     
     update: function(){
             
             walk_update();
-            
-            fog.forEach(function(black){ //check if man overlaps the fog
-                checkOverlap_man_black(man, black);
-            });
 
             if (placeToGoX != null){ 
                 if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
@@ -102,7 +112,46 @@ maze.prototype = {
             placeToGoY = 'null';
             placeToGoX = 'null';
         }, null, this);
+        
+        this.updateShadowTexture(switchMission);
     },
+
+    updateShadowTexture: function (switchMission) {
+
+        if (gameStop === true) {
+            return false;
+        }
+
+        // Draw shadow
+        if (switchMission) {
+            this.shadowTexture.context.fillStyle = 'rgb(255, 255, 255)';
+        } 
+        else {
+            this.shadowTexture.context.fillStyle = 'rgb(0, 0, 0)';
+        }
+        this.shadowTexture.context.fillRect(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
+
+        var posY = man.y;
+        if (!this.game.device.desktop) {
+            posY = man.y - (this.LIGHT_RADIUS/2);
+        }
+
+        // Draw circle of light with a soft edge
+        var gradient = this.shadowTexture.context.createRadialGradient(
+            man.x, posY, this.LIGHT_RADIUS * 0.75,
+            man.x, posY, this.LIGHT_RADIUS);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+        this.shadowTexture.context.beginPath();
+        this.shadowTexture.context.fillStyle = gradient;
+        this.shadowTexture.context.arc(man.x, posY, this.LIGHT_RADIUS, 0, Math.PI * 2);
+        this.shadowTexture.context.fill();
+
+        // This just tells the engine it should update the texture cache
+        this.shadowTexture.dirty = true;
+        game.world.bringToTop(this.shadowTexture);
+    }
 };
 
 function createWall(cords){
@@ -126,12 +175,4 @@ function createWall(cords){
     wall = walls.create(startX, startY, '');
     wall.body.setSize(sizeX, sizeY);
     wall.body.immovable = true;
-}
-
-function checkOverlap_man_black(_man, _black) {
-    var boundsA = _man.getBounds();
-    var boundsB = _black.getBounds();
-    
-    if (Phaser.Rectangle.intersects(boundsA, boundsB)) _black.kill();
-    else{ _black.revive(); }
 }
