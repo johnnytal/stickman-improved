@@ -2,6 +2,9 @@ document.addEventListener("deviceready", start, false);
 //window.onload = start;
 
 function start(){
+    var place;
+    var interstitial;
+    
     WIDTH = 703; 
     HEIGHT = 580;
 
@@ -9,6 +12,7 @@ function start(){
       
     game.state.add("Boot", boot);
     game.state.add("Preloader", preloader);
+    game.state.add("Menu", menu);
     game.state.add("Game", game_main);
     game.state.add("Street", street);
     game.state.add("Pub", pub);
@@ -24,7 +28,12 @@ boot.prototype = {
     create: function(){
         font = 'Fontdiner Swanky';
 
-        var interstitial;
+        try{
+            place = localStorage.getItem("stickman-location");
+        }
+        catch(e){
+            place = 'Street';
+        }
 
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 

@@ -28,7 +28,7 @@ game_main.prototype = {
         
         loadSfx();
         
-        game.state.start("Street");
+        game.state.start(place);
     },
     
     update: function(){},
@@ -83,7 +83,7 @@ function interact_item(_static_item_clicked){
             if (ladderMission && !stoneMission) showManText("It ain't breaking & entry if i don't break something first", 0);
         break;
         case 'window':
-             if (!ladderMission) showManText("I can't reach", 0);
+             if (!ladderMission) showManText("StickMen can't jump", 0);
              else if (ladderMission && !stoneMission) showManText("Breaking & entry is no good unless i break something first", 0);
             _static_item_clicked.alpha = 0;
             

@@ -36,6 +36,8 @@ hall.prototype = {
                 interstitial.show();
             } catch(e){}
         }, 3000);
+        
+        localStorage.setItem( "stickman-location", 'Hall' );
     },
     
     update: function(){

@@ -63,6 +63,8 @@ maze.prototype = {
         man.scale.set(0.33, 0.29); 
 
         mazeText = showManText('Sure is dark here!', 600);   
+        
+        localStorage.setItem( "stickman-location", 'Maze' );
     },
     
     update: function(){

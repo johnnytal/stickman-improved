@@ -83,7 +83,7 @@ function create_street_items(){
     
     create_item( game, 'ladder_s', true, true, 635, 285, true );
     create_item( game, 'door', false, false, 520, 264, true );
-    create_item( game, 'window', false, false, 491, 172, true );
+    create_item( game, 'window', false, false, 490, 88, true );
     create_item( game, 'broken_window', true, false, 491, 172, false );
     create_item( game, 'ladder_b', true, false, 488, 245, false );
     create_item( game, 'rock', true, true, 260, 340, true ); 

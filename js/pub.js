@@ -35,6 +35,8 @@ pub.prototype = {
         setTimeout(function(){ 
             walkingIcon.visible = true; 
         }, 5650);
+        
+        localStorage.setItem( "stickman-location", 'Pub' );
     },
     
     update: function(){

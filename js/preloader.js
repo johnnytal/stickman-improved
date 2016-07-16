@@ -33,6 +33,9 @@ preloader.prototype = {
         game.load.image('hall_door', 'images/stickman/hall_door.png');
         game.load.image('hall_window', 'images/stickman/hall_window.png');
         game.load.image('hall_window_broken', 'images/stickman/hall_window_broken.png');
+        game.load.image('opening', 'images/stickman/opening2.png');
+        game.load.image('contBtn', 'images/stickman/contBtn.png');
+        game.load.image('startBtn', 'images/stickman/startBtn.png');
         
         game.load.audio('sfxBreak_window', ['sounds/stickman/break_window.ogg', 'sounds/stickman/break_window.mp3']);
         game.load.audio('sfxDart', ['sounds/stickman/dart.ogg', 'sounds/stickman/dart.mp3']);
@@ -54,6 +57,6 @@ preloader.prototype = {
     },
     
     create: function(){
-        this.game.state.start("Game");  
+        this.game.state.start("Menu");  
     }
 };
