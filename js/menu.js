@@ -7,12 +7,13 @@ menu.prototype = {
 
     },
     
-    create: function(){  
+    create: function(){   
         this.game.add.sprite(0, 0, 'opening');
-        
         startBtn = this.game.add.sprite(70, 395, 'startBtn');
         contBtn = this.game.add.sprite(390, 395, 'contBtn');
         
+        fadeInScreen();
+
         startBtn.inputEnabled = true;
         contBtn.inputEnabled = true;
         
@@ -36,9 +37,9 @@ menu.prototype = {
             this.game.state.start('Game');
         }, this);
     }, 
-    
-    update: function(){           
-       
-    }
 };
 
+function fadeInScreen(){
+    bigBlack = game.add.sprite(0, 0, 'bigBlack');
+    game.add.tween(bigBlack).to( { alpha: 0}, 1000, Phaser.Easing.Sinusoidal.InOut, true);  
+}

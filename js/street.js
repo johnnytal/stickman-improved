@@ -10,6 +10,8 @@ street.prototype = {
     
     create: function(){
         street = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'street');    
+        
+        thisPlace = 'street';
 
         floor = game.add.sprite(TOTAL_WIDTH/2-27, 450, null);
         game.physics.enable(floor, Phaser.Physics.ARCADE);
@@ -17,7 +19,7 @@ street.prototype = {
         floor.body.immovable = true;
         
         create_street_items();
-        create_man(107, 291, 'street');
+        create_man(107, 291);
         
         create_rain();
 

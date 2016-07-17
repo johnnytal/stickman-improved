@@ -36,6 +36,8 @@ preloader.prototype = {
         game.load.image('opening', 'images/stickman/opening2.png');
         game.load.image('contBtn', 'images/stickman/contBtn.png');
         game.load.image('startBtn', 'images/stickman/startBtn.png');
+        game.load.image('room', 'images/stickman/myRoom2.jpg');
+        game.load.image('computer', 'images/stickman/computer.png');
         
         game.load.audio('sfxBreak_window', ['sounds/stickman/break_window.ogg', 'sounds/stickman/break_window.mp3']);
         game.load.audio('sfxDart', ['sounds/stickman/dart.ogg', 'sounds/stickman/dart.mp3']);

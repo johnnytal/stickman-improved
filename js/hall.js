@@ -12,7 +12,9 @@ hall.prototype = {
     preload: function(){},
     
     create: function(){
-        hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');   
+        hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');  
+        
+        thisPlace = 'hall'; 
         
         walls = game.add.group();
         walls.enableBody = true;
@@ -23,7 +25,7 @@ hall.prototype = {
         }
         
         create_hall_items();
-        create_man(60, 470, 'hall');
+        create_man(60, 470);
 
         fadeInScreen();
         
@@ -31,10 +33,8 @@ hall.prototype = {
         walkingIcon.visible = false; 
         
         setTimeout(function(){
-            try{
-                walkingIcon.visible = true; 
-                interstitial.show();
-            } catch(e){}
+            walkingIcon.visible = true; 
+            showAd();
         }, 3000);
         
         localStorage.setItem( "stickman-location", 'Hall' );

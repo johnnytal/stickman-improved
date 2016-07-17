@@ -7,6 +7,8 @@ pub.prototype = {
     
     create: function(man){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
+        
+        thisPlace = 'pub';
        
         pub_bound_u = game.add.sprite(0, 0, null);
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
@@ -14,7 +16,7 @@ pub.prototype = {
         pub_bound_u.body.immovable = true;
 
         create_pub_items();
-        create_man(665, 375, 'pub');
+        create_man(665, 375);
         
         sfxRain.stop();
         sfxRain_indoors.play();
@@ -27,9 +29,7 @@ pub.prototype = {
         showManText('The pub looks abonded, just like the rest of this town', 1400);
         
         setTimeout(function(){ 
-            try{
-                interstitial.show();
-            } catch(e){}
+            showAd();
         }, 4150);
         
         setTimeout(function(){ 

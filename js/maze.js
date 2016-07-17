@@ -17,10 +17,10 @@ var maze = function(game){
 };
 
 maze.prototype = {
-    preload: function(){},
-    
     create: function(){
         maze = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'maze');
+        
+        thisPlace = 'maze';
         
         walls = game.add.group();
         walls.enableBody = true;
@@ -35,9 +35,7 @@ maze.prototype = {
         fadeInScreen();
         sfxRain_indoors.stop();
 
-        try{
-            interstitial.show();
-        } catch(e){}
+        showAd();
 
         this.LIGHT_RADIUS = 70;
         LIGHT_RADIUS = this.LIGHT_RADIUS;
@@ -59,7 +57,7 @@ maze.prototype = {
         this.flash.endFill();
         this.flash.alpha = 0;
 
-        create_man(30, 185, 'maze');
+        create_man(30, 185);
         man.scale.set(0.33, 0.29); 
 
         mazeText = showManText('Sure is dark here!', 600);   
