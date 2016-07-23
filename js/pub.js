@@ -8,6 +8,9 @@ pub.prototype = {
     create: function(man){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
         
+        street_music.fadeOut();
+        pub_music.fadeIn();
+        
         thisPlace = 'pub';
        
         pub_bound_u = game.add.sprite(0, 0, null);
@@ -19,7 +22,7 @@ pub.prototype = {
         create_man(665, 375);
         
         sfxRain.stop();
-        sfxRain_indoors.play();
+        //sfxRain_indoors.play();
         
         fadeInScreen();
         walkingIcon.visible = false;

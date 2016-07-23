@@ -20,6 +20,9 @@ maze.prototype = {
     create: function(){
         maze = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'maze');
         
+        pub_music.fadeOut();
+        maze_music.fadeIn();
+        
         thisPlace = 'maze';
         
         walls = game.add.group();
@@ -33,7 +36,6 @@ maze.prototype = {
         create_item( game, 'switch', true, false, 831, 358, true );
 
         fadeInScreen();
-        sfxRain_indoors.stop();
 
         showAd();
 

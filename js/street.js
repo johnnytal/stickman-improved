@@ -24,6 +24,8 @@ street.prototype = {
         create_rain();
 
         fadeInScreen();
+        
+        street_music.play();
 
         try{
             Cocoon.Ad.AdMob.configure({

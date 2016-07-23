@@ -7,7 +7,7 @@ room.prototype = {
     
     create: function(){
         room = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'room');   
-        
+
         thisPlace = 'room';
         
         create_room_items();

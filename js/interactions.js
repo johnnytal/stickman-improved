@@ -73,6 +73,10 @@ function interact_item(_static_item_clicked){
             showManText("It looks like someone really wanted me to take this jump.\nHere goes nothing...", 0);
             
             setTimeout(function(){
+                
+                hall_music.fadeOut();
+                street_music.play();
+                
                 bigBlack = game.add.sprite(0, 0, 'bigBlack');
                 bigBlack.alpha = 0;
                 theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 

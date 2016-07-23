@@ -213,6 +213,11 @@ function loadSfx(){
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
+    
+    hall_music = game.add.audio('hall_music', 0.6, true);
+    street_music = game.add.audio('street_music', 0.6, true);
+    pub_music = game.add.audio('pub_music', 0.6, true);
+    maze_music = game.add.audio('maze_music', 0.6, true);
 }
 
 function drawLine(){
@@ -267,8 +272,9 @@ function endTheGame(){
         tweenAlpha(image3, 0, 4500);
         tweenAlpha(image4, 0, 4500);
 
-        gameOverTxt = game.add.text(25 + game.camera.x, 100, 'The StickMan\nAdventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
-        gameOverTxt2 = game.add.text(25 + game.camera.x, 320, 'Created by Johnny Tal -\niLyich Games', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
+        gameOverTxt = game.add.text(40 + game.camera.x, 100, 'The StickMan\nAdventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
+        gameOverTxt2 = game.add.text(40 + game.camera.x, 320, 'Created by Johnny Tal -\niLyich Games\njohnnytal9@gmail.com', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
+        gameOverTxt2.padding.set(10, 5);
         gameOverTxt.alpha = 0;
         gameOverTxt2.alpha = 0;
         tweenAlpha(gameOverTxt, 1, 4500);  
@@ -281,7 +287,8 @@ function endTheGame(){
             tweenAlpha(gameOverTxt, 0, 4500);  
             tween = game.add.tween(gameOverTxt2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
             tween.onComplete.add(function(){
-               game.state.start('Preloader');
+               street_music.stop();
+               game.state.start("Boot");
             });
         }, 10000); 
     }, 24000);              
@@ -290,7 +297,13 @@ function endTheGame(){
 function showAd(){
     try{
         interstitial.show();
-    } catch(e){}       
+    } catch(e){
+        setTimeout(function(){
+            try{
+                interstitial.show();
+            } catch(e){}
+        }, 2000);
+    }       
 }
 
 function tweenAlpha(what, where, time){

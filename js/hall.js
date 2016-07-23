@@ -14,6 +14,9 @@ hall.prototype = {
     create: function(){
         hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');  
         
+        maze_music.fadeOut();
+        hall_music.fadeIn();
+        
         thisPlace = 'hall'; 
         
         walls = game.add.group();
@@ -117,7 +120,7 @@ function create_hall_items(){
     drawLine();
     
     create_item( game, 'hall_door', false, false, 269, 184, true );
-    create_item( game, 'hall_window', false, false, 887, 163, true );
+    create_item( game, 'hall_window', false, false, 887, 162, true );
     create_item( game, 'hall_window_broken', true, false, 887, 163, false );
     create_item( game, 'rock', true, true, 800, 340, true ); 
 }

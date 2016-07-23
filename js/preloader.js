@@ -39,18 +39,22 @@ preloader.prototype = {
         game.load.image('room', 'images/stickman/myRoom2.jpg');
         game.load.image('computer', 'images/stickman/computer.png');
         
-        game.load.audio('sfxBreak_window', ['sounds/stickman/break_window.ogg', 'sounds/stickman/break_window.mp3']);
-        game.load.audio('sfxDart', ['sounds/stickman/dart.ogg', 'sounds/stickman/dart.mp3']);
-        game.load.audio('sfxPocket', ['sounds/stickman/pocket.ogg', 'sounds/stickman/pocket.mp3']);
-        game.load.audio('sfxPut_ladder', ['sounds/stickman/put_ladder.ogg', 'sounds/stickman/put_ladder.mp3']);
-        game.load.audio('sfxRain', ['sounds/stickman/rain.ogg', 'sounds/stickman/rain.mp3']);
-        game.load.audio('sfxSteps', ['sounds/stickman/steps.ogg', 'sounds/stickman/steps.mp3']);
-        game.load.audio('sfxOpen_barrel', ['sounds/stickman/open_barrel.ogg', 'sounds/stickman/open_barrel.mp3']);
-        game.load.audio('sfxPut_glass', ['sounds/stickman/put_glass.ogg', 'sounds/stickman/put_glass.mp3']);
-        game.load.audio('sfxRain_indoors', ['sounds/stickman/rain_indoors.ogg', 'sounds/stickman/rain_indoors.mp3']);
-        game.load.audio('sfxSecret_door', ['sounds/stickman/secret_door.ogg', 'sounds/stickman/secret_door.mp3']);
-        game.load.audio('sfxSteps_pub', ['sounds/stickman/steps_pub.ogg', 'sounds/stickman/steps_pub.mp3']);
-        game.load.audio('sfxLight_switch', ['sounds/stickman/switch.ogg', 'sounds/stickman/switch.mp3']);
+        game.load.audio('sfxBreak_window', 'sounds/stickman/break_window.ogg');
+        game.load.audio('sfxDart', 'sounds/stickman/dart.ogg');
+        game.load.audio('sfxPocket', 'sounds/stickman/pocket.ogg');
+        game.load.audio('sfxPut_ladder', 'sounds/stickman/put_ladder.ogg');
+        game.load.audio('sfxRain', 'sounds/stickman/rain.ogg');
+        game.load.audio('sfxSteps', 'sounds/stickman/steps.ogg');
+        game.load.audio('sfxOpen_barrel', 'sounds/stickman/open_barrel.ogg');
+        game.load.audio('sfxPut_glass', 'sounds/stickman/put_glass.ogg');
+        game.load.audio('sfxSecret_door', 'sounds/stickman/secret_door.ogg');
+        game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.ogg');
+        game.load.audio('sfxLight_switch', 'sounds/stickman/switch.ogg');
+        
+        game.load.audio('hall_music', 'sounds/stickman/music/hall_music.ogg');
+        game.load.audio('street_music', 'sounds/stickman/music/street_music.ogg');
+        game.load.audio('pub_music', 'sounds/stickman/music/pub_music.ogg');
+        game.load.audio('maze_music', 'sounds/stickman/music/maze_music.ogg');
 
         game.load.image('image1', 'images/stickman/image1.jpg');
         game.load.image('image2', 'images/stickman/image2.jpg');
