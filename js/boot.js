@@ -1,5 +1,5 @@
-//document.addEventListener("deviceready", start, false);
-window.onload = start;
+document.addEventListener("deviceready", start, false);
+//window.onload = start;
 
 function start(){
     var place;

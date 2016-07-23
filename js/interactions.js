@@ -32,11 +32,11 @@ function interact_item(_static_item_clicked){
             showManText("Now I need something to hit the glass with... hmmm...", 0);
         break;
         case 'barrel_empty':
-            showManText("I'ts empty now. someone drank it! * Hic *", 0);
+            showManText("I'ts empty now. someone must have drank it! * Hic *", 0);
         break;
         case 'secret_door':
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
-            showManText("OK, I'm going in. It's not like I have anything better to do", 4100);
+            showManText("OK let's go, Maybe that's where they keep the extra barrels", 4100);
 
             setTimeout(function(){
                 bigBlack = game.add.sprite(0, 0, 'bigBlack');
@@ -63,14 +63,14 @@ function interact_item(_static_item_clicked){
             }
         break;
         case 'hall_door':
-            showManText("This door is way too heavy to open without a key", 200);
+            showManText("I don't have a key, and it's way to heavy to break down", 200);
         break;
         case 'hall_window':
             showManText("It's a closed window", 0);
         break;
         case 'hall_window_broken':
             stoneMission2 = true;
-            showManText("It looks like someone really wanted me to take this jump.\nHere goes nothing...", 0);
+            showManText("It looks like someone really wants me to take this jump.\nHere goes nothing...", 0);
             
             setTimeout(function(){
                 
