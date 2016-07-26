@@ -19,7 +19,7 @@ street.prototype = {
         floor.body.immovable = true;
         
         create_street_items();
-        create_man(107, 291);
+        create_man(107, 291, 3);
         
         create_rain();
 

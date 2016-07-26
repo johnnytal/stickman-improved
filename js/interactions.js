@@ -1,42 +1,67 @@
 function interact_item(_static_item_clicked){  
     switch(_static_item_clicked.key){
+        
         case 'door':
             showManText("The door is locked", 200);
             _static_item_clicked.alpha = 0;
         break;
+        
         case 'ladder_b':
-            if (ladderMission && !stoneMission) showManText("It ain't breaking & entry if i don't break something first", 0);
+            if (ladderMission && !stoneMission){
+                showManText("No point, the window seems closed from the inside", 0);
+            }
         break;
+        
         case 'window':
-             if (!ladderMission) showManText("StickMen can't jump", 0);
-             else if (ladderMission && !stoneMission) showManText("Breaking & entry is no good unless i break something first", 0);
-            _static_item_clicked.alpha = 0;
-            
+             if (!ladderMission){
+                 showManText("Stickmen can't jump", 0);
+             }
+             else if (ladderMission && !stoneMission){
+                 showManText("No point, the window seems closed from the inside", 0);
+             }
+             
+            _static_item_clicked.alpha = 0; 
         break;
+        
         case 'broken_window': 
-             if (stoneMission && !ladderMission) showManText("It's broken, but I can't reach it", 0);
-             else if (stoneMission && ladderMission) window_mission();
+             if (stoneMission && !ladderMission){
+                 showManText("Stickmen can't jump", 0);
+             }
+             else if (stoneMission && ladderMission) {
+                 window_mission();
+             }
+             
              _static_item_clicked.alpha = 0.4;
         break;
+        
         case 'pub_door':
-            showManText("Naa, it's raining outside", 0);
+            showManText("Naa, it's still raining outside", 0);
         break;
+       
         case 'barrel':
-            showManText("Wouldn't mind getting drunk,\nbut i'd had to open it first", 0);
+            showManText("I wouldn't mind getting drunk,\nbut i'd had to open it first", 0);
         break;
+        
         case 'dart_board':
-            if (!drunkMission) showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);
-            else { showManText("I knew there was something funny about that bullseye!", 0); }
+            if (!drunkMission){
+                showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);  
+            }
+            else{ 
+                showManText("I knew there was something funny about that bullseye!", 0); 
+            }
         break;
+        
         case 'barrel_glass':
-            showManText("Now I need something to hit the glass with... hmmm...", 0);
+            showManText("I need something to hit the glass with... hmmm...", 0);
         break;
+        
         case 'barrel_empty':
             showManText("I'ts empty now. someone must have drank it! * Hic *", 0);
         break;
+        
         case 'secret_door':
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
-            showManText("OK let's go, Maybe that's where they keep the extra barrels", 4100);
+            showManText("Let's go, Maybe that's where they keep the extra barrels", total_text_time);
 
             setTimeout(function(){
                 bigBlack = game.add.sprite(0, 0, 'bigBlack');
@@ -47,6 +72,7 @@ function interact_item(_static_item_clicked){
                 }, this);
             },9000);
         break;
+        
         case 'switch':
             if (!switchMission){
                 switchMission = true;
@@ -56,18 +82,22 @@ function interact_item(_static_item_clicked){
                 
                 setTimeout(function(){
                     theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
+                    game.add.tween(man).to( { alpha: 0}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
                     theTween.onComplete.add(function(){
                        game.state.start("Hall");   
                     }, this);
                 },3000);
             }
         break;
+        
         case 'hall_door':
-            showManText("I don't have a key, and it's way to heavy to break down", 200);
+            showManText("I don't have a key, and it's way too heavy to break down", 200);
         break;
+        
         case 'hall_window':
             showManText("It's a closed window", 0);
         break;
+        
         case 'hall_window_broken':
             stoneMission2 = true;
             showManText("It looks like someone really wants me to take this jump.\nHere goes nothing...", 0);
@@ -75,11 +105,11 @@ function interact_item(_static_item_clicked){
             setTimeout(function(){
                 
                 hall_music.fadeOut();
-                street_music.play();
-                
+
                 bigBlack = game.add.sprite(0, 0, 'bigBlack');
                 bigBlack.alpha = 0;
                 theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
+                
                 theTween.onComplete.add(function(){
                    man.kill();
                    newMan = game.add.sprite(TOTAL_WIDTH / 2, 0, 'man');
@@ -87,18 +117,21 @@ function interact_item(_static_item_clicked){
                    newManTween = game.add.tween(newMan).to( { y: 750}, 4650, Phaser.Easing.Sinusoidal.InOut, true); 
                    game.add.tween(newMan).to( { angle: 180}, 2650, Phaser.Easing.Sinusoidal.InOut, true); 
                    
+                   street_music.play();
+                   
                    newManTween.onComplete.add(function(){
                        game.state.start("Room"); 
                    });
                 }, this);
-            },5800);
+            }, total_text_time);
         break;
+        
         case 'computer':
             stoneMission2 = true;
             showManText("Hey, this looks exactly like...", 0);
             
             setTimeout(function(){
-                johnnyText = game.add.text(300, 250, '...You' , {font: "21px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
+                johnnyText = game.add.text(300, 250, '...You' , {font: "22px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
                 johnnyText.alpha = 0;
                 game.add.tween(johnnyText).to( { alpha: 1}, 1000, Phaser.Easing.Sinusoidal.InOut, true);
             }, 1400);
@@ -109,6 +142,7 @@ function interact_item(_static_item_clicked){
             }, 4900);
         break;
     }   
+    
     static_item_clicked = null;
     
     if (_static_item_clicked.tint != '0xffffff') _static_item_clicked.tint = '0xffffff';
@@ -118,7 +152,7 @@ function interact_item(_static_item_clicked){
 function window_mission(){
     if (ladderMission && stoneMission){
         walkingIcon.visible = false;
-        showManText("Broken window, here I come!"); 
+        showManText("Broken window, here I come!", 0); 
 
         setTimeout(function(){
             bigBlack = game.add.sprite(0, 0, 'bigBlack');
@@ -127,7 +161,7 @@ function window_mission(){
             theTween.onComplete.add(function(){
                 game.state.start("Pub");  
             });
-        }, 3000);
+        }, total_text_time);
         
         return true;
     }
@@ -141,15 +175,18 @@ function take_item(item){
         case 'ladder_s':
             showManText('This ladder fits right in my pocket!',500);
         break;
+        
         case 'rock':
            if (thisPlace == 'street') showManText('I will take this rock. because it rocks.', 0); 
            else if (thisPlace == 'pub') { showManText("Rock, you're my only friend in this world", 0); }
-           else if (thisPlace == 'hall') { showManText("Stone ex machina.\nHow did it even get here?!", 0); }
-           else if(thisPlace == 'room') { showManText("You have got to be kidding me.", 1000); }
+           else if (thisPlace == 'hall') { showManText("Stone ex-machina.\nHow did it even get here?!", 0); }
+           else if (thisPlace == 'room') { showManText("You've got to be kidding me.", 800); }
         break;
+        
         case 'glass':
             showManText("At least I'd clean after myself", 0);
         break;
+        
         case 'dart':
             showManText("Someone carelessly left this dart here", 0);
         break;
@@ -209,7 +246,7 @@ function use_item(inventory_item, static_item){
                 
                 setTimeout(function(){
                     sfxBreak_window.play();
-                },700);
+                }, 700);
                 
                 setTimeout(function(){                    
                     kill_inventory_item(inventory_item);
@@ -228,7 +265,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('rock + pub_door'):
-                showManText("Stickmen who lives in an abonded pub shouldn't throw stones", 0);
+                showManText("Stickmen who lives in abonded pubs shouldn't throw stones", 0);
                 add_item_to_inventory(inventory_item); 
                 static_item.alpha = 0;
             break;
@@ -256,6 +293,7 @@ function use_item(inventory_item, static_item){
                     showManText("Hey what's that noise?", 4500);
                     
                     setTimeout(function(){ sfxSecret_door.play(); }, 2000);
+                    
                     setTimeout(function(){ 
                         get_item('name', 'secret_door').visible = true; 
                         walkingIcon.visible = true;
@@ -270,8 +308,8 @@ function use_item(inventory_item, static_item){
             case ('dart + barrel'):
             case ('dart + barrel_glass'):
                 walkingIcon.visible = false;
-                showManText("I guess it makes sense", 0);
-                showManText("Nope. poking the barrel just makes it angry", 3000);
+                showManText("I guess that makes sense", 0);
+                showManText("Nope. poking the barrel just makes it angrier", 3000);
                 setTimeout(function(){ 
                     walkingIcon.visible = true;
                     add_item_to_inventory(inventory_item); 
@@ -304,8 +342,9 @@ function use_item(inventory_item, static_item){
                     
                     get_item('name', 'barrel').kill();
                     get_item('name', 'barrel_glass').visible = true;
+                    
                     walkingIcon.visible = true;
-                },700);
+                }, 700);
             break;
             
             case ('rock + barrel_glass'):
@@ -371,7 +410,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case("rock + computer"):
-                showManText("That's not a window.\nit's windows.\nHa.", 0);
+                showManText("That's not a window.\nIt's windows. Ha.", 0);
                 add_item_to_inventory(inventory_item);
             break;
         }
@@ -380,7 +419,7 @@ function use_item(inventory_item, static_item){
     } 
     
     else{
-        showManText("I don't see how that's possible", 0);
+        showManText("I don't see how this is possible", 0);
         add_item_to_inventory(inventory_item);     
     }
     

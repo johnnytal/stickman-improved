@@ -11,7 +11,7 @@ room.prototype = {
         thisPlace = 'room';
         
         create_room_items();
-        create_man(645, 462);
+        create_man(645, 462, 4);
 
         fadeInScreen();
         
@@ -29,8 +29,7 @@ room.prototype = {
         game.physics.enable(room_bound_r, Phaser.Physics.ARCADE);
         room_bound_r.body.setSize(50, TOTAL_HEIGHT);
         room_bound_r.body.immovable = true;
-        
-        man.frame = 4;
+
         dir == 'left';
         showManText('What is this place?', 1000);
         
@@ -42,6 +41,10 @@ room.prototype = {
         }, 2000);
         
         localStorage.setItem( "stickman-location", 'Room' );
+        
+        if (!street_music.isPlaying){
+           street_music.play();
+        }
     },
     
     update: function(){

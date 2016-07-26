@@ -5,13 +5,14 @@ var pub = function(game){
 pub.prototype = {
     preload: function(){},
     
-    create: function(man){
+    create: function(){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
         
         street_music.fadeOut();
         pub_music.fadeIn();
         
         thisPlace = 'pub';
+        items = [];
        
         pub_bound_u = game.add.sprite(0, 0, null);
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
@@ -19,25 +20,19 @@ pub.prototype = {
         pub_bound_u.body.immovable = true;
 
         create_pub_items();
-        create_man(665, 375);
+        create_man(665, 375, 4);
+        dir == 'left';
         
         sfxRain.stop();
-        //sfxRain_indoors.play();
-        
-        fadeInScreen();
-        walkingIcon.visible = false;
 
-        man.frame = 4;
-        dir == 'left';
+        fadeInScreen();
+
         showManText('The pub looks abonded, just like the rest of this town', 1400);
+        suspend(total_text_time);
         
         setTimeout(function(){ 
             showAd();
-        }, 4150);
-        
-        setTimeout(function(){ 
-            walkingIcon.visible = true; 
-        }, 5650);
+        }, total_text_time);
         
         localStorage.setItem( "stickman-location", 'Pub' );
     },
@@ -53,7 +48,7 @@ pub.prototype = {
         var boundsL = 250;
 
         if (placeToGoX != null){ 
-            if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
+            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
             
             if (man.body.x - placeToGoX < -DISTANCE && man.body.x < boundsR){ // man walk right
                man.body.velocity.x = pub_vel_x; 
@@ -69,7 +64,7 @@ pub.prototype = {
         } 
         
         if (placeToGoY != null){
-            if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
+            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
             
             if (man.body.y - placeToGoY < -DISTANCE && man.body.x > boundsL + 100 && man.body.x < boundsR){ // man walk up
                 man.body.velocity.y = pub_vel_y; 

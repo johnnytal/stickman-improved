@@ -59,7 +59,7 @@ maze.prototype = {
         this.flash.endFill();
         this.flash.alpha = 0;
 
-        create_man(30, 185);
+        create_man(30, 185, 3);
         man.scale.set(0.33, 0.29); 
 
         mazeText = showManText('Sure is dark here!', 600);   

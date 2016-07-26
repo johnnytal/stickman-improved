@@ -28,17 +28,16 @@ hall.prototype = {
         }
         
         create_hall_items();
-        create_man(60, 470);
+        create_man(60, 470, 3);
 
         fadeInScreen();
         
         showManText('That was kinda fun!', 1000);
-        walkingIcon.visible = false; 
-        
+        suspend(total_text_time);
+
         setTimeout(function(){
-            walkingIcon.visible = true; 
             showAd();
-        }, 3000);
+        }, total_text_time);
         
         localStorage.setItem( "stickman-location", 'Hall' );
     },
@@ -51,7 +50,7 @@ hall.prototype = {
         var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
 
         if (placeToGoX != null){ 
-            if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
+            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
                man.body.velocity.x = pub_vel_x; 
@@ -67,7 +66,7 @@ hall.prototype = {
         } 
         
         if (placeToGoY != null){
-            if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
+            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
                 man.body.velocity.y = pub_vel_y; 
@@ -84,8 +83,9 @@ hall.prototype = {
         
         game.physics.arcade.collide(man, walls, function(){
             if (man.body.touching.left || man.body.touching.right) placeToGoX = 'null';
-             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
             else { placeToGoY = 'null'; }
+            
+            if (sfxSteps_pub.isPlaying) sfxSteps_pub.stop();
         }, null, this);
         
         factor = (1.5 + (man.body.y / 80)) * 0.25; //scale man size

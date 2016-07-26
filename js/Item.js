@@ -29,14 +29,15 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible) {
 };
 
 Item.prototype.interact = function() {   
-
-    if (this.isTakeable){
-        itemToTake = this.sprite;
-    }
-    else{
-        static_item_clicked = this.sprite;
-        this.sprite.alpha = 0.9;
-        this.sprite.tint = 0xffffff;  
+    if (!suspended){
+        if (this.isTakeable){
+            itemToTake = this.sprite;
+        }
+        else{
+            static_item_clicked = this.sprite;
+            this.sprite.alpha = 0.9;
+            this.sprite.tint = 0xffffff;  
+        }
     }
 };
 
