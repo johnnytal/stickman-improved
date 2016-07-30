@@ -156,8 +156,8 @@ function showManText(textToShow, timeToWait){
     setTimeout(function(){
         manText.text = textToShow;
 
-        manText.x = game.world.centerX - textToShow.length * 2;
-        manText.y = 70;
+        manText.x = game.world.centerX - textToShow.length * 2.2;
+        manText.y = 120;
 
         manText.fixedToCamera = true;
         manText.alpha = 1;

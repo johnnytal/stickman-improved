@@ -36,12 +36,7 @@ room.prototype = {
         walkingIcon.visible = false; 
         
         suspend(total_text_time);
-        
-        /*setTimeout(function(){
-            walkingIcon.visible = true; 
-            showAd();
-        }, 2000);*/
-        
+
         localStorage.setItem( "stickman-location", 'Room' );
         
         if (!street_music.isPlaying){

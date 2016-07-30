@@ -30,10 +30,6 @@ pub.prototype = {
         showManText('This pub seems abonded, just like the rest of the town', 1400);
         suspend(total_text_time);
         
-        /*setTimeout(function(){ 
-            showAd();
-        }, total_text_time);*/
-        
         localStorage.setItem( "stickman-location", 'Pub' );
     },
     

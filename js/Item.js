@@ -23,17 +23,27 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible) {
     }
     else{
         sprite.events.onInputDown.add(function(){ // an image different from the bg elemnt, not tinted unless clicked
-            this.sprite.tint = 0xc9a279;  
+            if (!suspended){
+                this.sprite.tint = 0xc9a279;
+            }
         }, this);
     }
 };
 
-Item.prototype.interact = function() {   
+Item.prototype.interact = function(){   
     if (!suspended){
         if (this.isTakeable){
             itemToTake = this.sprite;
         }
         else{
+
+            for(var i = 0; i < items.length; i++) { // if 2 items were pressed before interaction with the 1st, cancel the 1st
+                if (items[i].sprite.alpha == 0.9 && !items[i].isLayered){
+                    items[i].sprite.alpha = 0;
+                }
+            }
+            
+            
             static_item_clicked = this.sprite;
             this.sprite.alpha = 0.9;
             this.sprite.tint = 0xffffff;  

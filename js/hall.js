@@ -35,10 +35,6 @@ hall.prototype = {
         showManText('That was kinda fun!', 1000);
         suspend(total_text_time);
 
-       /* setTimeout(function(){
-            showAd();
-        }, total_text_time);*/
-        
         localStorage.setItem( "stickman-location", 'Hall' );
     },
     

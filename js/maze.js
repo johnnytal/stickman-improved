@@ -37,22 +37,14 @@ maze.prototype = {
 
         fadeInScreen();
 
-        //showAd();
-
         this.LIGHT_RADIUS = 70;
         LIGHT_RADIUS = this.LIGHT_RADIUS;
 
-        // Create the shadow texture
         this.shadowTexture = this.game.add.bitmapData(TOTAL_WIDTH, TOTAL_HEIGHT);
 
-        // Create an object that will use the bitmap as a texture
         var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
-
-        // Set the blend mode to MULTIPLY. This will darken the colors of
-        // everything below this sprite.
         lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
-        // Create a white rectangle that we'll use to represent the flash
         this.flash = this.game.add.graphics(0, 0);
         this.flash.beginFill(0xffffff, 1);
         this.flash.drawRect(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);

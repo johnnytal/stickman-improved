@@ -1,6 +1,7 @@
+
 function interact_item(_static_item_clicked){  
-    switch(_static_item_clicked.key){
-        
+    
+    switch(_static_item_clicked.key){    
         case 'door':
             showManText("The door is locked", 200);
             _static_item_clicked.alpha = 0;
@@ -43,7 +44,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'dart_board':
-            if (!drunkMission){
+            if (!get_item('name', 'secret_door').visible){
                 showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);  
             }
             else{ 
@@ -189,7 +190,12 @@ function take_item(item){
         break;
         
         case 'dart':
-            showManText("Someone carelessly left this dart here", 0);
+            if (!drunkMission){
+                showManText("Someone carelessly left this dart here", 0);
+            }
+            else{
+                showManText("Someone carelessly left this dart here. * Hic *", 0);
+            }
         break;
     }  
     
@@ -286,7 +292,7 @@ function use_item(inventory_item, static_item){
                 }
                 
                 else{
-                    walkingIcon.visible = false;
+                    suspend(5300);
                     
                     create_item( game, 'dart', true, false, 538, 185, true );
                     get_item('name', 'dart').tint = 0xffddff; 
@@ -298,7 +304,6 @@ function use_item(inventory_item, static_item){
                     
                     setTimeout(function(){ 
                         get_item('name', 'secret_door').visible = true; 
-                        walkingIcon.visible = true;
                    }, 5300);
                 }
                 
@@ -309,11 +314,12 @@ function use_item(inventory_item, static_item){
             
             case ('dart + barrel'):
             case ('dart + barrel_glass'):
-                walkingIcon.visible = false;
+                suspend(3000);
+                
                 showManText("I guess that makes sense", 0);
                 showManText("Nope. poking the barrel just makes it angrier", 3000);
+                
                 setTimeout(function(){ 
-                    walkingIcon.visible = true;
                     add_item_to_inventory(inventory_item); 
                 }, 3000);
             break;
@@ -350,7 +356,7 @@ function use_item(inventory_item, static_item){
             break;
             
             case ('rock + barrel_glass'):
-                walkingIcon.visible = false;
+                suspend(9500);
                 showManText("OK, here we go...", 0);
 
                 setTimeout(function(){  
@@ -380,7 +386,6 @@ function use_item(inventory_item, static_item){
                 setTimeout(function(){
                     get_item('name', 'barrel_open').kill();
                     get_item('name', 'barrel_empty').visible = true;
-                    walkingIcon.visible = true;
                     
                     man.x = 728;
                     man.y = 313;
