@@ -1,6 +1,6 @@
 var street = function(game){
     MAN_VEL_X = 120;
-    MAN_VEL_Y = 24;
+    MAN_VEL_Y = 32;
     
     MIDDLE = (TOTAL_WIDTH / 2) - 27;
 };
@@ -30,11 +30,15 @@ street.prototype = {
         try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
-                    interstitial:"ca-app-pub-9795366520625065/2229270238"
+                    //interstitial:"ca-app-pub-9795366520625065/2229270238",
+                    banner:"ca-app-pub-9795366520625065/9752537037"
                 }
             });
-            interstitial = Cocoon.Ad.AdMob.createInterstitial();
-            interstitial.load();
+            //interstitial = Cocoon.Ad.AdMob.createInterstitial();
+           // interstitial.load();
+            
+            banner = Cocoon.Ad.AdMob.createBanner();
+            banner.load();
         } catch(e){}
     },
     
@@ -74,7 +78,7 @@ street.prototype = {
             manWalk = man.animations.play(dir);    
         }
         
-        factor = -2.25 + (man.body.y / 90);
+        factor = -2.25 + (man.body.y / 95);
         if (factor < 1.1) man.scale.set(factor, factor); //scale man size
         sfxSteps.volume = factor; // change step volume by distance from camera   
 

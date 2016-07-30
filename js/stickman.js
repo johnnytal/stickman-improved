@@ -37,8 +37,10 @@ function take_from_inventory(item){
        inventory[i].tint = '0xffffff';
        inventory[i].scale.set(1, 1);
    }
-   item.tint = '0xc9a279';
-   item.scale.set(1.25, 1.25);
+   if (item != null){
+       item.tint = '0xc9a279';
+       item.scale.set(1.25, 1.25);
+   }
 }
 
 function stop_man(){    
@@ -56,10 +58,11 @@ function stop_man(){
 
     if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 40)){
         take_item(itemToTake);      
+        take_from_inventory(null); // in case you select from inventory and click a takeable item
     }
     
     if (itemToTake != null && itemToTake.isTaken){
-        use_item(itemToTake, static_item_clicked);
+        use_item(itemToTake, static_item_clicked); 
     }
     
     else if (static_item_clicked != null){
@@ -265,7 +268,7 @@ function endTheGame(){
         tweenAlpha(image4, 0, 4500);
 
         gameOverTxt = game.add.text(70 + game.camera.x, 80, 'The StickMan\nAdventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
-        gameOverTxt2 = game.add.text(70 + game.camera.x, 300, 'Created by Johnny Tal -\niLyich Games\njohnnytal9@gmail.com', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
+        gameOverTxt2 = game.add.text(70 + game.camera.x, 300, 'Created by Johnny Tal\niLyich Games\njohnnytal9@gmail.com', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
         gameOverTxt2.padding.set(10, 5);
         gameOverTxt.alpha = 0;
         gameOverTxt2.alpha = 0;
@@ -281,11 +284,11 @@ function endTheGame(){
         
         setTimeout(function(){
             tweenAlpha(gameOverTxt2, 0, 4500);  
-        }, 15000);  
+        }, 14500);  
         
-        setTimeout(function(){
+       /* setTimeout(function(){
             showAd();
-        }, 22000);  
+        }, 22000);  */
     }, 24000);              
 }
 

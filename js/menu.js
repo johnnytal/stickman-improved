@@ -25,7 +25,6 @@ menu.prototype = {
         }, this);
         
         contBtn.events.onInputUp.add(function(){ 
-            showAd();
             startGame();
         }, this);
                 
@@ -49,6 +48,7 @@ function fadeInScreen(){
 function startGame(){
     sfxclick.play();
     street_music.stop();
+    showAd();
     
     this.game.state.start('Game');    
 }
@@ -75,13 +75,20 @@ function loadSfx(){
 }
 
 function showAd(){
-    try{
-        interstitial.show();
-    } catch(e){
+    var timeToShow = game.rnd.integerInRange(30000, 75000);
+    var timeToHide = game.rnd.integerInRange(10000, 30000);
+    
+    setTimeout(function(){
+        try{
+            banner.show();
+        } catch(e){}
+        
         setTimeout(function(){
-            try{
-                interstitial.show();
-            } catch(e){}
-        }, 2000);
-    }       
+           try{
+               banner.hide(); 
+               showAd();
+           } catch(e){}
+        }, timeToHide);
+        
+    }, timeToShow);     
 }

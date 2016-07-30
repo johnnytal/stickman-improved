@@ -41,10 +41,6 @@ Item.prototype.interact = function() {
     }
 };
 
-Item.prototype.look = function() {
+//Item.prototype.look = function() {};
 
-};
-
-Item.prototype.use = function() {
-
-};
+//Item.prototype.use = function() {};

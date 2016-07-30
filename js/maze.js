@@ -37,7 +37,7 @@ maze.prototype = {
 
         fadeInScreen();
 
-        showAd();
+        //showAd();
 
         this.LIGHT_RADIUS = 70;
         LIGHT_RADIUS = this.LIGHT_RADIUS;

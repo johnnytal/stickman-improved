@@ -171,6 +171,7 @@ function window_mission(){
 }
 
 function take_item(item){
+
     switch(item.key){
         case 'ladder_s':
             showManText('This ladder fits right in my pocket!',500);
@@ -197,7 +198,8 @@ function take_item(item){
     add_item_to_inventory(item);
     itemToTake = null; 
     
-    sfxPocket.play();   
+    sfxPocket.play(); 
+    
 }
 
 function use_item(inventory_item, static_item){

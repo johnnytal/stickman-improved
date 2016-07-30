@@ -35,10 +35,12 @@ room.prototype = {
         
         walkingIcon.visible = false; 
         
-        setTimeout(function(){
+        suspend(total_text_time);
+        
+        /*setTimeout(function(){
             walkingIcon.visible = true; 
             showAd();
-        }, 2000);
+        }, 2000);*/
         
         localStorage.setItem( "stickman-location", 'Room' );
         
