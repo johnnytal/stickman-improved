@@ -30,11 +30,7 @@ room.prototype = {
         room_bound_r.body.setSize(50, TOTAL_HEIGHT);
         room_bound_r.body.immovable = true;
 
-        dir == 'left';
         showManText('What is this place?', 1000);
-        
-        walkingIcon.visible = false; 
-        
         suspend(total_text_time);
 
         localStorage.setItem( "stickman-location", 'Room' );

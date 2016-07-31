@@ -16,13 +16,13 @@ preloader.prototype = {
         game.load.image('window', 'images/stickman/window.png');
         game.load.image('pub_door', 'images/stickman/pub_door.png');
         game.load.image('barrel_empty', 'images/stickman/barrel_empty.png');
-        game.load.image('black', 'images/stickman/black.png');
         game.load.image('broken_window', 'images/stickman/broken_window.png');
         game.load.image('rain', 'images/stickman/rain.png');
         game.load.image('ladder_s', 'images/stickman/ladder_s.png');
         game.load.image('ladder_b', 'images/stickman/ladder_b.png');
         game.load.image('rock', 'images/stickman/rock.png');
         game.load.image('glass', 'images/stickman/glass.png');
+        game.load.image('broken_pub_window', 'images/stickman/broken_pub_window.png');
         game.load.image('barrel', 'images/stickman/barrel.png');
         game.load.image('barrel_glass', 'images/stickman/barrel_glass.png');
         game.load.image('barrel_open', 'images/stickman/barrel_open.png');
@@ -34,7 +34,7 @@ preloader.prototype = {
         game.load.image('hall_window', 'images/stickman/hall_window.png');
         game.load.image('hall_window_broken', 'images/stickman/hall_window_broken.png');
         game.load.image('opening', 'images/stickman/opening2.png');
-        game.load.image('contBtn', 'images/stickman/contBtn.png');
+        game.load.image('contBtn', 'images/stickman/contBtn2.png');
         game.load.image('startBtn', 'images/stickman/startBtn.png');
         game.load.image('room', 'images/stickman/myRoom2.jpg');
         game.load.image('computer', 'images/stickman/computer.png');
@@ -43,6 +43,11 @@ preloader.prototype = {
         game.load.image('image2', 'images/stickman/image2.jpg');
         game.load.image('image3', 'images/stickman/image3.jpg');
         game.load.image('image4', 'images/stickman/image4.jpg');
+        
+        game.load.audio('hall_music', 'sounds/stickman/music/hall_music.ogg');
+        game.load.audio('street_music', 'sounds/stickman/music/street_music.ogg');
+        game.load.audio('pub_music', 'sounds/stickman/music/pub_music.ogg');
+        game.load.audio('maze_music', 'sounds/stickman/music/maze_music.ogg');
         
         game.load.audio('sfxBreak_window', 'sounds/stickman/break_window.ogg');
         game.load.audio('sfxDart', 'sounds/stickman/dart.ogg');
@@ -56,11 +61,6 @@ preloader.prototype = {
         game.load.audio('sfxSteps_pub', 'sounds/stickman/steps_pub.ogg');
         game.load.audio('sfxLight_switch', 'sounds/stickman/switch.ogg');
         game.load.audio('sfxclick', 'sounds/stickman/click.ogg');
-        
-        game.load.audio('hall_music', 'sounds/stickman/music/hall_music.ogg');
-        game.load.audio('street_music', 'sounds/stickman/music/street_music.ogg');
-        game.load.audio('pub_music', 'sounds/stickman/music/pub_music.ogg');
-        game.load.audio('maze_music', 'sounds/stickman/music/maze_music.ogg');
     },
     
     create: function(){

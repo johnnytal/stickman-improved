@@ -79,6 +79,7 @@ function showAd(){
     var timeToHide = game.rnd.integerInRange(10000, 30000);
     
     setTimeout(function(){
+        
         try{
             banner.show();
         } catch(e){}

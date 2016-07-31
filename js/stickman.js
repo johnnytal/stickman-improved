@@ -114,8 +114,15 @@ function create_man(x, y, _frame){
     man.inputEnabled = true;
     man.anchor.setTo(0.5, 0.5);
     
+    if (_frame < 4){
+        dir = 'right';
+    }
+    else{
+        dir = 'left';
+    }
+
     man.events.onInputDown.add(function(){ 
-        showManText("It's me, Stickman.\nBut who am I? and what does this all mean?!", 0);
+        showManText("It's me, Stickman.\nBut who am I? and what does it all mean?!", 0);
     }, this);
     
     man.animations.add('right', [0, 1, 2, 3], 15, true);
@@ -215,7 +222,7 @@ function create_rain(){
 }
 
 function drawLine(){
-    line = game.add.sprite(26, TOTAL_HEIGHT - 100, 'line');
+    line = game.add.sprite(96, TOTAL_HEIGHT - 100, 'line');
     line.alpha = 0.4;
     line.fixedToCamera = true;
 }

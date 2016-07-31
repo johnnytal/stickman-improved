@@ -30,13 +30,9 @@ street.prototype = {
         try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
-                    //interstitial:"ca-app-pub-9795366520625065/2229270238",
                     banner:"ca-app-pub-9795366520625065/9752537037"
                 }
             });
-            //interstitial = Cocoon.Ad.AdMob.createInterstitial();
-           // interstitial.load();
-            
             banner = Cocoon.Ad.AdMob.createBanner();
             banner.load();
         } catch(e){}
@@ -93,6 +89,6 @@ function create_street_items(){
     create_item( game, 'door', false, false, 520, 264, true );
     create_item( game, 'window', false, false, 490, 88, true );
     create_item( game, 'broken_window', true, false, 491, 172, false );
-    create_item( game, 'ladder_b', true, false, 488, 245, false );
+    create_item( game, 'ladder_b', true, false, 493, 245, false );
     create_item( game, 'rock', true, true, 260, 340, true ); 
 }

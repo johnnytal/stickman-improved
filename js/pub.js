@@ -21,8 +21,7 @@ pub.prototype = {
 
         create_pub_items();
         create_man(665, 375, 4);
-        dir == 'left';
-        
+
         sfxRain.stop();
 
         fadeInScreen();
@@ -93,6 +92,7 @@ function create_pub_items(){
     create_item( game, 'glass', true, true, 607, 370, true );
     create_item( game, 'barrel', true, false, 635, 243, true );
     create_item( game, 'pub_door', false, false, 400, 177, true );
+    create_item( game, 'broken_pub_window', false, false, 563, 14, true );
     create_item( game, 'dart', true, true, 220, 350, true );
     create_item( game, 'dart_board', true, false, 540, 170, true );
     create_item( game, 'rock', true, true, 590, 435, true );

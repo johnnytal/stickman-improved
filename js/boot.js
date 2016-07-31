@@ -4,7 +4,6 @@ document.addEventListener("deviceready", start, false);
 function start(){
     var place;
     var thisPlace;
-   // var interstitial;
     var banner;
     
     WIDTH = 703; 
