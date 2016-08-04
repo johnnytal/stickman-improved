@@ -52,9 +52,9 @@ maze.prototype = {
         this.flash.alpha = 0;
 
         create_man(30, 185, 3);
-        man.scale.set(0.33, 0.29); 
+        man.scale.set(0.33, 0.29);
 
-        mazeText = showManText('Sure is dark here!', 600);   
+        mazeText = showManText('Sure is dark here!', 1200);   
         
         localStorage.setItem( "stickman-location", 'Maze' );
     },

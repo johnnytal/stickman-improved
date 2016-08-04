@@ -13,6 +13,7 @@ preloader.prototype = {
         game.load.image('hall', 'images/stickman/hall.jpg');
         game.load.image('door', 'images/stickman/door.png');
         game.load.image('ladder_s', 'images/stickman/ladder_s.png');
+        game.load.image('bar_sign', 'images/stickman/bar_sign.png');
         game.load.image('window', 'images/stickman/window.png');
         game.load.image('pub_door', 'images/stickman/pub_door.png');
         game.load.image('barrel_empty', 'images/stickman/barrel_empty.png');
@@ -26,8 +27,12 @@ preloader.prototype = {
         game.load.image('barrel', 'images/stickman/barrel.png');
         game.load.image('barrel_glass', 'images/stickman/barrel_glass.png');
         game.load.image('barrel_open', 'images/stickman/barrel_open.png');
+        game.load.image('stool', 'images/stickman/stool.png');
         game.load.image('dart_board', 'images/stickman/dart_board.png');
         game.load.image('dart', 'images/stickman/dart.png');
+        game.load.image('chandelier', 'images/stickman/chandelier.png');
+        game.load.image('poster', 'images/stickman/poster.png');
+        game.load.image('wc_door', 'images/stickman/wc_door.png');
         game.load.image('secret_door', 'images/stickman/secret_door.png');
         game.load.image('switch', 'images/stickman/switch.png');
         game.load.image('hall_door', 'images/stickman/hall_door.png');

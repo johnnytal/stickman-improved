@@ -91,4 +91,5 @@ function create_street_items(){
     create_item( game, 'broken_window', true, false, 491, 172, false );
     create_item( game, 'ladder_b', true, false, 493, 245, false );
     create_item( game, 'rock', true, true, 260, 340, true ); 
+    create_item( game, 'bar_sign', true, false, 600, 174, true ); 
 }

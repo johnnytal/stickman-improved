@@ -131,11 +131,12 @@ function create_man(x, y, _frame){
     manText = game.add.text(0, 70, '' , {font: "20px " + font, fill: "#f9d5b2", align:'center', stroke: "0x000000", strokeThickness: 3});
     manText.anchor.setTo(0.5, 0.5);
 
-    walkingIcon = game.add.sprite(450, 350, 'walkingIcon');
+    walkingIcon = game.add.sprite(350, 290, 'walkingIcon');
     walkingIcon.anchor.set(0.5, 0);
     
     if (thisPlace == 'maze'){
         walkingIcon.scale.set(0.45, 0.45);
+        game.add.tween(man).from( { alpha: 0}, 2500, Phaser.Easing.Sinusoidal.InOut, true); 
     }
     
     game.camera.follow(man, Phaser.Camera.topdownFollow);
@@ -156,8 +157,8 @@ function walk_update(){
 function showManText(textToShow, timeToWait){    
     try{ clearTimeout(textTimer); } catch(e){}
     
-    fade_text_time = 400;
-    text_show_time = textToShow.length * 65;
+    fade_text_time = 350;
+    text_show_time = textToShow.length * 60;
     total_text_time = timeToWait + text_show_time + (fade_text_time * 1.5) + 50; 
 
     setTimeout(function(){
@@ -223,7 +224,7 @@ function create_rain(){
 
 function drawLine(){
     line = game.add.sprite(96, TOTAL_HEIGHT - 100, 'line');
-    line.alpha = 0.4;
+    line.alpha = 0.3;
     line.fixedToCamera = true;
 }
 
@@ -234,7 +235,7 @@ function endTheGame(){
     timePassedText = game.add.text(40 + game.camera.x, 120, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText.alpha = 0;
 
-    timePassedText2 = game.add.text(40 + game.camera.x, 245, 'When StickMan reaches\n1,000 downloads...' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
+    timePassedText2 = game.add.text(40 + game.camera.x, 245, 'October 31, 2016' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText2.alpha = 0;
 
     tweenAlpha(timePassedText, 1, 4500);            
@@ -292,10 +293,6 @@ function endTheGame(){
         setTimeout(function(){
             tweenAlpha(gameOverTxt2, 0, 4500);  
         }, 14500);  
-        
-       /* setTimeout(function(){
-            showAd();
-        }, 22000);  */
     }, 24000);              
 }
 

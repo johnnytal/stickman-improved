@@ -25,6 +25,9 @@ menu.prototype = {
         }, this);
         
         contBtn.events.onInputUp.add(function(){ 
+            if (place == null){
+                place = "Street";
+            }
             startGame();
         }, this);
                 

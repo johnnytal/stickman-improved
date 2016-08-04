@@ -36,14 +36,11 @@ Item.prototype.interact = function(){
             itemToTake = this.sprite;
         }
         else{
-
             for(var i = 0; i < items.length; i++) { // if 2 items were pressed before interaction with the 1st, cancel the 1st
                 if (items[i].sprite.alpha == 0.9 && !items[i].isLayered){
                     items[i].sprite.alpha = 0;
                 }
             }
-            
-            
             static_item_clicked = this.sprite;
             this.sprite.alpha = 0.9;
             this.sprite.tint = 0xffffff;  

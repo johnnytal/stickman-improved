@@ -16,11 +16,11 @@ pub.prototype = {
        
         pub_bound_u = game.add.sprite(0, 0, null);
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
-        pub_bound_u.body.setSize(TOTAL_WIDTH, 275);
+        pub_bound_u.body.setSize(TOTAL_WIDTH, 285);
         pub_bound_u.body.immovable = true;
 
         create_pub_items();
-        create_man(665, 375, 4);
+        create_man(690, 405, 4);
 
         sfxRain.stop();
 
@@ -39,8 +39,8 @@ pub.prototype = {
         var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.35);
         var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.6);
         
-        var boundsR = 750;
-        var boundsL = 250;
+        var boundsR = 760;
+        var boundsL = 260;
 
         if (placeToGoX != null){ 
             if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
@@ -89,15 +89,19 @@ function hitPubBounds(){
 function create_pub_items(){
     drawLine();
     
-    create_item( game, 'glass', true, true, 607, 370, true );
-    create_item( game, 'barrel', true, false, 635, 243, true );
-    create_item( game, 'pub_door', false, false, 400, 177, true );
-    create_item( game, 'broken_pub_window', false, false, 563, 14, true );
-    create_item( game, 'dart', true, true, 220, 350, true );
-    create_item( game, 'dart_board', true, false, 540, 170, true );
-    create_item( game, 'rock', true, true, 590, 435, true );
-    create_item( game, 'barrel_glass', true, false, 635, 243, false );
-    create_item( game, 'barrel_open', true, false, 635, 243, false );
-    create_item( game, 'barrel_empty', true, false, 600, 255, false );
-    create_item( game, 'secret_door', true, false, 870, 382, false );
+    create_item( game, 'glass', true, true, 610, 417, true );
+    create_item( game, 'barrel', true, false, 653, 260, true );
+    create_item( game, 'barrel_glass', true, false, 653, 260, false );
+    create_item( game, 'barrel_open', true, false, 653, 260, false );
+    create_item( game, 'barrel_empty', true, false, 600, 265, false );
+    create_item( game, 'pub_door', false, false, 431, 193, true );
+    create_item( game, 'broken_pub_window', false, false, 588, 7, true );
+    create_item( game, 'dart', true, true, 222, 413, true );
+    create_item( game, 'dart_board', true, false, 558, 185, true );
+    create_item( game, 'rock', true, true, 588, 440, true );
+    create_item( game, 'secret_door', true, false, 877, 420, false );
+    create_item( game, 'stool', true, false, 305, 283, true );
+    create_item( game, 'chandelier', false, false, 364, 0, true );
+    create_item( game, 'wc_door', false, false, 788, 200, true ); // stop man comes before the interaction with door
+    create_item( game, 'poster', false, false, 694, 170, true );
 }

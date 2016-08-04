@@ -7,6 +7,10 @@ function interact_item(_static_item_clicked){
             _static_item_clicked.alpha = 0;
         break;
         
+        case 'bar_sign':
+            showManText('It reads: "BAR"', 200);
+        break;
+        
         case 'ladder_b':
             if (ladderMission && !stoneMission){
                 showManText("No point, the window seems closed from the inside", 0);
@@ -37,6 +41,7 @@ function interact_item(_static_item_clicked){
         
         case 'pub_door':
             showManText("Naa, it's still raining outside", 0);
+            //this.game.state.start('Street'); 
         break;
         
         case 'broken_pub_window':
@@ -62,6 +67,22 @@ function interact_item(_static_item_clicked){
         
         case 'barrel_empty':
             showManText("I'ts empty now. someone must have drank it! * Hic *", 0);
+        break;
+        
+        case 'stool':
+            showManText("It's a bar stool", 0);
+        break;
+        
+        case 'wc_door':
+            showManText("Stickmen bodily functions don't work that way", 0);
+        break;
+        
+        case 'chandelier':
+            showManText("That's one big lamp", 0);
+        break;
+        
+        case 'poster':
+            showManText('"Beer. Helping ugly Stickmen get laid since 1862"', 0);
         break;
         
         case 'secret_door':
@@ -152,8 +173,16 @@ function interact_item(_static_item_clicked){
     
     static_item_clicked = null;
     
-    if (_static_item_clicked.tint != '0xffffff') _static_item_clicked.tint = '0xffffff';
-    else { _static_item_clicked.alpha = 0; }
+    if (_static_item_clicked.tint != '0xffffff'){
+        setTimeout(function(){
+            _static_item_clicked.tint = '0xffffff';  
+        }, 200); 
+    }
+    else { 
+        setTimeout(function(){
+            _static_item_clicked.alpha = 0; 
+        }, 100); 
+   }
 }
 
 function window_mission(){
@@ -238,6 +267,7 @@ function use_item(inventory_item, static_item){
             get_item('name', 'ladder_b').visible = true;
             kill_inventory_item(inventory_item);
             showManText("I'm sure that won't look suspicious to anyone", 300);
+            suspend(total_text_time);
             
             ladderMission = true;
             
@@ -306,7 +336,7 @@ function use_item(inventory_item, static_item){
                 suspend(1000);
                 
                 setTimeout(function(){   
-                    create_item( game, 'dart', true, true, 480, 217, true );
+                    create_item( game, 'dart', true, true, 474, 224, true );
                 },300);
 
                 showManText("I suck at this", 1000);
@@ -315,7 +345,7 @@ function use_item(inventory_item, static_item){
             else{
                 suspend(5300);
                 
-                create_item( game, 'dart', true, false, 538, 185, true );
+                create_item( game, 'dart', true, false, 555, 196, true );
                 get_item('name', 'dart').tint = 0xffddff; 
 
                 showManText("Bullseye! i'm alot better at this when i'm drunk!", 500);
@@ -407,7 +437,7 @@ function use_item(inventory_item, static_item){
                 get_item('name', 'barrel_empty').visible = true;
                 
                 man.x = 728;
-                man.y = 313;
+                man.y = 320;
                 man.frame = 4;
                 dir == 'left';
             }, 7000);

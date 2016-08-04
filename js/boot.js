@@ -1,5 +1,5 @@
-//window.onload = start;
-document.addEventListener("deviceready", start, false);
+window.onload = start;
+//document.addEventListener("deviceready", start, false);
 
 function start(){
     var place;
@@ -33,9 +33,7 @@ boot.prototype = {
         try{
             place = localStorage.getItem("stickman-location");
         }
-        catch(e){
-            place = 'Street';
-        }
+        catch(e){}
 
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
