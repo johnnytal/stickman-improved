@@ -100,7 +100,7 @@ function create_pub_items(){
     create_item( game, 'dart_board', true, false, 558, 185, true );
     create_item( game, 'rock', true, true, 588, 440, true );
     create_item( game, 'secret_door', true, false, 877, 420, false );
-    create_item( game, 'stool', true, false, 305, 283, true );
+    //create_item( game, 'stool', true, false, 305, 283, true );
     create_item( game, 'chandelier', false, false, 364, 0, true );
     create_item( game, 'wc_door', false, false, 788, 200, true ); // stop man comes before the interaction with door
     create_item( game, 'poster', false, false, 694, 170, true );
