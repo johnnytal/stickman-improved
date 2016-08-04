@@ -5,7 +5,6 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible) {
     this.isTakeable = isTakeable;    
     this.x = x_cor;
     this.y = y_cor;
-    this.isAlive = true;
     this.isTaken = false;
 
     this.sprite = game.add.sprite(x_cor, y_cor, name);

@@ -40,8 +40,8 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pub_door':
-            showManText("Naa, it's still raining outside", 0);
-            //this.game.state.start('Street'); 
+            //showManText("Naa, it's still raining outside", 0);
+            this.game.state.start('Street'); 
         break;
         
         case 'broken_pub_window':
