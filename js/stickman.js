@@ -19,6 +19,7 @@ var game_main = function(game){
 
      inventory = [];
      items = [];
+     dead_items = [];
      
      dir = 'right';
      
@@ -189,15 +190,17 @@ function get_item(attr, value) {
 }
 
 function create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible){
-    items.push(new Item(
-        game, 
-        name,
-        isLayered,
-        isTakeable, 
-        x_cor,
-        y_cor,
-        visible
-    ));    
+    if (dead_items.indexOf(name) == -1){
+        items.push(new Item(
+            game, 
+            name,
+            isLayered,
+            isTakeable, 
+            x_cor,
+            y_cor,
+            visible
+        ));    
+    }
 }
 
 function create_rain(){
@@ -230,7 +233,7 @@ function drawLine(){
 
 function endTheGame(){ 
     suspended = true;
-    tweenAlpha(bigBlack, 1, 3000);
+    tween_alpha(bigBlack, 1, 3000);
     
     timePassedText = game.add.text(40 + game.camera.x, 120, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText.alpha = 0;
@@ -238,10 +241,10 @@ function endTheGame(){
     timePassedText2 = game.add.text(40 + game.camera.x, 245, 'October 31, 2016' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText2.alpha = 0;
 
-    tweenAlpha(timePassedText, 1, 4500);            
+    tween_alpha(timePassedText, 1, 4500);            
     
     setTimeout(function(){
-        tweenAlpha(timePassedText2, 1, 4500);
+        tween_alpha(timePassedText2, 1, 4500);
     }, 3000); 
     
     image1 = game.add.image(0, 0, 'image1');
@@ -265,39 +268,52 @@ function endTheGame(){
     }, 8000);  
     
     setTimeout(function(){
-        tweenAlpha(image1, 0, 4500);
-        tweenAlpha(image2, 0, 4500);
-        tweenAlpha(image3, 1, 4500);
-        tweenAlpha(image4, 1, 4500);
+        tween_alpha(image1, 0, 4500);
+        tween_alpha(image2, 0, 4500);
+        tween_alpha(image3, 1, 4500);
+        tween_alpha(image4, 1, 4500);
     }, 16000);   
     
     setTimeout(function(){
-        tweenAlpha(image3, 0, 4500);
-        tweenAlpha(image4, 0, 4500);
+        tween_alpha(image3, 0, 4500);
+        tween_alpha(image4, 0, 4500);
 
         gameOverTxt = game.add.text(70 + game.camera.x, 80, 'The StickMan\nAdventures', {font: "68px " + font, fill: "#f7f7f7", align:'center'});
         gameOverTxt2 = game.add.text(70 + game.camera.x, 300, 'Created by Johnny Tal\niLyich Games\njohnnytal9@gmail.com', {font: "42px " + font, fill: "#f7f7f7", align:'center'});
         gameOverTxt2.padding.set(10, 5);
         gameOverTxt.alpha = 0;
         gameOverTxt2.alpha = 0;
-        tweenAlpha(gameOverTxt, 1, 4500); 
+        tween_alpha(gameOverTxt, 1, 4500); 
      
         setTimeout(function(){
-            tweenAlpha(gameOverTxt2, 1, 4500);
+            tween_alpha(gameOverTxt2, 1, 4500);
         }, 2000); 
         
         setTimeout(function(){
-            tweenAlpha(gameOverTxt, 0, 4500);  
+            tween_alpha(gameOverTxt, 0, 4500);  
         }, 10000);  
         
         setTimeout(function(){
-            tweenAlpha(gameOverTxt2, 0, 4500);  
+            tween_alpha(gameOverTxt2, 0, 4500);  
         }, 14500);  
     }, 24000);              
 }
 
-function tweenAlpha(what, where, time){
+function tween_alpha(what, where, time){
     game.add.tween(what).to( { alpha: where}, time, Phaser.Easing.Sinusoidal.InOut, true); 
+}
+
+function tween_black(time, delay, place){
+    setTimeout(function(){
+        bigBlack = game.add.sprite(0, 0, 'bigBlack');
+        bigBlack.alpha = 0;
+        
+        theTween = game.add.tween(bigBlack).to( { alpha: 1}, time, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        theTween.onComplete.add(function(){
+            game.state.start(place);  
+        });
+    }, delay);
 }
 
 function suspend(time_to_suspend){
@@ -309,4 +325,3 @@ function suspend(time_to_suspend){
         walkingIcon.visible = true;
     }, time_to_suspend);
 }
-

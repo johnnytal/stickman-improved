@@ -40,8 +40,8 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pub_door':
-            showManText("Naa, it's still raining outside", 0);
-            //this.game.state.start('Street'); 
+            showManText("It opens easily from the inside", 0);
+            tween_black(1000, total_text_time, "Street");
         break;
         
         case 'broken_pub_window':
@@ -89,15 +89,8 @@ function interact_item(_static_item_clicked){
             suspend(9000);
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
             showManText("Let's go, Maybe that's where they keep the extra barrels", total_text_time);
-
-            setTimeout(function(){
-                bigBlack = game.add.sprite(0, 0, 'bigBlack');
-                bigBlack.alpha = 0;
-                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
-                theTween.onComplete.add(function(){
-                   game.state.start("Maze");   
-                }, this);
-            },9000);
+            
+            tween_black(2000, 9000, "Maze");
         break;
         
         case 'switch':
@@ -190,14 +183,7 @@ function window_mission(){
         walkingIcon.visible = false;
         showManText("Broken window, here I come!", 0); 
 
-        setTimeout(function(){
-            bigBlack = game.add.sprite(0, 0, 'bigBlack');
-            bigBlack.alpha = 0;
-            theTween = game.add.tween(bigBlack).to( { alpha: 1}, 1000, Phaser.Easing.Sinusoidal.InOut, true); 
-            theTween.onComplete.add(function(){
-                game.state.start("Pub");  
-            });
-        }, total_text_time);
+        tween_black(1000, total_text_time, "Pub");
         
         return true;
     }
@@ -207,13 +193,19 @@ function window_mission(){
 }
 
 function take_item(item){
-    switch(item.key){
+    var name = item.key; 
+    
+    switch(name){
         case 'ladder_s':
             showManText('This ladder fits right in my pocket!',500);
+            dead_items.push(name);
         break;
         
         case 'rock':
-           if (thisPlace == 'street') showManText('I will take this rock. because it rocks.', 0); 
+           if (thisPlace == 'street'){ 
+               showManText('I will take this rock. because it rocks.', 0);
+               dead_items.push(name);
+           }
            else if (thisPlace == 'pub') { showManText("Sticks and stones, best friends forever", 0); }
            else if (thisPlace == 'hall') { showManText("Stone ex-machina.\nHow did it even get here?!", 0); }
            else if (thisPlace == 'room') { showManText("You've got to be kidding me.", 800); }

@@ -19,8 +19,19 @@ street.prototype = {
         floor.body.immovable = true;
         
         create_street_items();
-        create_man(107, 291, 3);
         
+        var x, y;
+        
+        if (ladderMission || stoneMission){
+            x = 591;
+            y = 360;
+        }
+        else{
+            x = 107;
+            y = 291;    
+        }
+        create_man(x, y, 3);
+
         create_rain();
 
         fadeInScreen();
@@ -92,4 +103,12 @@ function create_street_items(){
     create_item( game, 'ladder_b', true, false, 493, 245, false );
     create_item( game, 'rock', true, true, 260, 340, true ); 
     create_item( game, 'bar_sign', true, false, 600, 174, true ); 
+    
+    if (ladderMission){
+        get_item('name', 'ladder_b').visible = true;  
+    }
+    
+    if (stoneMission){
+        get_item('name', 'broken_window').visible = true;
+    }
 }

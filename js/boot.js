@@ -1,5 +1,5 @@
-//window.onload = start;
-document.addEventListener("deviceready", start, false);
+window.onload = start;
+//document.addEventListener("deviceready", start, false);
 
 function start(){
     var place;
@@ -42,7 +42,7 @@ boot.prototype = {
         
         this.scale.forceOrientation(false, true);
 
-        this.scale.setScreenSize(true);
+        this.scale.updateLayout(true);
 
         game.state.start('Preloader');
     }
