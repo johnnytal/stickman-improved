@@ -17,6 +17,10 @@ function interact_item(_static_item_clicked){
             }
         break;
         
+        case 'alley_entrance':
+            tween_black(500, 150, "Alley"); 
+        break;
+        
         case 'window':
              if (!ladderMission){
                  showManText("Stickmen can't jump", 0);
@@ -201,14 +205,24 @@ function take_item(item){
             dead_items.push(name);
         break;
         
-        case 'rock':
-           if (thisPlace == 'street'){ 
-               showManText('I will take this rock. because it rocks.', 0);
-               dead_items.push(name);
-           }
-           else if (thisPlace == 'pub') { showManText("Sticks and stones, best friends forever", 0); }
-           else if (thisPlace == 'hall') { showManText("Stone ex-machina.\nHow did it even get here?!", 0); }
-           else if (thisPlace == 'room') { showManText("You've got to be kidding me.", 800); }
+        case 'rock_alley':
+           showManText('I will take this rock. because it rocks.', 0);
+           dead_items.push(name);
+        break;
+        
+        case 'rock_pub':
+           showManText("Sticks and stones, best friends forever", 0);
+           dead_items.push(name);
+        break;
+        
+        case 'rock_hall':
+           showManText("Stone ex-machina.\nHow did it even get here?!", 0);
+           dead_items.push(name);
+        break;
+        
+        case 'rock_room':
+           showManText("You've got to be kidding me.", 800);
+           dead_items.push(name);
         break;
         
         case 'glass':
@@ -268,18 +282,20 @@ function use_item(inventory_item, static_item){
             }
         break;
         
-        case("rock + door"):
-        case("rock + hall_door"):
+        case("rock_alley + door"):
+        case("rock_hall + hall_door"):
+        case("rock_pub + door"):
             showManText("Stoning the door won't help", 0);
             put_item_away(inventory_item, static_item);
         break;
         
-        case("rock + ladder_b"):
+        case("rock_alley + ladder_b"):
+        case("rock_pub + ladder_b"):
             showManText("That might break the ladder", 0);
             add_item_to_inventory(inventory_item); 
         break;
         
-        case('rock + window'):
+        case('rock_alley + window'):
             suspend(1200);
             showManText("Take that window!", 200);
             
@@ -296,6 +312,10 @@ function use_item(inventory_item, static_item){
             }, 1150);
         break;
         
+        case('rock_pub + broken_window'):
+            showManText("I'ts already very much broken", 0);
+        break;
+        
         case ('glass + pub_door'):
             showManText('"Stickman was here". There. I did it.', 200);
             put_item_away(inventory_item, static_item);
@@ -306,7 +326,7 @@ function use_item(inventory_item, static_item){
             put_item_away(inventory_item, static_item);
         break;
         
-        case ('rock + broken_pub_window'):
+        case ('rock_pub + broken_pub_window'):
             showManText("Already did it, it was a great success", 0);
             put_item_away(inventory_item, static_item);
         break;
@@ -316,7 +336,7 @@ function use_item(inventory_item, static_item){
             put_item_away(inventory_item, static_item);
         break;
 
-        case ('rock + pub_door'):
+        case ('rock_pub + pub_door'):
             showManText("Stickmen who lives in abonded pubs shouldn't throw stones", 0);
             put_item_away(inventory_item, static_item);
         break;
@@ -372,13 +392,13 @@ function use_item(inventory_item, static_item){
             put_item_away(inventory_item, static_item);
         break;
         
-        case ('rock + barrel'):
+        case ('rock_pub + barrel'):
             showManText("That's a bad way to open a barrel,\nI need something sharp... hmmm...", 0);
             add_item_to_inventory(inventory_item); 
         break;
         
         case ('glass + dart_board'):
-        case ('rock + dart_board'):
+        case ('rock_pub + dart_board'):
             showManText("That might damage the dartboard", 0);
             add_item_to_inventory(inventory_item); 
         break;
@@ -396,7 +416,7 @@ function use_item(inventory_item, static_item){
             }, 700);
         break;
         
-        case ('rock + barrel_glass'):
+        case ('rock_pub + barrel_glass'):
             suspend(9500);
             showManText("OK, here we go...", 0);
 
@@ -439,7 +459,7 @@ function use_item(inventory_item, static_item){
             drunkMission = true;
         break;
         
-        case ('rock + hall_window'):
+        case ('rock_hall + hall_window'):
             suspend(1150);
             showManText("That feels awfully familiar", 200);
             
@@ -456,7 +476,7 @@ function use_item(inventory_item, static_item){
             }, 1150);
         break;
         
-        case("rock + computer"):
+        case("rock_room + computer"):
             showManText("That's not a window.\nIt's windows. Ha.", 0);
             put_item_away(inventory_item, static_item);
         break;

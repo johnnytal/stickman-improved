@@ -25,17 +25,17 @@ maze.prototype = {
         
         thisPlace = 'maze';
         
+        reset_inventory();
+        
         walls = game.add.group();
         walls.enableBody = true;
         walls.physicsBodyType = Phaser.Physics.ARCADE;
         
         for(w = 0; w < mazeWalls.length; w++){ 
-            createWall(mazeWalls[w]); 
+            create_maze_walls(mazeWalls[w]); 
         }
         
         create_item( game, 'switch', true, false, 831, 358, true );
-
-        fadeInScreen();
 
         this.LIGHT_RADIUS = 70;
         LIGHT_RADIUS = this.LIGHT_RADIUS;
@@ -53,6 +53,8 @@ maze.prototype = {
 
         create_man(30, 185, 3);
         man.scale.set(0.33, 0.29);
+        
+        fadeInScreen();
 
         mazeText = showManText('Sure is dark here!', 1200);   
         
@@ -112,7 +114,7 @@ maze.prototype = {
 
     updateShadowTexture: function (switchMission) {
 
-        if (gameStop === true) {
+        if (gameStop === true) { // can delete this?
             return false;
         }
 
@@ -148,7 +150,7 @@ maze.prototype = {
     }
 };
 
-function createWall(cords){
+function create_maze_walls(cords){
     var x0, x1, y0, y1, startX, endX, startY, endY, sizeX, sizeY;
     
     x0 = cords[0];

@@ -1,11 +1,7 @@
-var menu = function(game){
-   
-};
+var menu = function(game){};
  
 menu.prototype = {
-    preload: function(){ 
-
-    },
+    preload: function(){},
     
     create: function(){   
         this.game.add.sprite(0, 0, 'opening');
@@ -81,8 +77,7 @@ function showAd(){
     var timeToShow = game.rnd.integerInRange(30000, 75000);
     var timeToHide = game.rnd.integerInRange(10000, 30000);
     
-    setTimeout(function(){
-        
+    setTimeout(function(){  
         try{
             banner.show();
         } catch(e){}
@@ -93,6 +88,5 @@ function showAd(){
                showAd();
            } catch(e){}
         }, timeToHide);
-        
     }, timeToShow);     
 }

@@ -22,13 +22,13 @@ street.prototype = {
         
         var x, y;
         
-        if (ladderMission || stoneMission){
+        if (ladderMission && stoneMission){
             x = 591;
             y = 360;
         }
         else{
-            x = 107;
-            y = 291;    
+            x = 119;
+            y = 294;    
         }
         create_man(x, y, 3);
 
@@ -37,16 +37,20 @@ street.prototype = {
         fadeInScreen();
         
         street_music.play();
-
-        try{
-            Cocoon.Ad.AdMob.configure({
-                android: { 
-                    banner:"ca-app-pub-9795366520625065/9752537037"
-                }
-            });
-            banner = Cocoon.Ad.AdMob.createBanner();
-            banner.load();
-        } catch(e){}
+        
+        if (banner_not_created){
+            try{
+                Cocoon.Ad.AdMob.configure({
+                    android: { 
+                        banner:"ca-app-pub-9795366520625065/9752537037"
+                    }
+                });
+                banner = Cocoon.Ad.AdMob.createBanner();
+                banner.load();
+                
+                banner_not_created = false;
+            } catch(e){}
+        }
     },
     
     update: function(){
@@ -69,6 +73,7 @@ street.prototype = {
             } 
                 
             else if (man.body.x - placeToGoX > 3 && man.body.x > 35){ // man walk left
+                
                man.body.velocity.x = -MAN_VEL_X; 
               
                if (man.body.x < MIDDLE) man.body.velocity.y = -MAN_VEL_Y;
@@ -94,16 +99,16 @@ street.prototype = {
 };
 
 function create_street_items(){
-    drawLine();
     
-    create_item( game, 'ladder_s', true, true, 635, 285, true );
+    reset_inventory();
+
     create_item( game, 'door', false, false, 520, 264, true );
     create_item( game, 'window', false, false, 490, 88, true );
     create_item( game, 'broken_window', true, false, 491, 172, false );
     create_item( game, 'ladder_b', true, false, 493, 245, false );
-    create_item( game, 'rock', true, true, 260, 340, true ); 
     create_item( game, 'bar_sign', true, false, 600, 174, true ); 
-    
+    create_item( game, 'alley_entrance', false, false, 144, 267, true );
+     
     if (ladderMission){
         get_item('name', 'ladder_b').visible = true;  
     }

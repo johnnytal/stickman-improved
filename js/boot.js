@@ -16,6 +16,7 @@ function start(){
     game.state.add("Menu", menu);
     game.state.add("Game", game_main);
     game.state.add("Street", street);
+    game.state.add("Alley", alley);
     game.state.add("Pub", pub);
     game.state.add("Maze", maze);
     game.state.add("Hall", hall);
@@ -29,6 +30,7 @@ var boot = function(game){};
 boot.prototype = {
     create: function(){
         font = 'Fontdiner Swanky';
+        banner_not_created = true;
 
         try{
             place = localStorage.getItem("stickman-location");

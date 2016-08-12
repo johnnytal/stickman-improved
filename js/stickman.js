@@ -45,12 +45,9 @@ function take_from_inventory(item){
 }
 
 function stop_man(){    
-    if (sfxSteps.isPlaying){
-         sfxSteps.stop();
-     }
+    if (sfxSteps.isPlaying) sfxSteps.stop();  
     if (sfxSteps_pub.isPlaying) sfxSteps_pub.stop();
-    
-    man.animations.stop();
+
     man.body.velocity.x = 0;
     man.body.velocity.y = 0;
     
@@ -58,8 +55,8 @@ function stop_man(){
     else{ man.frame = 4; }   
 
     if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 40)){
-        take_item(itemToTake);      
-        take_from_inventory(null); // in case you select from inventory and click a takeable item
+        take_item(itemToTake);  
+        take_from_inventory(null); // in case user select from inventory and click a takeable item
     }
     
     if (itemToTake != null && itemToTake.isTaken){
@@ -72,6 +69,8 @@ function stop_man(){
     
     placeToGoX = null;
     placeToGoY = null;
+    
+    man.animations.stop();
 }
 
 function kill_inventory_item(_item){
@@ -84,19 +83,22 @@ function kill_inventory_item(_item){
     itemToTake = null;
 }
 
-function add_item_to_inventory(_item){
+function add_item_to_inventory(_item, v){ 
     if (inventory.indexOf(_item) == -1){
         inventory.push(_item);
     }
-    
-    for (i = 0; i < inventory.length; i++){
-        get_item('name', inventory[i].key).fixedToCamera = false; // to move back the rest of the items
-        get_item('name', inventory[i].key).y = 535;
-        
-        inventory[i].x = ((i + 1) * 50) + 100; 
-        
-        get_item('name', inventory[i].key).fixedToCamera = true;
-    } 
+
+    if (!v){
+        for (i = 0; i < inventory.length; i++){
+            
+            get_item('name', inventory[i].key).fixedToCamera = false; // to move back the rest of the items
+            get_item('name', inventory[i].key).y = 535;
+            
+            inventory[i].x = ((i + 1) * 50) + 100; 
+            
+            get_item('name', inventory[i].key).fixedToCamera = true;
+        }
+    }
     
     _item.isTaken = true;
     _item.y = 535;
@@ -137,7 +139,6 @@ function create_man(x, y, _frame){
     
     if (thisPlace == 'maze'){
         walkingIcon.scale.set(0.45, 0.45);
-        game.add.tween(man).from( { alpha: 0}, 2500, Phaser.Easing.Sinusoidal.InOut, true); 
     }
     
     game.camera.follow(man, Phaser.Camera.topdownFollow);
@@ -145,7 +146,7 @@ function create_man(x, y, _frame){
 
 function walk_update(){
     walkingIcon.x = game.input.x + game.camera.x; 
-    walkingIcon.y = game.input.y - 10 + game.camera.y;   
+    walkingIcon.y = game.input.y - 10 + game.camera.y;  
     
     if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y < 470 && suspended == false){
         placeToGoX = game.input.x + game.camera.x;
@@ -198,37 +199,29 @@ function create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible){
             isTakeable, 
             x_cor,
             y_cor,
-            visible
-        ));    
+            visible,
+            false
+        )); 
     }
 }
 
-function create_rain(){
-    sfxRain.play();
- 
-    emitter = game.add.emitter(game.world.centerX, -100, 500);
-
-    emitter.width = game.world.width;
-    emitter.angle = 17;
-
-    emitter.makeParticles('rain');
-
-    emitter.minParticleScale = 0.1;
-    emitter.maxParticleScale = 0.5;
-
-    emitter.setYSpeed(350, 650);
-    emitter.setXSpeed(-7, 7);
-
-    emitter.minRotation = 0;
-    emitter.maxRotation = 0;
-
-    emitter.start(false, 1600, 5, 0);
-}
-
-function drawLine(){
+function reset_inventory(){
+    items = [];
+    
     line = game.add.sprite(96, TOTAL_HEIGHT - 100, 'line');
     line.alpha = 0.3;
     line.fixedToCamera = true;
+    
+    var pseudoInventory = inventory;
+
+    inventory = [];
+   
+    for (i = 0; i < pseudoInventory.length; i++){
+        var x = ((i + 1) * 50) + 100; 
+        var name = pseudoInventory[i].key;
+
+        items.push(new Item(game, name, true, true, x, 535, true, true));
+    }    
 }
 
 function endTheGame(){ 
@@ -324,4 +317,26 @@ function suspend(time_to_suspend){
         suspended = false;
         walkingIcon.visible = true;
     }, time_to_suspend);
+}
+
+function create_rain(){
+    sfxRain.play();
+ 
+    emitter = game.add.emitter(game.world.centerX, -100, 500);
+
+    emitter.width = game.world.width;
+    emitter.angle = 17;
+
+    emitter.makeParticles('rain');
+
+    emitter.minParticleScale = 0.1;
+    emitter.maxParticleScale = 0.5;
+
+    emitter.setYSpeed(350, 650);
+    emitter.setXSpeed(-7, 7);
+
+    emitter.minRotation = 0;
+    emitter.maxRotation = 0;
+
+    emitter.start(false, 1600, 5, 0);
 }

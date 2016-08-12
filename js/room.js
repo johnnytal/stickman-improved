@@ -86,12 +86,6 @@ room.prototype = {
             placeToGoX = 'null'; 
         }, null, this); 
         
-        /*game.physics.arcade.collide(man, walls, function(){
-            if (man.body.touching.left || man.body.touching.right) placeToGoX = 'null';
-             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
-            else { placeToGoY = 'null'; }
-        }, null, this);*/
-        
         factor = (1.5 + (man.body.y / 80)) * 0.15; //scale man size
         man.scale.set(factor, factor);  
     },
@@ -103,8 +97,8 @@ function hitRoomBounds(){
 }
 
 function create_room_items(){
-    drawLine();
+    reset_inventory();
     
     create_item( game, 'computer', false, false, 246, 12, true );
-    create_item( game, 'rock', true, true, 70, 462, true );
+    create_item( game, 'rock_room', true, true, 70, 462, true );
 }

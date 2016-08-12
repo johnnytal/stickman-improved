@@ -11,6 +11,7 @@ preloader.prototype = {
         game.load.image('pub', 'images/stickman/pub.jpg');
         game.load.image('maze', 'images/stickman/maze.jpg');
         game.load.image('hall', 'images/stickman/hall.jpg');
+        game.load.image('alley', 'images/stickman/alley.jpg');
         game.load.image('door', 'images/stickman/door.png');
         game.load.image('ladder_s', 'images/stickman/ladder_s.png');
         game.load.image('bar_sign', 'images/stickman/bar_sign.png');
@@ -21,7 +22,11 @@ preloader.prototype = {
         game.load.image('rain', 'images/stickman/rain.png');
         game.load.image('ladder_s', 'images/stickman/ladder_s.png');
         game.load.image('ladder_b', 'images/stickman/ladder_b.png');
-        game.load.image('rock', 'images/stickman/rock.png');
+        game.load.image('alley_entrance', 'images/stickman/alley_entrance.png');
+        game.load.image('rock_alley', 'images/stickman/rock_alley.png');
+        game.load.image('rock_pub', 'images/stickman/rock_pub.png');
+        game.load.image('rock_hall', 'images/stickman/rock_hall.png');
+        game.load.image('rock_room', 'images/stickman/rock_room.png');
         game.load.image('glass', 'images/stickman/glass.png');
         game.load.image('broken_pub_window', 'images/stickman/broken_pub_window.png');
         game.load.image('barrel', 'images/stickman/barrel.png');
@@ -48,7 +53,7 @@ preloader.prototype = {
         game.load.image('image2', 'images/stickman/image2.jpg');
         game.load.image('image3', 'images/stickman/image3.jpg');
         game.load.image('image4', 'images/stickman/image4.jpg');
-        
+
         game.load.audio('hall_music', 'sounds/stickman/music/hall_music.ogg');
         game.load.audio('street_music', 'sounds/stickman/music/street_music.ogg');
         game.load.audio('pub_music', 'sounds/stickman/music/pub_music.ogg');

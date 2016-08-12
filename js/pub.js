@@ -87,7 +87,7 @@ function hitPubBounds(){
 }
 
 function create_pub_items(){
-    drawLine();
+    reset_inventory();
     
     create_item( game, 'glass', true, true, 610, 417, true );
     create_item( game, 'barrel', true, false, 653, 260, true );
@@ -98,10 +98,11 @@ function create_pub_items(){
     create_item( game, 'broken_pub_window', false, false, 588, 7, true );
     create_item( game, 'dart', true, true, 222, 413, true );
     create_item( game, 'dart_board', true, false, 558, 185, true );
-    create_item( game, 'rock', true, true, 588, 440, true );
+    create_item( game, 'rock_pub', true, true, 588, 440, true );
     create_item( game, 'secret_door', true, false, 877, 420, false );
-    //create_item( game, 'stool', true, false, 305, 283, true );
     create_item( game, 'chandelier', false, false, 364, 0, true );
-    create_item( game, 'wc_door', false, false, 788, 200, true ); // stop man comes before the interaction with door
+    create_item( game, 'wc_door', false, false, 788, 200, true );
     create_item( game, 'poster', false, false, 694, 170, true );
+    
+    //create_item( game, 'stool', true, false, 305, 283, true );
 }
