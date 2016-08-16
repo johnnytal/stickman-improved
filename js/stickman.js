@@ -19,11 +19,8 @@ var game_main = function(game){
 
      inventory = [];
      items = [];
-     dead_items = [];
      
      dir = 'right';
-     
-     var emitter;
 };
 
 game_main.prototype = {
@@ -54,9 +51,14 @@ function stop_man(){
     if ( dir == 'right' ) man.frame = 3;
     else{ man.frame = 4; }   
 
-    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && Math.abs(man.body.x - itemToTake.x < 40)){
+    if (itemToTake != null && !itemToTake.isTaken && static_item_clicked == null && 
+        Math.abs(man.body.x - itemToTake.x < 40) && Math.abs(man.body.y - itemToTake.y < 80)){
         take_item(itemToTake);  
         take_from_inventory(null); // in case user select from inventory and click a takeable item
+    }
+    else if (itemToTake != null && !itemToTake.isTaken){ // cancel selection 
+        itemToTake.tint = 0xffffff;
+        itemToTake = null;
     }
     
     if (itemToTake != null && itemToTake.isTaken){
@@ -90,13 +92,14 @@ function add_item_to_inventory(_item, v){
 
     if (!v){
         for (i = 0; i < inventory.length; i++){
-            
-            get_item('name', inventory[i].key).fixedToCamera = false; // to move back the rest of the items
-            get_item('name', inventory[i].key).y = 535;
-            
-            inventory[i].x = ((i + 1) * 50) + 100; 
-            
-            get_item('name', inventory[i].key).fixedToCamera = true;
+            try{
+                get_item('name', inventory[i].key).fixedToCamera = false; // to move back the rest of the items
+                get_item('name', inventory[i].key).y = 535;
+                
+                inventory[i].x = ((i + 1) * 50) + 100; 
+                
+                get_item('name', inventory[i].key).fixedToCamera = true;
+            } catch(e){}
         }
     }
     
@@ -190,19 +193,17 @@ function get_item(attr, value) {
     }
 }
 
-function create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible){
-    if (dead_items.indexOf(name) == -1){
-        items.push(new Item(
-            game, 
-            name,
-            isLayered,
-            isTakeable, 
-            x_cor,
-            y_cor,
-            visible,
-            false
-        )); 
-    }
+function create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible, taken){
+    items.push(new Item(
+        game,
+        name,
+        isLayered,
+        isTakeable, 
+        x_cor,
+        y_cor,
+        visible,
+        taken
+    )); 
 }
 
 function reset_inventory(){
@@ -224,6 +225,80 @@ function reset_inventory(){
     }    
 }
 
+function tween_black(time, delay, going_to, _coming_from){
+    setTimeout(function(){
+        bigBlack = game.add.sprite(0, 0, 'bigBlack');
+        bigBlack.alpha = 0;
+        
+        theTween = game.add.tween(bigBlack).to( { alpha: 1}, time, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        theTween.onComplete.add(function(){
+            coming_from = _coming_from;
+            game.state.start(going_to);  
+        });
+    }, delay);
+}
+
+function store_game_state(items, place){    
+    
+    var last_item = "stickman-item" + (items.length) + place;
+     
+    for (i = 0; i < items.length; i++){
+        localStorage.setItem("stickman-item" + i + place, JSON.stringify([
+            items[i].name, 
+            items[i].isLayered, 
+            items[i].isTakeable, 
+            items[i].x, 
+            items[i].y, 
+            items[i].sprite.visible, 
+            items[i].sprite.isTaken
+        ]));
+    }
+
+    if (localStorage.getItem(last_item) != null && localStorage.getItem(last_item) != undefined &&
+        localStorage.getItem(last_item) != 'undefined'){ 
+        localStorage.removeItem(last_item);
+    }
+}
+
+function load_items_state(num_of_items){
+    var i = 0;
+    var num;
+    
+    if (num_of_items != null){
+        num = num_of_items;
+    } 
+ 
+    while(localStorage.getItem("stickman-item" + i + thisPlace) != null &&
+        localStorage.getItem("stickman-item" + i + thisPlace) != undefined &&
+        localStorage.getItem("stickman-item" + i + thisPlace) != 'undefined' &&
+        i != num){
+            
+        var name = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[0];
+        var isLayered = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[1];
+        var isTakeable = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[2];
+        var x_cor = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[3];
+        var y_cor = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[4];
+        var visible = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[5];
+        var isTaken = JSON.parse(localStorage.getItem("stickman-item" + i + thisPlace))[6];
+        
+        if (!isTaken){
+            create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible, isTaken);
+        } 
+        i++;
+    }
+}
+
+function suspend(time_to_suspend){
+    walkingIcon.visible = false;
+    suspended = true;
+    
+    setTimeout(function(){
+        suspended = false;
+        walkingIcon.visible = true;
+    }, time_to_suspend);
+}
+
 function endTheGame(){ 
     suspended = true;
     tween_alpha(bigBlack, 1, 3000);
@@ -231,7 +306,7 @@ function endTheGame(){
     timePassedText = game.add.text(40 + game.camera.x, 120, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText.alpha = 0;
 
-    timePassedText2 = game.add.text(40 + game.camera.x, 245, 'October 31, 2016' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
+    timePassedText2 = game.add.text(40 + game.camera.x, 245, 'October 31st, 2016' , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText2.alpha = 0;
 
     tween_alpha(timePassedText, 1, 4500);            
@@ -294,29 +369,6 @@ function endTheGame(){
 
 function tween_alpha(what, where, time){
     game.add.tween(what).to( { alpha: where}, time, Phaser.Easing.Sinusoidal.InOut, true); 
-}
-
-function tween_black(time, delay, place){
-    setTimeout(function(){
-        bigBlack = game.add.sprite(0, 0, 'bigBlack');
-        bigBlack.alpha = 0;
-        
-        theTween = game.add.tween(bigBlack).to( { alpha: 1}, time, Phaser.Easing.Sinusoidal.InOut, true); 
-        
-        theTween.onComplete.add(function(){
-            game.state.start(place);  
-        });
-    }, delay);
-}
-
-function suspend(time_to_suspend){
-    walkingIcon.visible = false;
-    suspended = true;
-    
-    setTimeout(function(){
-        suspended = false;
-        walkingIcon.visible = true;
-    }, time_to_suspend);
 }
 
 function create_rain(){

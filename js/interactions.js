@@ -18,7 +18,17 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'alley_entrance':
-            tween_black(500, 150, "Alley"); 
+            store_game_state(items, 'Street');
+            
+            if (first_visit['Alley']){
+                showManText("There's a narrow alley here", 0);
+                suspend(total_text_time);
+                tween_black(500, total_text_time, "Alley", "Street"); 
+            }
+            
+            else{
+                tween_black(500, 150, "Alley", "Street"); 
+            }
         break;
         
         case 'window':
@@ -44,8 +54,8 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pub_door':
-            showManText("It opens easily from the inside", 0);
-            tween_black(1000, total_text_time, "Street");
+            store_game_state(items, 'Pub');
+            tween_black(700, 200, "Street", "Pub");
         break;
         
         case 'broken_pub_window':
@@ -103,6 +113,7 @@ function interact_item(_static_item_clicked){
                 sfxLight_switch.play();
                 
                 showManText("Too bad there was no switch on the other side", 750);
+                suspend(total_text_time);
                 
                 setTimeout(function(){
                     theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
@@ -130,8 +141,7 @@ function interact_item(_static_item_clicked){
             
             setTimeout(function(){
                 
-                hall_music.fadeOut();
-                street_music.play();
+                change_music(street_music);
                  
                 bigBlack = game.add.sprite(0, 0, 'bigBlack');
                 bigBlack.alpha = 0;
@@ -185,8 +195,9 @@ function interact_item(_static_item_clicked){
 function window_mission(){
     if (ladderMission && stoneMission){
         walkingIcon.visible = false;
+        
         showManText("Broken window, here I come!", 0); 
-
+        store_game_state(items, 'Street');
         tween_black(1000, total_text_time, "Pub");
         
         return true;
@@ -202,27 +213,22 @@ function take_item(item){
     switch(name){
         case 'ladder_s':
             showManText('This ladder fits right in my pocket!',500);
-            dead_items.push(name);
         break;
         
         case 'rock_alley':
            showManText('I will take this rock. because it rocks.', 0);
-           dead_items.push(name);
         break;
         
         case 'rock_pub':
            showManText("Sticks and stones, best friends forever", 0);
-           dead_items.push(name);
         break;
         
         case 'rock_hall':
            showManText("Stone ex-machina.\nHow did it even get here?!", 0);
-           dead_items.push(name);
         break;
         
         case 'rock_room':
            showManText("You've got to be kidding me.", 800);
-           dead_items.push(name);
         break;
         
         case 'glass':
@@ -347,7 +353,7 @@ function use_item(inventory_item, static_item){
             if (!drunkMission){
                 suspend(1000);
                 
-                setTimeout(function(){   
+                setTimeout(function(){  
                     create_item( game, 'dart', true, true, 474, 224, true );
                 },300);
 

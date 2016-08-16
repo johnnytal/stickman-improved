@@ -2,9 +2,7 @@ window.onload = start;
 //document.addEventListener("deviceready", start, false);
 
 function start(){
-    var place;
-    var thisPlace;
-    var banner;
+    var place, thisPlace, coming_from, banner, first_visit, emitter;
     
     WIDTH = 703; 
     HEIGHT = 580;
@@ -36,7 +34,7 @@ boot.prototype = {
             place = localStorage.getItem("stickman-location");
         }
         catch(e){}
-
+        
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         this.scale.maxWidth = window.innerWidth * window.devicePixelRatio;

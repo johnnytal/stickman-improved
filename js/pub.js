@@ -7,11 +7,10 @@ pub.prototype = {
     
     create: function(){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
+
+        change_music(pub_music);
         
-        street_music.fadeOut();
-        pub_music.fadeIn();
-        
-        thisPlace = 'pub';
+        thisPlace = 'Pub';
         items = [];
        
         pub_bound_u = game.add.sprite(0, 0, null);
@@ -24,12 +23,12 @@ pub.prototype = {
 
         sfxRain.stop();
 
+        localStorage.setItem("stickman-location", thisPlace);
+
         fadeInScreen();
 
         showManText('This pub seems abonded, just like the rest of the town', 1400);
         suspend(total_text_time);
-        
-        localStorage.setItem( "stickman-location", 'Pub' );
     },
     
     update: function(){
@@ -87,22 +86,32 @@ function hitPubBounds(){
 }
 
 function create_pub_items(){
+    
     reset_inventory();
+
+    if (first_visit[thisPlace]){
+        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'glass', true, true, 610, 417, true ]));
+        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'barrel', true, false, 653, 260, true ]));
+        localStorage.setItem("stickman-item2" + thisPlace, JSON.stringify([ 'barrel_glass', true, false, 653, 260, false ]));
+        localStorage.setItem("stickman-item3" + thisPlace, JSON.stringify([ 'barrel_open', true, false, 653, 260, false ]));
+        localStorage.setItem("stickman-item4" + thisPlace, JSON.stringify([ 'barrel_empty', true, false, 600, 265, false ]));
+        localStorage.setItem("stickman-item5" + thisPlace, JSON.stringify([ 'pub_door', false, false, 431, 193, true ]));
+        localStorage.setItem("stickman-item6" + thisPlace, JSON.stringify([ 'broken_pub_window', false, false, 588, 7, true ]));
+        localStorage.setItem("stickman-item7" + thisPlace, JSON.stringify([ 'dart', true, true, 222, 413, true ]));
+        localStorage.setItem("stickman-item8" + thisPlace, JSON.stringify([ 'dart_board', true, false, 558, 185, true ]));
+        localStorage.setItem("stickman-item9" + thisPlace, JSON.stringify([ 'rock_pub', true, true, 588, 440, true ]));
+        localStorage.setItem("stickman-item10" + thisPlace, JSON.stringify([ 'secret_door', true, false, 877, 420, false ]));
+        localStorage.setItem("stickman-item11" + thisPlace, JSON.stringify([ 'chandelier', false, false, 364, 0, true ]));
+        localStorage.setItem("stickman-item12" + thisPlace, JSON.stringify([ 'wc_door', false, false, 788, 200, true ]));
+        localStorage.setItem("stickman-item13" + thisPlace, JSON.stringify([ 'poster', false, false, 694, 170, true ]));
+        //localStorage.setItem("stickman-item15" + thisPlace, JSON.stringify([ 'stool', true, false, 305, 283, true ]));
+        
+        first_visit[thisPlace] = false;
+        load_items_state(14);
+    }
     
-    create_item( game, 'glass', true, true, 610, 417, true );
-    create_item( game, 'barrel', true, false, 653, 260, true );
-    create_item( game, 'barrel_glass', true, false, 653, 260, false );
-    create_item( game, 'barrel_open', true, false, 653, 260, false );
-    create_item( game, 'barrel_empty', true, false, 600, 265, false );
-    create_item( game, 'pub_door', false, false, 431, 193, true );
-    create_item( game, 'broken_pub_window', false, false, 588, 7, true );
-    create_item( game, 'dart', true, true, 222, 413, true );
-    create_item( game, 'dart_board', true, false, 558, 185, true );
-    create_item( game, 'rock_pub', true, true, 588, 440, true );
-    create_item( game, 'secret_door', true, false, 877, 420, false );
-    create_item( game, 'chandelier', false, false, 364, 0, true );
-    create_item( game, 'wc_door', false, false, 788, 200, true );
-    create_item( game, 'poster', false, false, 694, 170, true );
-    
-    //create_item( game, 'stool', true, false, 305, 283, true );
+    else{
+        load_items_state(null);
+        localStorage.setItem("stickman-first_visit_to" + thisPlace, false);
+    }
 }

@@ -25,7 +25,7 @@ alley.prototype = {
         graphics.drawPolygon(poly.points);
         graphics.endFill();*/
         
-        thisPlace = 'alley';
+        thisPlace = 'Alley';
         
         walls = game.add.group();
         walls.enableBody = true;
@@ -39,9 +39,9 @@ alley.prototype = {
 
         create_man(600, 440, 4);
         
+        localStorage.setItem("stickman-location", thisPlace);
+        
         fadeInScreen();
-
-        localStorage.setItem( "stickman-location", 'Alley' );
     },
     
     update: function(){
@@ -99,7 +99,8 @@ alley.prototype = {
         }, null, this);
         
         if (man.x > 730){
-            tween_black(500, 0, "Street");
+            store_game_state(items, thisPlace);
+            tween_black(500, 0, "Street", thisPlace);
         }
         
         factor = (1.5 + (man.body.y / 80)) * 0.17; //scale man size
@@ -107,15 +108,8 @@ alley.prototype = {
     },
 };
 
-function create_alley_items(){
-    reset_inventory();
-
-    create_item( game, 'ladder_s', true, true, 595, 242, true );
-    create_item( game, 'rock_alley', true, true, 450, 385, true ); 
-}
-
 function create_alley_walls(cords){
-    var x0, x1, y0, y1, startX, endX, startY, endY, sizeX, sizeY;
+    var x0, x1, y0, y1, startX, startY, sizeX, sizeY;
     
     x0 = cords[0];
     x1 = cords[2];
@@ -135,4 +129,22 @@ function create_alley_walls(cords){
     wall = walls.create(startX, startY, '');
     wall.body.setSize(sizeX, sizeY);
     wall.body.immovable = true;
+}
+
+function create_alley_items(){
+    reset_inventory();
+
+    if (first_visit[thisPlace]){
+        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'ladder_s', true, true, 595, 242, true, false ]));
+        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'rock_alley', true, true, 490, 385, true, false ]));
+
+        first_visit[thisPlace] = false;
+        localStorage.setItem("stickman-first_visit_to" + thisPlace, false);
+        
+        load_items_state(2);
+    }
+    
+    else{
+        load_items_state(null); 
+    }
 }

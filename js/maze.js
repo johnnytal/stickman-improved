@@ -12,18 +12,15 @@ var maze = function(game){
     
     VELOCITY = 60;
     DISTANCE = 3;
-
-    gameStop = false;
 };
 
 maze.prototype = {
     create: function(){
         maze = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'maze');
         
-        pub_music.fadeOut();
-        maze_music.fadeIn();
+        change_music(maze_music);
         
-        thisPlace = 'maze';
+        thisPlace = 'Maze';
         
         reset_inventory();
         
@@ -35,7 +32,7 @@ maze.prototype = {
             create_maze_walls(mazeWalls[w]); 
         }
         
-        create_item( game, 'switch', true, false, 831, 358, true );
+        create_maze_items();
 
         this.LIGHT_RADIUS = 70;
         LIGHT_RADIUS = this.LIGHT_RADIUS;
@@ -54,11 +51,11 @@ maze.prototype = {
         create_man(30, 185, 3);
         man.scale.set(0.33, 0.29);
         
+        localStorage.setItem("stickman-location", thisPlace);
+        
         fadeInScreen();
 
         mazeText = showManText('Sure is dark here!', 1200);   
-        
-        localStorage.setItem( "stickman-location", 'Maze' );
     },
     
     update: function(){
@@ -112,13 +109,7 @@ maze.prototype = {
         this.updateShadowTexture(switchMission);
     },
 
-    updateShadowTexture: function (switchMission) {
-
-        if (gameStop === true) { // can delete this?
-            return false;
-        }
-
-        // Draw shadow
+    updateShadowTexture: function(switchMission){ // Draw shadow
         if (switchMission) {
             this.shadowTexture.context.fillStyle = 'rgb(255, 255, 255)';
         } 
@@ -132,7 +123,6 @@ maze.prototype = {
             posY = man.y - (this.LIGHT_RADIUS/2);
         }
 
-        // Draw circle of light with a soft edge
         var gradient = this.shadowTexture.context.createRadialGradient(
             man.x, posY, this.LIGHT_RADIUS * 0.75,
             man.x, posY, this.LIGHT_RADIUS);
@@ -143,8 +133,6 @@ maze.prototype = {
         this.shadowTexture.context.fillStyle = gradient;
         this.shadowTexture.context.arc(man.x, posY, this.LIGHT_RADIUS, 0, Math.PI * 2);
         this.shadowTexture.context.fill();
-
-        // This just tells the engine it should update the texture cache
         this.shadowTexture.dirty = true;
         game.world.bringToTop(this.shadowTexture);
     }
@@ -171,4 +159,16 @@ function create_maze_walls(cords){
     wall = walls.create(startX, startY, '');
     wall.body.setSize(sizeX, sizeY);
     wall.body.immovable = true;
+}
+
+function create_maze_items(){
+    reset_inventory();
+
+    if (first_visit[thisPlace]){
+        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'switch', true, false, 831, 358, true ]));
+        
+        first_visit[thisPlace] = false;
+    }
+    
+    load_items_state();
 }

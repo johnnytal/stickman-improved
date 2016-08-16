@@ -13,11 +13,10 @@ hall.prototype = {
     
     create: function(){
         hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');  
+            
+        change_music(hall_music);
         
-        maze_music.fadeOut();
-        hall_music.fadeIn();
-        
-        thisPlace = 'hall'; 
+        thisPlace = 'Hall'; 
         
         walls = game.add.group();
         walls.enableBody = true;
@@ -29,13 +28,13 @@ hall.prototype = {
         
         create_hall_items();
         create_man(60, 470, 3);
+        
+        localStorage.setItem("stickman-location", thisPlace);
 
         fadeInScreen();
         
         showManText('That was kinda fun!', 1000);
         suspend(total_text_time);
-
-        localStorage.setItem( "stickman-location", 'Hall' );
     },
     
     update: function(){

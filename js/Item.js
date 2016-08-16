@@ -5,13 +5,14 @@ Item = function (game, name, isLayered, isTakeable, x_cor, y_cor, visible, isTak
     this.isTakeable = isTakeable;    
     this.x = x_cor;
     this.y = y_cor;
-    this.isTaken = isTaken; // can delete?
-
+    this.visible = visible;
+    
     this.sprite = game.add.sprite(x_cor, y_cor, name);
     sprite = this.sprite;
 
     sprite.inputEnabled = true;
     sprite.visible = visible;
+    sprite.isTaken = isTaken;
     
     sprite.events.onInputOver.add(function(){ walkingIcon.frame = 1; });
     sprite.events.onInputOut.add(function(){ walkingIcon.frame = 0; });

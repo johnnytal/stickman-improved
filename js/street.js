@@ -11,7 +11,7 @@ street.prototype = {
     create: function(){
         street = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'street');    
         
-        thisPlace = 'street';
+        thisPlace = 'Street';
 
         floor = game.add.sprite(TOTAL_WIDTH/2-27, 450, null);
         game.physics.enable(floor, Phaser.Physics.ARCADE);
@@ -22,7 +22,7 @@ street.prototype = {
         
         var x, y;
         
-        if (ladderMission && stoneMission){
+        if (coming_from == 'Pub'){
             x = 591;
             y = 360;
         }
@@ -36,7 +36,7 @@ street.prototype = {
 
         fadeInScreen();
         
-        street_music.play();
+        change_music(street_music);
         
         if (banner_not_created){
             try{
@@ -102,18 +102,21 @@ function create_street_items(){
     
     reset_inventory();
 
-    create_item( game, 'door', false, false, 520, 264, true );
-    create_item( game, 'window', false, false, 490, 88, true );
-    create_item( game, 'broken_window', true, false, 491, 172, false );
-    create_item( game, 'ladder_b', true, false, 493, 245, false );
-    create_item( game, 'bar_sign', true, false, 600, 174, true ); 
-    create_item( game, 'alley_entrance', false, false, 144, 267, true );
-     
-    if (ladderMission){
-        get_item('name', 'ladder_b').visible = true;  
+    if (first_visit[thisPlace]){
+        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'door', false, false, 520, 264, true ]));
+        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'window', false, false, 490, 88, true ]));
+        localStorage.setItem("stickman-item2" + thisPlace, JSON.stringify([ 'broken_window', true, false, 491, 172, false ]));
+        localStorage.setItem("stickman-item3" + thisPlace, JSON.stringify([ 'ladder_b', true, false, 493, 245, false ]));
+        localStorage.setItem("stickman-item4" + thisPlace, JSON.stringify([ 'bar_sign', true, false, 600, 174, true ]));
+        localStorage.setItem("stickman-item5" + thisPlace, JSON.stringify([ 'alley_entrance', false, false, 144, 267, true ]));
+        
+        first_visit[thisPlace] = false; // for this game
+        localStorage.setItem("stickman-first_visit_to" + thisPlace, false); // for continues
+        
+        load_items_state(6);
     }
     
-    if (stoneMission){
-        get_item('name', 'broken_window').visible = true;
+    else{
+        load_items_state(null);    
     }
 }

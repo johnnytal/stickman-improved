@@ -16,15 +16,51 @@ menu.prototype = {
         loadSfx();
 
         startBtn.events.onInputUp.add(function(){ 
+            first_visit = {
+                
+                Street: true,
+                Alley: true,
+                Pub: true, 
+                Wc: true,
+                Roof: true,
+                Maze: true, 
+                Hall: true,
+                Stone_room: true,
+                Room: true
+                
+            }; 
+            
             place = "Street";
             startGame();
+            
         }, this);
         
         contBtn.events.onInputUp.add(function(){ 
+            first_visit = {
+                
+                Street: localStorage.getItem("stickman-first_visit_toStreet"),
+                Alley: localStorage.getItem("stickman-first_visit_toAlley"),
+                Pub: localStorage.getItem("stickman-first_visit_toPub"),
+                Wc: localStorage.getItem("stickman-first_visit_toWc"),
+                Roof: localStorage.getItem("stickman-first_visit_toRoof"),
+                Maze: localStorage.getItem("stickman-first_visit_toMaze"),
+                Hall: localStorage.getItem("stickman-first_visit_toHall"),
+                Stone_room: localStorage.getItem("stickman-first_visit_toStone_room"),
+                Room: localStorage.getItem("stickman-first_visit_toRoom"),
+
+            }; 
+
+            for (var key in first_visit) {
+                if (first_visit[key] == null){
+                    first_visit[key] = true;
+                }
+            }
+            
             if (place == null){
                 place = "Street";
             }
             startGame();
+            
         }, this);
                 
         startBtn.events.onInputDown.add(function(){ 
@@ -71,6 +107,30 @@ function loadSfx(){
     street_music = game.add.audio('street_music', 0.7, true);
     pub_music = game.add.audio('pub_music', 0.6, true);
     maze_music = game.add.audio('maze_music', 0.7, true);
+}
+
+function change_music(music_to_play){
+    musics = [street_music, pub_music, hall_music, maze_music];
+    
+    for(m = 0; m < musics.length; m++){
+        if (musics[m].isPlaying && musics[m] != music_to_play){
+            musics[m].fadeOut();
+            
+            setTimeout(function(){ // in case fadeOut fails
+                try{
+                    musics[m].stop();
+                } catch(e){}
+            }, 1500);
+        } 
+    }
+    
+    music_to_play.fadeIn();
+    
+    setTimeout(function(){ // in case fadeIn fails
+        if (!music_to_play.isPlaying){
+            music_to_play.play();
+        }   
+    }, 1500);
 }
 
 function showAd(){

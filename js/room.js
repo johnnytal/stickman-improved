@@ -8,7 +8,7 @@ room.prototype = {
     create: function(){
         room = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'room');   
 
-        thisPlace = 'room';
+        thisPlace = 'Room';
         
         create_room_items();
         create_man(645, 462, 4);
@@ -29,15 +29,13 @@ room.prototype = {
         game.physics.enable(room_bound_r, Phaser.Physics.ARCADE);
         room_bound_r.body.setSize(50, TOTAL_HEIGHT);
         room_bound_r.body.immovable = true;
+        
+        localStorage.setItem("stickman-location", thisPlace);
 
         showManText('What is this place?', 1000);
         suspend(total_text_time);
-
-        localStorage.setItem( "stickman-location", 'Room' );
         
-        if (!street_music.isPlaying){
-           street_music.play();
-        }
+        change_music(street_music);
     },
     
     update: function(){
