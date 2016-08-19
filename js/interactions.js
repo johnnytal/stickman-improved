@@ -12,8 +12,11 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'ladder_b':
-            if (ladderMission && !stoneMission){
+            if (missions['stone_mission'] == false){
                 showManText("No point, the window seems closed from the inside", 0);
+            }
+            else if (missions['stone_mission'] == true){
+                complete_window_mission();
             }
         break;
         
@@ -32,10 +35,10 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'window':
-             if (!ladderMission){
+             if (missions['ladder_mission'] == false){
                  showManText("Stickmen can't jump", 0);
              }
-             else if (ladderMission && !stoneMission){
+             else if (missions['ladder_mission'] == true && missions['stone_mission'] == false){
                  showManText("No point, the window seems closed from the inside", 0);
              }
              
@@ -43,11 +46,11 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'broken_window': 
-             if (stoneMission && !ladderMission){
+             if (missions['stone_mission'] == true && missions['ladder_mission'] == false){
                  showManText("Stickmen can't jump", 0);
              }
-             else if (stoneMission && ladderMission) {
-                 window_mission();
+             else if (missions['stone_mission'] == true && missions['ladder_mission'] == true) {
+                complete_window_mission();
              }
              
              _static_item_clicked.alpha = 0.4;
@@ -108,19 +111,17 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'switch':
-            if (!switchMission){
-                switchMission = true;
+            if (missions['switch_mission'] == false){
+                mission_complete('switch_mission');
                 sfxLight_switch.play();
                 
                 showManText("Too bad there was no switch on the other side", 750);
                 suspend(total_text_time);
                 
+                tween_black(2300, 3000, "Hall", "Maze");
+                
                 setTimeout(function(){
-                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
-                    game.add.tween(man).to( { alpha: 0}, 2300, Phaser.Easing.Sinusoidal.InOut, true); 
-                    theTween.onComplete.add(function(){
-                       game.state.start("Hall");   
-                    }, this);
+                    tween_alpha(man, 0, 2300);
                 },3000);
             }
         break;
@@ -134,8 +135,6 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'hall_window_broken':
-            stoneMission2 = true;
-            
             showManText("Looks like someone really wants me to take this jump.\nHere goes nothing...", 0);
             suspend(total_text_time);
             
@@ -149,7 +148,8 @@ function interact_item(_static_item_clicked){
                 
                 theTween.onComplete.add(function(){
                    man.kill();
-                   newMan = game.add.sprite(TOTAL_WIDTH / 2, 0, 'man');
+                   
+                   newMan = game.add.sprite(TOTAL_WIDTH / 2, 0, 'man'); // cutscene animation
                    newMan.scale.set(0.7, 0.7); 
                    newManTween = game.add.tween(newMan).to( { y: 750}, 4650, Phaser.Easing.Sinusoidal.InOut, true); 
                    game.add.tween(newMan).to( { angle: 180}, 2650, Phaser.Easing.Sinusoidal.InOut, true); 
@@ -162,18 +162,19 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'computer':
-            stoneMission2 = true;
             showManText("Hey, this looks exactly like...", 0);
+            suspend(total_text_time);
             
             setTimeout(function(){
-                johnnyText = game.add.text(300, 250, '...You' , {font: "22px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
+                johnnyText = game.add.text(300, 250, '...You' 
+                ,{font: "22px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
                 johnnyText.alpha = 0;
-                game.add.tween(johnnyText).to( { alpha: 1}, 1000, Phaser.Easing.Sinusoidal.InOut, true);
+                tween_alpha(johnnyText, 1, 1000);
             }, 1400);
 
             setTimeout(function(){
-                game.add.tween(johnnyText).to( { alpha: 0}, 2750, Phaser.Easing.Sinusoidal.InOut, true);
-                endTheGame();
+                tween_alpha(johnnyText, 0, 2750);
+                end_game();
             }, 4900);
         break;
     }   
@@ -190,21 +191,6 @@ function interact_item(_static_item_clicked){
             _static_item_clicked.alpha = 0; 
         }, 100); 
    }
-}
-
-function window_mission(){
-    if (ladderMission && stoneMission){
-        walkingIcon.visible = false;
-        
-        showManText("Broken window, here I come!", 0); 
-        store_game_state(items, 'Street');
-        tween_black(1000, total_text_time, "Pub");
-        
-        return true;
-    }
-    else{ 
-        return false; 
-    }
 }
 
 function take_item(item){
@@ -236,7 +222,7 @@ function take_item(item){
         break;
         
         case 'dart':
-            if (!drunkMission){
+            if (missions['drunk_mission'] == false){
                 showManText("Someone carelessly left this dart here", 0);
             }
             else{
@@ -281,7 +267,7 @@ function use_item(inventory_item, static_item){
             showManText("I'm sure that won't look suspicious to anyone", 300);
             suspend(total_text_time);
             
-            ladderMission = true;
+            mission_complete('ladder_mission');
             
             if (static_item.key == 'window'){
                 static_item.alpha = 0; 
@@ -311,10 +297,10 @@ function use_item(inventory_item, static_item){
             
             setTimeout(function(){                    
                 kill_inventory_item(inventory_item);
-                stoneMission = true;
                 static_item.destroy();
-
                 get_item('name', 'broken_window').visible = true;
+                
+                mission_complete('stone_mission');
             }, 1150);
         break;
         
@@ -350,7 +336,7 @@ function use_item(inventory_item, static_item){
         case ('dart + dart_board'):
             sfxDart.play();
             
-            if (!drunkMission){
+            if (missions['drunk_mission'] == false){
                 suspend(1000);
                 
                 setTimeout(function(){  
@@ -425,6 +411,7 @@ function use_item(inventory_item, static_item){
         case ('rock_pub + barrel_glass'):
             suspend(9500);
             showManText("OK, here we go...", 0);
+            man.frame = 4;
 
             setTimeout(function(){  
                 sfxOpen_barrel.play();
@@ -435,15 +422,18 @@ function use_item(inventory_item, static_item){
                 get_item('name', 'barrel_glass').kill();
                 get_item('name', 'barrel_open').visible = true;
 
+                bigBlack = game.add.sprite(0, 0, 'bigBlack');
+                bigBlack.alpha = 0;
+                
                 timePassedText = game.add.text(300, 200, '2 Hours Later' , {font: "72px " + font, fill: "#f7f7f7", align:'center'});
                 timePassedText.alpha = 0;
-                
+
                 theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4200, Phaser.Easing.Sinusoidal.InOut, true); 
-                game.add.tween(timePassedText).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+                tween_alpha(timePassedText, 1, 4500);
 
                 theTween.onComplete.add(function(){
-                   game.add.tween(bigBlack).to( { alpha: 0}, 3000, Phaser.Easing.Sinusoidal.InOut, true);  
-                   game.add.tween(timePassedText).to( { alpha: 0}, 2900, Phaser.Easing.Sinusoidal.InOut, true);  
+                   tween_alpha(bigBlack, 0, 3000);
+                   tween_alpha(timePassedText, 0, 2900);
                 }, this);
                 
             }, 2750);
@@ -462,7 +452,7 @@ function use_item(inventory_item, static_item){
             
             showManText("I'm Bobbin. Are you my mother? * Hic *", 9500); //lucasatrs reference
             
-            drunkMission = true;
+            mission_complete('drunk_mission');
         break;
         
         case ('rock_hall + hall_window'):
@@ -475,10 +465,10 @@ function use_item(inventory_item, static_item){
             
             setTimeout(function(){                    
                 kill_inventory_item(inventory_item);
-                stoneMission2 = true;
                 static_item.destroy();
-
                 get_item('name', 'hall_window_broken').visible = true;
+                
+                mission_complete('stone_hall_mission');
             }, 1150);
         break;
         
@@ -492,6 +482,16 @@ function use_item(inventory_item, static_item){
             add_item_to_inventory(inventory_item);     
         break;
     }
+}
+
+function complete_window_mission(){
+    showManText("Broken window, here I come!", 0); 
+    suspend(total_text_time);
+    
+    mission_complete('window_mission');
+    
+    store_game_state(items, 'Street');
+    tween_black(1000, total_text_time, "Pub");
 }
 
 function put_item_away(_item1, _item2){

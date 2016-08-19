@@ -19,6 +19,7 @@ pub.prototype = {
         pub_bound_u.body.immovable = true;
 
         create_pub_items();
+        
         create_man(690, 405, 4);
 
         sfxRain.stop();
@@ -89,7 +90,7 @@ function create_pub_items(){
     
     reset_inventory();
 
-    if (first_visit[thisPlace]){
+    if (first_visit[thisPlace] == true){
         localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'glass', true, true, 610, 417, true ]));
         localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'barrel', true, false, 653, 260, true ]));
         localStorage.setItem("stickman-item2" + thisPlace, JSON.stringify([ 'barrel_glass', true, false, 653, 260, false ]));

@@ -11,8 +11,7 @@ menu.prototype = {
 
         startBtn.inputEnabled = true;
         contBtn.inputEnabled = true;
-        
-        fadeInScreen();
+
         loadSfx();
 
         startBtn.events.onInputUp.add(function(){ 
@@ -30,7 +29,21 @@ menu.prototype = {
                 
             }; 
             
+            missions = {
+                
+                 ladder_mission: false,
+                 stone_mission: false,
+                 window_mission: false,
+                 drunk_mission: false,
+                 switch_mission: false,
+                 stone_hall_mission: false
+                 
+             };
+             
+            inventory = [];
+            
             place = "Street";
+            
             startGame();
             
         }, this);
@@ -38,17 +51,41 @@ menu.prototype = {
         contBtn.events.onInputUp.add(function(){ 
             first_visit = {
                 
-                Street: localStorage.getItem("stickman-first_visit_toStreet"),
-                Alley: localStorage.getItem("stickman-first_visit_toAlley"),
-                Pub: localStorage.getItem("stickman-first_visit_toPub"),
-                Wc: localStorage.getItem("stickman-first_visit_toWc"),
-                Roof: localStorage.getItem("stickman-first_visit_toRoof"),
-                Maze: localStorage.getItem("stickman-first_visit_toMaze"),
-                Hall: localStorage.getItem("stickman-first_visit_toHall"),
-                Stone_room: localStorage.getItem("stickman-first_visit_toStone_room"),
-                Room: localStorage.getItem("stickman-first_visit_toRoom"),
+                Street: JSON.parse(localStorage.getItem("stickman-first_visit_toStreet")),
+                Alley: JSON.parse(localStorage.getItem("stickman-first_visit_toAlley")),
+                Pub: JSON.parse(localStorage.getItem("stickman-first_visit_toPub")),
+                Wc: JSON.parse(localStorage.getItem("stickman-first_visit_toWc")),
+                Roof: JSON.parse(localStorage.getItem("stickman-first_visit_toRoof")),
+                Maze: JSON.parse(localStorage.getItem("stickman-first_visit_toMaze")),
+                Hall: JSON.parse(localStorage.getItem("stickman-first_visit_toHall")),
+                Stone_room: JSON.parse(localStorage.getItem("stickman-first_visit_toStone_room")),
+                Room: JSON.parse(localStorage.getItem("stickman-first_visit_toRoom")),
 
             }; 
+            
+            missions = {
+                
+                 ladder_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_ladder_mission")),
+                 stone_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_stone_mission")),
+                 window_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_window_mission")),
+                 drunk_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_drunk_mission")),
+                 switch_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_switch_mission")),
+                 stone_hall_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_stone_hall_mission")),
+                 
+            };
+            
+            inventory = [];
+             
+            storage_inventory = JSON.parse(localStorage.getItem("stickman-inventory"));
+            
+            if (storage_inventory != null){
+                for (i = 0; i < storage_inventory.length; i++){
+                    var x = ((i + 1) * 50) + 100; 
+                    var name = storage_inventory[i];
+                    
+                    items.push(new Item(game, name, true, true, x, 535, true, true));
+                } 
+            }
 
             for (var key in first_visit) {
                 if (first_visit[key] == null){
@@ -56,9 +93,16 @@ menu.prototype = {
                 }
             }
             
+            for (var key in missions) {
+                if (missions[key] == null){
+                    missions[key] = false;
+                }
+            }
+            
             if (place == null){
                 place = "Street";
             }
+            
             startGame();
             
         }, this);
@@ -71,18 +115,29 @@ menu.prototype = {
             contBtn.tint = 0xc9a279;  
         }, this);
         
-        street_music.play();
+        credits_music.play();
+        
+        create_rain();
+        sfxRain.stop();
+        
+        fadeInScreen();
     }, 
 };
 
 function fadeInScreen(){
     bigBlack = game.add.sprite(0, 0, 'bigBlack');
-    game.add.tween(bigBlack).to( { alpha: 0}, 2500, Phaser.Easing.Sinusoidal.InOut, true);  
+    var theTween = game.add.tween(bigBlack).to( { alpha: 0}, 2500, Phaser.Easing.Sinusoidal.InOut, true);  
+    
+    theTween.onComplete.add(function(){
+        bigBlack.destroy();
+    });
 }
 
 function startGame(){
-    sfxclick.play();
-    street_music.stop();
+    if (sfxclick.isDecoded){
+        sfxclick.play();
+    }
+    credits_music.fadeOut();
     showAd();
     
     this.game.state.start('Game');    
@@ -93,11 +148,11 @@ function loadSfx(){
     sfxDart = game.add.audio('sfxDart', 1, false);
     sfxPocket = game.add.audio('sfxPocket', 1, false);
     sfxPut_ladder = game.add.audio('sfxPut_ladder', 1, false);
-    sfxRain = game.add.audio('sfxRain', 0.8, true);
+    sfxRain = game.add.audio('sfxRain', 0.5, true);
     sfxSteps = game.add.audio('sfxSteps', 1, true);
     sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
     sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
-    sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.6, true);
+    sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.3, true);
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
@@ -107,24 +162,28 @@ function loadSfx(){
     street_music = game.add.audio('street_music', 0.7, true);
     pub_music = game.add.audio('pub_music', 0.6, true);
     maze_music = game.add.audio('maze_music', 0.7, true);
+    credits_music = game.add.audio('credits_music', 0.7, true);
 }
 
 function change_music(music_to_play){
-    musics = [street_music, pub_music, hall_music, maze_music];
+    musics = [street_music, pub_music, hall_music, maze_music, credits_music];
     
     for(m = 0; m < musics.length; m++){
         if (musics[m].isPlaying && musics[m] != music_to_play){
             musics[m].fadeOut();
-            
-            setTimeout(function(){ // in case fadeOut fails
-                try{
-                    musics[m].stop();
-                } catch(e){}
-            }, 1500);
+
         } 
     }
+           
+    setTimeout(function(){ // in case fadeOut fails
+        for(m = 0; m < musics.length; m++){
+            if (musics[m].isPlaying && musics[m] != music_to_play){
+                 musics[m].stop();
+            }
+        }
+    }, 1500);
     
-    music_to_play.fadeIn();
+    music_to_play.fadeTo(1500, 0.7);
     
     setTimeout(function(){ // in case fadeIn fails
         if (!music_to_play.isPlaying){

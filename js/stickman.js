@@ -2,12 +2,6 @@ var game_main = function(game){
      TOTAL_WIDTH = 950;
      TOTAL_HEIGHT = 600;
 
-     ladderMission = false;
-     stoneMission = false;
-     stoneMission2 = false;
-     drunkMission = false; 
-     switchMission = false;
-
      placeToGoX = null;
      placeToGoY = null;
      
@@ -17,7 +11,6 @@ var game_main = function(game){
      suspended = false;
      total_text_time = 0;
 
-     inventory = [];
      items = [];
      
      dir = 'right';
@@ -150,8 +143,10 @@ function create_man(x, y, _frame){
 function walk_update(){
     walkingIcon.x = game.input.x + game.camera.x; 
     walkingIcon.y = game.input.y - 10 + game.camera.y;  
-    
-    if ((game.input.mousePointer.isDown || game.input.pointer1.isDown) && game.input.y < 470 && suspended == false){
+
+    if ( !(polyLine.contains(walkingIcon.x, walkingIcon.y)) &&
+       (game.input.mousePointer.isDown || game.input.pointer1.isDown) && 
+        suspended == false){ 
         placeToGoX = game.input.x + game.camera.x;
         placeToGoY = game.input.y - 10 + game.camera.y;
     }  
@@ -212,7 +207,13 @@ function reset_inventory(){
     line = game.add.sprite(96, TOTAL_HEIGHT - 100, 'line');
     line.alpha = 0.3;
     line.fixedToCamera = true;
-    
+       
+    polyLine = new Phaser.Polygon([ 
+        new Phaser.Point(96, TOTAL_HEIGHT - 100), new Phaser.Point(96 + line.width, TOTAL_HEIGHT - 100), 
+        new Phaser.Point(96 + line.width, TOTAL_HEIGHT - 100 + line.height),
+        new Phaser.Point(96, TOTAL_HEIGHT - 100 + line.height), new Phaser.Point(96, TOTAL_HEIGHT - 100)
+    ]);
+
     var pseudoInventory = inventory;
 
     inventory = [];
@@ -259,6 +260,15 @@ function store_game_state(items, place){
         localStorage.getItem(last_item) != 'undefined'){ 
         localStorage.removeItem(last_item);
     }
+    
+    inventory_keys = []; // saving the keys and not the sprite to avoid circular structure, grrrr
+    
+    for (i = 0; i < inventory.length; i++){
+        var name = inventory[i].key;
+        inventory_keys.push(name);
+    } 
+    
+    localStorage.setItem("stickman-inventory", JSON.stringify(inventory_keys));
 }
 
 function load_items_state(num_of_items){
@@ -285,6 +295,7 @@ function load_items_state(num_of_items){
         if (!isTaken){
             create_item(game, name, isLayered, isTakeable, x_cor, y_cor, visible, isTaken);
         } 
+        
         i++;
     }
 }
@@ -299,8 +310,17 @@ function suspend(time_to_suspend){
     }, time_to_suspend);
 }
 
-function endTheGame(){ 
+function mission_complete(_mission){
+    missions[_mission] = true;
+    localStorage.setItem("stickman-mission_complete_" + _mission, true);
+}
+
+function end_game(){ 
     suspended = true;
+    
+    bigBlack = game.add.sprite(0, 0, 'bigBlack');
+    bigBlack.alpha = 0;
+    
     tween_alpha(bigBlack, 1, 3000);
     
     timePassedText = game.add.text(40 + game.camera.x, 120, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
@@ -333,6 +353,8 @@ function endTheGame(){
         game.add.tween(timePassedText2).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
         game.add.tween(image1).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
         game.add.tween(image2).to( { alpha: 1}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        change_music(credits_music);
     }, 8000);  
     
     setTimeout(function(){
@@ -381,10 +403,10 @@ function create_rain(){
 
     emitter.makeParticles('rain');
 
-    emitter.minParticleScale = 0.1;
-    emitter.maxParticleScale = 0.5;
+    emitter.minParticleScale = 0.2;
+    emitter.maxParticleScale = 0.4;
 
-    emitter.setYSpeed(350, 650);
+    emitter.setYSpeed(300, 550);
     emitter.setXSpeed(-7, 7);
 
     emitter.minRotation = 0;

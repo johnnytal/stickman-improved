@@ -32,7 +32,7 @@ preloader.prototype = {
         game.load.image('barrel', 'images/stickman/barrel.png');
         game.load.image('barrel_glass', 'images/stickman/barrel_glass.png');
         game.load.image('barrel_open', 'images/stickman/barrel_open.png');
-        game.load.image('stool', 'images/stickman/stool.png');
+        //game.load.image('stool', 'images/stickman/stool.png');
         game.load.image('dart_board', 'images/stickman/dart_board.png');
         game.load.image('dart', 'images/stickman/dart.png');
         game.load.image('chandelier', 'images/stickman/chandelier.png');
@@ -58,6 +58,7 @@ preloader.prototype = {
         game.load.audio('street_music', 'sounds/stickman/music/street_music.ogg');
         game.load.audio('pub_music', 'sounds/stickman/music/pub_music.ogg');
         game.load.audio('maze_music', 'sounds/stickman/music/maze_music.ogg');
+        game.load.audio('credits_music', 'sounds/stickman/music/credits_music.ogg');
         
         game.load.audio('sfxBreak_window', 'sounds/stickman/break_window.ogg');
         game.load.audio('sfxDart', 'sounds/stickman/dart.ogg');

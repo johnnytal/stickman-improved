@@ -1,9 +1,12 @@
-window.onload = start;
-//document.addEventListener("deviceready", start, false);
+//window.onload = start;
+document.addEventListener("deviceready", start, false);
 
 function start(){
-    var place, thisPlace, coming_from, banner, first_visit, emitter;
-    
+    var place, thisPlace; 
+    var banner;
+    var first_visit, missions, inventory;
+    var emitter, polyLine;
+
     WIDTH = 703; 
     HEIGHT = 580;
 
@@ -29,6 +32,7 @@ boot.prototype = {
     create: function(){
         font = 'Fontdiner Swanky';
         banner_not_created = true;
+        coming_from = null;
 
         try{
             place = localStorage.getItem("stickman-location");

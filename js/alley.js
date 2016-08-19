@@ -1,11 +1,12 @@
 var alley = function(game){
-    DISTANCE = 8;
     var poly;
+    
+    DISTANCE = 8;
     stopped = false;
-    //var graphics;
 
     alleyWalls = [
-        [664,197,664,424],[664,424,950,424],[641,237,537,237],[537,237,0,237],[326,325,0,325]
+        [664,197,664,424],[664,424,950,424],[641,237,537,237],[537,237,0,237],[326,325,0,325],
+        [0,600,900,600]
     ]; 
 };
 
@@ -20,11 +21,6 @@ alley.prototype = {
             new Phaser.Point(540, 0), new Phaser.Point(540, 286)
         ]);
         
-        /*graphics = game.add.graphics(0, 0);
-        graphics.beginFill(0xFF33ff);
-        graphics.drawPolygon(poly.points);
-        graphics.endFill();*/
-        
         thisPlace = 'Alley';
         
         walls = game.add.group();
@@ -37,18 +33,19 @@ alley.prototype = {
         
         create_alley_items();
 
-        create_man(600, 440, 4);
+        create_man(685, 503, 4);
         
         localStorage.setItem("stickman-location", thisPlace);
         
+        create_rain();
         fadeInScreen();
     },
     
     update: function(){
         walk_update();
         
-        var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var maze_vel_x = 35 + (Math.abs(man.body.x - placeToGoX) / 1.7);
+        var maze_vel_y = 60 + (Math.abs(man.body.y - placeToGoY) / 1.7);
         
         if (poly.contains(man.x, man.y)){
             if (!stopped || stopped && poly.contains(placeToGoX, placeToGoY)){
@@ -65,12 +62,12 @@ alley.prototype = {
             if (!sfxSteps.isPlaying) sfxSteps.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
-               man.body.velocity.x = pub_vel_x; 
+               man.body.velocity.x = maze_vel_x; 
                dir = 'right';
                manWalk = man.animations.play(dir);
             } 
             else if (man.body.x - placeToGoX > DISTANCE){
-               man.body.velocity.x = -pub_vel_x; 
+               man.body.velocity.x = -maze_vel_x; 
                dir = 'left';
                manWalk = man.animations.play(dir);
             } 
@@ -81,11 +78,11 @@ alley.prototype = {
             if (!sfxSteps.isPlaying) sfxSteps.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
-                man.body.velocity.y = pub_vel_y; 
+                man.body.velocity.y = maze_vel_y; 
                 manWalk = man.animations.play(dir);
             }
             else if (man.body.y - placeToGoY > DISTANCE){
-                man.body.velocity.y = -pub_vel_y;  
+                man.body.velocity.y = -maze_vel_y;  
                 manWalk = man.animations.play(dir); 
             }
             else{ placeToGoY = 'null'; } 
@@ -101,6 +98,8 @@ alley.prototype = {
         if (man.x > 730){
             store_game_state(items, thisPlace);
             tween_black(500, 0, "Street", thisPlace);
+            placeToGoY = 'null';
+            placeToGoX = 'null';
         }
         
         factor = (1.5 + (man.body.y / 80)) * 0.17; //scale man size
@@ -134,9 +133,9 @@ function create_alley_walls(cords){
 function create_alley_items(){
     reset_inventory();
 
-    if (first_visit[thisPlace]){
-        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'ladder_s', true, true, 595, 242, true, false ]));
-        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'rock_alley', true, true, 490, 385, true, false ]));
+    if (first_visit[thisPlace] == true){
+        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'ladder_s', true, true, 590, 242, true, false ]));
+        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'rock_alley', true, true, 365, 415, true, false ]));
 
         first_visit[thisPlace] = false;
         localStorage.setItem("stickman-first_visit_to" + thisPlace, false);

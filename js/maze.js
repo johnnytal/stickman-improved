@@ -106,11 +106,11 @@ maze.prototype = {
             placeToGoX = 'null';
         }, null, this);
         
-        this.updateShadowTexture(switchMission);
+        this.updateShadowTexture(missions['switch_mission']);
     },
 
-    updateShadowTexture: function(switchMission){ // Draw shadow
-        if (switchMission) {
+    updateShadowTexture: function(_switch_mission){ // Draw shadow
+        if (_switch_mission) {
             this.shadowTexture.context.fillStyle = 'rgb(255, 255, 255)';
         } 
         else {
@@ -164,7 +164,7 @@ function create_maze_walls(cords){
 function create_maze_items(){
     reset_inventory();
 
-    if (first_visit[thisPlace]){
+    if (first_visit[thisPlace] == true){
         localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'switch', true, false, 831, 358, true ]));
         
         first_visit[thisPlace] = false;

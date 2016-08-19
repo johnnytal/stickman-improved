@@ -22,19 +22,22 @@ street.prototype = {
         
         var x, y;
         
-        if (coming_from == 'Pub'){
+        if (coming_from != 'Pub'){
+            x = 119;
+            y = 294; 
+        }
+        else{
             x = 591;
             y = 360;
         }
-        else{
-            x = 119;
-            y = 294;    
-        }
+        
         create_man(x, y, 3);
 
         create_rain();
 
         fadeInScreen();
+        
+        localStorage.setItem("stickman-location", thisPlace);
         
         change_music(street_music);
         
@@ -102,14 +105,15 @@ function create_street_items(){
     
     reset_inventory();
 
-    if (first_visit[thisPlace]){
+    if (first_visit[thisPlace] == true){
+ 
         localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'door', false, false, 520, 264, true ]));
         localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'window', false, false, 490, 88, true ]));
         localStorage.setItem("stickman-item2" + thisPlace, JSON.stringify([ 'broken_window', true, false, 491, 172, false ]));
         localStorage.setItem("stickman-item3" + thisPlace, JSON.stringify([ 'ladder_b', true, false, 493, 245, false ]));
         localStorage.setItem("stickman-item4" + thisPlace, JSON.stringify([ 'bar_sign', true, false, 600, 174, true ]));
         localStorage.setItem("stickman-item5" + thisPlace, JSON.stringify([ 'alley_entrance', false, false, 144, 267, true ]));
-        
+
         first_visit[thisPlace] = false; // for this game
         localStorage.setItem("stickman-first_visit_to" + thisPlace, false); // for continues
         
