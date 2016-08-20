@@ -32,14 +32,16 @@ street.prototype = {
         }
         
         create_man(x, y, 3);
-
+        
+        if (coming_from != 'Alley'){
+            sfxRain.play();
+            change_music(street_music);
+        }
+        
         create_rain();
-
         fadeInScreen();
         
-        localStorage.setItem("stickman-location", thisPlace);
-        
-        change_music(street_music);
+        store.set("stickman-location", thisPlace);
         
         if (banner_not_created){
             try{
@@ -107,15 +109,15 @@ function create_street_items(){
 
     if (first_visit[thisPlace] == true){
  
-        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'door', false, false, 520, 264, true ]));
-        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'window', false, false, 490, 88, true ]));
-        localStorage.setItem("stickman-item2" + thisPlace, JSON.stringify([ 'broken_window', true, false, 491, 172, false ]));
-        localStorage.setItem("stickman-item3" + thisPlace, JSON.stringify([ 'ladder_b', true, false, 493, 245, false ]));
-        localStorage.setItem("stickman-item4" + thisPlace, JSON.stringify([ 'bar_sign', true, false, 600, 174, true ]));
-        localStorage.setItem("stickman-item5" + thisPlace, JSON.stringify([ 'alley_entrance', false, false, 144, 267, true ]));
+        store.set("stickman-item0" + thisPlace, [ 'door', false, false, 520, 264, true ]);
+        store.set("stickman-item1" + thisPlace, [ 'window', false, false, 490, 88, true ]);
+        store.set("stickman-item2" + thisPlace, [ 'broken_window', true, false, 491, 172, false ]);
+        store.set("stickman-item3" + thisPlace, [ 'ladder_b', true, false, 493, 245, false ]);
+        store.set("stickman-item4" + thisPlace, [ 'bar_sign', true, false, 600, 174, true ]);
+        store.set("stickman-item5" + thisPlace, [ 'alley_entrance', false, false, 144, 267, true ]);
 
         first_visit[thisPlace] = false; // for this game
-        localStorage.setItem("stickman-first_visit_to" + thisPlace, false); // for continues
+        store.set("stickman-first_visit_to" + thisPlace, false); // for continues
         
         load_items_state(6);
     }

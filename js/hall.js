@@ -29,7 +29,7 @@ hall.prototype = {
         create_hall_items();
         create_man(60, 470, 3);
         
-        localStorage.setItem("stickman-location", thisPlace);
+        store.set("stickman-location", thisPlace);
 
         fadeInScreen();
         
@@ -113,9 +113,18 @@ function create_hall_walls(cords){
 
 function create_hall_items(){
     reset_inventory();
+
+    if (first_visit[thisPlace] == true){
+        store.set("stickman-item0" + thisPlace, [ 'hall_door', false, false, 269, 184, true ]);
+        store.set("stickman-item1" + thisPlace, [ 'hall_window', false, false, 887, 162, true ]);
+        store.set("stickman-item2" + thisPlace, [ 'hall_window_broken', true, false, 887, 163, false ]);
+        store.set("stickman-item3" + thisPlace, [ 'rock_hall', true, true, 800, 340, true ]);
+        
+        first_visit[thisPlace] = false;
+        store.set("stickman-first_visit_to" + thisPlace, false);
+        
+        load_items_state(4);
+    }
     
-    create_item( game, 'hall_door', false, false, 269, 184, true );
-    create_item( game, 'hall_window', false, false, 887, 162, true );
-    create_item( game, 'hall_window_broken', true, false, 887, 163, false );
-    create_item( game, 'rock_hall', true, true, 800, 340, true ); 
+    load_items_state();
 }

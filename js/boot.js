@@ -30,12 +30,13 @@ var boot = function(game){};
   
 boot.prototype = {
     create: function(){
+               
         font = 'Fontdiner Swanky';
         banner_not_created = true;
         coming_from = null;
 
         try{
-            place = localStorage.getItem("stickman-location");
+            place = store.get("stickman-location");
         }
         catch(e){}
         

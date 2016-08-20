@@ -30,7 +30,7 @@ room.prototype = {
         room_bound_r.body.setSize(50, TOTAL_HEIGHT);
         room_bound_r.body.immovable = true;
         
-        localStorage.setItem("stickman-location", thisPlace);
+        store.set("stickman-location", thisPlace);
 
         showManText('What is this place?', 1000);
         suspend(total_text_time);
@@ -96,7 +96,16 @@ function hitRoomBounds(){
 
 function create_room_items(){
     reset_inventory();
+
+    if (first_visit[thisPlace] == true){
+        store.set("stickman-item0" + thisPlace, [ 'computer', false, false, 246, 12, true ]);
+        store.set("stickman-item1" + thisPlace, [ 'rock_room', true, true, 70, 462, true ]);
+        
+        first_visit[thisPlace] = false;
+        store.set("stickman-first_visit_to" + thisPlace, false);
+        
+        load_items_state(2);
+    }
     
-    create_item( game, 'computer', false, false, 246, 12, true );
-    create_item( game, 'rock_room', true, true, 70, 462, true );
+    load_items_state();
 }

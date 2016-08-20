@@ -5,14 +5,12 @@ menu.prototype = {
     
     create: function(){   
         this.game.add.sprite(0, 0, 'opening');
-        
+
         startBtn = this.game.add.sprite(70, 395, 'startBtn');
         contBtn = this.game.add.sprite(390, 395, 'contBtn');
 
         startBtn.inputEnabled = true;
         contBtn.inputEnabled = true;
-
-        loadSfx();
 
         startBtn.events.onInputUp.add(function(){ 
             first_visit = {
@@ -29,18 +27,37 @@ menu.prototype = {
                 
             }; 
             
+            store.set("stickman-first_visit_toStreet", true),
+            store.set("stickman-first_visit_toAlley", true),
+            store.set("stickman-first_visit_toPub", true),
+            store.set("stickman-first_visit_toWc", true),
+            store.set("stickman-first_visit_toRoof", true),
+            store.set("stickman-first_visit_toMaze", true),
+            store.set("stickman-first_visit_toHall", true),
+            store.set("stickman-first_visit_toStone_room", true),
+            store.set("stickman-first_visit_toRoom", true),
+            
             missions = {
                 
-                 ladder_mission: false,
-                 stone_mission: false,
-                 window_mission: false,
-                 drunk_mission: false,
-                 switch_mission: false,
-                 stone_hall_mission: false
+                ladder_mission: false,
+                stone_mission: false,
+                window_mission: false,
+                drunk_mission: false,
+                switch_mission: false,
+                stone_hall_mission: false
                  
-             };
-             
+            };
+        
+            store.set("stickman-mission_complete_ladder_mission", false),
+            store.set("stickman-mission_complete_stone_mission", false),
+            store.set("stickman-mission_complete_window_mission", false),
+            store.set("stickman-mission_complete_drunk_mission", false),
+            store.set("stickman-mission_complete_switch_mission", false),
+            store.set("stickman-mission_complete_stone_hall_mission", false),
+
             inventory = [];
+            
+            store.set("stickman-inventory", null);
             
             place = "Street";
             
@@ -51,32 +68,32 @@ menu.prototype = {
         contBtn.events.onInputUp.add(function(){ 
             first_visit = {
                 
-                Street: JSON.parse(localStorage.getItem("stickman-first_visit_toStreet")),
-                Alley: JSON.parse(localStorage.getItem("stickman-first_visit_toAlley")),
-                Pub: JSON.parse(localStorage.getItem("stickman-first_visit_toPub")),
-                Wc: JSON.parse(localStorage.getItem("stickman-first_visit_toWc")),
-                Roof: JSON.parse(localStorage.getItem("stickman-first_visit_toRoof")),
-                Maze: JSON.parse(localStorage.getItem("stickman-first_visit_toMaze")),
-                Hall: JSON.parse(localStorage.getItem("stickman-first_visit_toHall")),
-                Stone_room: JSON.parse(localStorage.getItem("stickman-first_visit_toStone_room")),
-                Room: JSON.parse(localStorage.getItem("stickman-first_visit_toRoom")),
+                Street: store.get("stickman-first_visit_toStreet"),
+                Alley: store.get("stickman-first_visit_toAlley"),
+                Pub: store.get("stickman-first_visit_toPub"),
+                Wc: store.get("stickman-first_visit_toWc"),
+                Roof: store.get("stickman-first_visit_toRoof"),
+                Maze: store.get("stickman-first_visit_toMaze"),
+                Hall: store.get("stickman-first_visit_toHall"),
+                Stone_room: store.get("stickman-first_visit_toStone_room"),
+                Room: store.get("stickman-first_visit_toRoom"),
 
             }; 
             
             missions = {
                 
-                 ladder_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_ladder_mission")),
-                 stone_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_stone_mission")),
-                 window_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_window_mission")),
-                 drunk_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_drunk_mission")),
-                 switch_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_switch_mission")),
-                 stone_hall_mission: JSON.parse(localStorage.getItem("stickman-mission_complete_stone_hall_mission")),
+                 ladder_mission: store.get("stickman-mission_complete_ladder_mission"),
+                 stone_mission: store.get("stickman-mission_complete_stone_mission"),
+                 window_mission: store.get("stickman-mission_complete_window_mission"),
+                 drunk_mission: store.get("stickman-mission_complete_drunk_mission"),
+                 switch_mission: store.get("stickman-mission_complete_switch_mission"),
+                 stone_hall_mission: store.get("stickman-mission_complete_stone_hall_mission"),
                  
             };
             
             inventory = [];
              
-            storage_inventory = JSON.parse(localStorage.getItem("stickman-inventory"));
+            storage_inventory = store.get("stickman-inventory");
             
             if (storage_inventory != null){
                 for (i = 0; i < storage_inventory.length; i++){
@@ -118,7 +135,6 @@ menu.prototype = {
         credits_music.play();
         
         create_rain();
-        sfxRain.stop();
         
         fadeInScreen();
     }, 
@@ -126,11 +142,11 @@ menu.prototype = {
 
 function fadeInScreen(){
     bigBlack = game.add.sprite(0, 0, 'bigBlack');
-    var theTween = game.add.tween(bigBlack).to( { alpha: 0}, 2500, Phaser.Easing.Sinusoidal.InOut, true);  
-    
-    theTween.onComplete.add(function(){
-        bigBlack.destroy();
-    });
+    tween_alpha(bigBlack, 0, 2500);
+}
+
+function tween_alpha(what, where, time){
+    game.add.tween(what).to( { alpha: where}, time, Phaser.Easing.Sinusoidal.InOut, true); 
 }
 
 function startGame(){
@@ -144,25 +160,24 @@ function startGame(){
 }
 
 function loadSfx(){
-    sfxBreak_window = game.add.audio('sfxBreak_window', 0.9, false);
-    sfxDart = game.add.audio('sfxDart', 1, false);
-    sfxPocket = game.add.audio('sfxPocket', 1, false);
-    sfxPut_ladder = game.add.audio('sfxPut_ladder', 1, false);
-    sfxRain = game.add.audio('sfxRain', 0.5, true);
-    sfxSteps = game.add.audio('sfxSteps', 1, true);
-    sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
-    sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
-    sfxRain_indoors = game.add.audio('sfxRain_indoors', 0.3, true);
-    sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
-    sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
-    sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);
-    sfxclick = game.add.audio('sfxclick', 0.9, false);
-    
-    hall_music = game.add.audio('hall_music', 0.7, true);
+    credits_music = game.add.audio('credits_music', 0.7, true);
     street_music = game.add.audio('street_music', 0.7, true);
     pub_music = game.add.audio('pub_music', 0.6, true);
     maze_music = game.add.audio('maze_music', 0.7, true);
-    credits_music = game.add.audio('credits_music', 0.7, true);
+    hall_music = game.add.audio('hall_music', 0.7, true);
+    
+    sfxclick = game.add.audio('sfxclick', 0.9, false);
+    sfxRain = game.add.audio('sfxRain', 0.5, true);
+    sfxSteps = game.add.audio('sfxSteps', 1, true);
+    sfxPocket = game.add.audio('sfxPocket', 1, false);
+    sfxPut_ladder = game.add.audio('sfxPut_ladder', 1, false);
+    sfxBreak_window = game.add.audio('sfxBreak_window', 0.9, false);
+    sfxSteps_pub = game.add.audio('sfxSteps_pub', 1, true);
+    sfxDart = game.add.audio('sfxDart', 1, false);
+    sfxPut_glass = game.add.audio('sfxPut_glass', 1, false);
+    sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
+    sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
+    sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);    
 }
 
 function change_music(music_to_play){
@@ -171,19 +186,18 @@ function change_music(music_to_play){
     for(m = 0; m < musics.length; m++){
         if (musics[m].isPlaying && musics[m] != music_to_play){
             musics[m].fadeOut();
-
         } 
     }
            
     setTimeout(function(){ // in case fadeOut fails
         for(m = 0; m < musics.length; m++){
-            if (musics[m].isPlaying && musics[m] != music_to_play){
+            if (musics[m] != music_to_play){
                  musics[m].stop();
             }
         }
     }, 1500);
     
-    music_to_play.fadeTo(1500, 0.7);
+    music_to_play.fadeIn();
     
     setTimeout(function(){ // in case fadeIn fails
         if (!music_to_play.isPlaying){

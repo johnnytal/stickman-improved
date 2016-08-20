@@ -112,8 +112,9 @@ function interact_item(_static_item_clicked){
         
         case 'switch':
             if (missions['switch_mission'] == false){
-                mission_complete('switch_mission');
+                
                 sfxLight_switch.play();
+                line.kill();
                 
                 showManText("Too bad there was no switch on the other side", 750);
                 suspend(total_text_time);
@@ -122,6 +123,7 @@ function interact_item(_static_item_clicked){
                 
                 setTimeout(function(){
                     tween_alpha(man, 0, 2300);
+                    mission_complete('switch_mission');
                 },3000);
             }
         break;
@@ -142,8 +144,8 @@ function interact_item(_static_item_clicked){
                 
                 change_music(street_music);
                  
-                bigBlack = game.add.sprite(0, 0, 'bigBlack');
-                bigBlack.alpha = 0;
+                /*bigBlack = game.add.sprite(0, 0, 'bigBlack');
+                bigBlack.alpha = 0;*/
                 theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
                 
                 theTween.onComplete.add(function(){
@@ -398,6 +400,7 @@ function use_item(inventory_item, static_item){
         case ('glass + barrel'):
             suspend(700);
             showManText("It's worth a shot", 0);
+            man.frame = 4;
            
             setTimeout(function(){
                 sfxPut_glass.play();
@@ -422,9 +425,6 @@ function use_item(inventory_item, static_item){
                 get_item('name', 'barrel_glass').kill();
                 get_item('name', 'barrel_open').visible = true;
 
-                bigBlack = game.add.sprite(0, 0, 'bigBlack');
-                bigBlack.alpha = 0;
-                
                 timePassedText = game.add.text(300, 200, '2 Hours Later' , {font: "72px " + font, fill: "#f7f7f7", align:'center'});
                 timePassedText.alpha = 0;
 
@@ -485,13 +485,17 @@ function use_item(inventory_item, static_item){
 }
 
 function complete_window_mission(){
-    showManText("Broken window, here I come!", 0); 
-    suspend(total_text_time);
+    var delay_time = 100;
     
-    mission_complete('window_mission');
-    
+    if (first_visit['Pub']){
+        showManText("Broken window, here I come!", 0); 
+        suspend(total_text_time);
+
+        mission_complete('window_mission');
+        delay_time = total_text_time;
+    }
     store_game_state(items, 'Street');
-    tween_black(1000, total_text_time, "Pub");
+    tween_black(1000, delay_time, "Pub");
 }
 
 function put_item_away(_item1, _item2){

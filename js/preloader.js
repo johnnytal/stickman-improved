@@ -75,6 +75,7 @@ preloader.prototype = {
     },
     
     create: function(){
-        this.game.state.start("Menu");  
+        this.game.state.start("Menu");
+        loadSfx();  
     }
 };

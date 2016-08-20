@@ -1,7 +1,7 @@
 var alley = function(game){
     var poly;
     
-    DISTANCE = 8;
+    DISTANCE = 4;
     stopped = false;
 
     alleyWalls = [
@@ -33,9 +33,14 @@ alley.prototype = {
         
         create_alley_items();
 
-        create_man(685, 503, 4);
+        create_man(590, 503, 4);
         
-        localStorage.setItem("stickman-location", thisPlace);
+        store.set("stickman-location", thisPlace);
+        
+        if (coming_from != 'Street'){
+            sfxRain.play();
+            change_music(street_music);
+        }
         
         create_rain();
         fadeInScreen();
@@ -44,8 +49,8 @@ alley.prototype = {
     update: function(){
         walk_update();
         
-        var maze_vel_x = 35 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var maze_vel_y = 60 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var maze_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
+        var maze_vel_y = 55 + (Math.abs(man.body.y - placeToGoY) / 1.7);
         
         if (poly.contains(man.x, man.y)){
             if (!stopped || stopped && poly.contains(placeToGoX, placeToGoY)){
@@ -104,6 +109,7 @@ alley.prototype = {
         
         factor = (1.5 + (man.body.y / 80)) * 0.17; //scale man size
         man.scale.set(factor, factor);  
+        sfxSteps.volume = factor / 1.5; // change step volume by distance from camera   
     },
 };
 
@@ -134,11 +140,11 @@ function create_alley_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'ladder_s', true, true, 590, 242, true, false ]));
-        localStorage.setItem("stickman-item1" + thisPlace, JSON.stringify([ 'rock_alley', true, true, 365, 415, true, false ]));
+        store.set("stickman-item0" + thisPlace, [ 'ladder_s', true, true, 590, 242, true, false ]);
+        store.set("stickman-item1" + thisPlace, [ 'rock_alley', true, true, 365, 415, true, false ]);
 
         first_visit[thisPlace] = false;
-        localStorage.setItem("stickman-first_visit_to" + thisPlace, false);
+        store.set("stickman-first_visit_to" + thisPlace, false);
         
         load_items_state(2);
     }

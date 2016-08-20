@@ -22,8 +22,6 @@ maze.prototype = {
         
         thisPlace = 'Maze';
         
-        reset_inventory();
-        
         walls = game.add.group();
         walls.enableBody = true;
         walls.physicsBodyType = Phaser.Physics.ARCADE;
@@ -51,7 +49,7 @@ maze.prototype = {
         create_man(30, 185, 3);
         man.scale.set(0.33, 0.29);
         
-        localStorage.setItem("stickman-location", thisPlace);
+        store.set("stickman-location", thisPlace);
         
         fadeInScreen();
 
@@ -165,10 +163,13 @@ function create_maze_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-        localStorage.setItem("stickman-item0" + thisPlace, JSON.stringify([ 'switch', true, false, 831, 358, true ]));
+        store.set("stickman-item0" + thisPlace, [ 'switch', true, false, 831, 358, true ]);
         
         first_visit[thisPlace] = false;
+        store.set("stickman-first_visit_to" + thisPlace, false);
+        
+        load_items_state(1);
     }
     
-    load_items_state();
+    load_items_state(null);
 }
