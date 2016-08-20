@@ -123,8 +123,9 @@ function interact_item(_static_item_clicked){
                 
                 setTimeout(function(){
                     tween_alpha(man, 0, 2300);
-                    mission_complete('switch_mission');
                 },3000);
+                
+                mission_complete('switch_mission');
             }
         break;
         
