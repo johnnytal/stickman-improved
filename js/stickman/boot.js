@@ -1,5 +1,5 @@
-//window.onload = start;
-document.addEventListener("deviceready", start, false);
+window.onload = start;
+//document.addEventListener("deviceready", start, false);
 
 function start(){
     var place, thisPlace; 
@@ -10,7 +10,7 @@ function start(){
     WIDTH = 703; 
     HEIGHT = 580;
 
-    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, "");    
+    game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, "game");    
       
     game.state.add("Boot", boot);
     game.state.add("Preloader", preloader);
@@ -19,6 +19,7 @@ function start(){
     game.state.add("Street", street);
     game.state.add("Alley", alley);
     game.state.add("Pub", pub);
+    game.state.add("Wc", wc);
     game.state.add("Maze", maze);
     game.state.add("Hall", hall);
     game.state.add("Room", room);

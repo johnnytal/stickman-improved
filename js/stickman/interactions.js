@@ -91,7 +91,8 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'wc_door':
-            showManText("Stickmen bodily functions don't work that way", 0);
+            //showManText("Stickmen bodily functions don't work that way", 0);
+            tween_black(500, 0, "Wc", 'Pub');
         break;
         
         case 'chandelier':
@@ -107,7 +108,7 @@ function interact_item(_static_item_clicked){
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
             showManText("Let's go, Maybe that's where they keep the extra barrels", total_text_time);
             
-            tween_black(2000, 9000, "Maze");
+            tween_black(2000, 9000, "Maze", "Pub");
         break;
         
         case 'switch':
