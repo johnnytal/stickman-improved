@@ -23,7 +23,7 @@ hall.prototype = {
         walls.physicsBodyType = Phaser.Physics.ARCADE;
         
         for(w = 0; w < hallWalls.length; w++){ 
-            create_hall_walls(hallWalls[w]); 
+            create_walls(hallWalls[w]); 
         }
         
         create_hall_items();
@@ -41,19 +41,19 @@ hall.prototype = {
                
         walk_update();
         
-        var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var hall_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
+        var hall_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
 
         if (placeToGoX != null){ 
             if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
-               man.body.velocity.x = pub_vel_x; 
+               man.body.velocity.x = hall_vel_x; 
                dir = 'right';
                manWalk = man.animations.play(dir);
             } 
             else if (man.body.x - placeToGoX > DISTANCE){
-               man.body.velocity.x = -pub_vel_x; 
+               man.body.velocity.x = -hall_vel_x; 
                dir = 'left';
                manWalk = man.animations.play(dir);
             } 
@@ -64,11 +64,11 @@ hall.prototype = {
             if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
-                man.body.velocity.y = pub_vel_y; 
+                man.body.velocity.y = hall_vel_y; 
                 manWalk = man.animations.play(dir);
             }
             else if (man.body.y - placeToGoY > DISTANCE){
-                man.body.velocity.y = -pub_vel_y;  
+                man.body.velocity.y = -hall_vel_y;  
                 manWalk = man.animations.play(dir); 
             }
             else{ placeToGoY = 'null'; } 
@@ -84,32 +84,11 @@ hall.prototype = {
         }, null, this);
         
         factor = (1.5 + (man.body.y / 80)) * 0.25; //scale man size
-        man.scale.set(factor, factor);  
+        man.scale.set(factor, factor);
+        sfxSteps.volume = factor; 
+         
     },
 };
-
-function create_hall_walls(cords){
-    var x0, x1, y0, y1, startX, endX, startY, endY, sizeX, sizeY;
-    
-    x0 = cords[0];
-    x1 = cords[2];
-   
-    y0 = cords[1];
-    y1 = cords[3];
-
-    if (x0 > x1) startX = x1;
-    else { startX = x0; }
-
-    if (y0 > y1) startY = y1;
-    else { startY = y0; }
-    
-    sizeX = Math.abs(x1 - x0);
-    sizeY = Math.abs(y1 - y0);;
-
-    wall = walls.create(startX, startY, '');
-    wall.body.setSize(sizeX, sizeY);
-    wall.body.immovable = true;
-}
 
 function create_hall_items(){
     reset_inventory();

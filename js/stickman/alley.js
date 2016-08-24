@@ -28,7 +28,7 @@ alley.prototype = {
         walls.physicsBodyType = Phaser.Physics.ARCADE;
         
         for(w = 0; w < alleyWalls.length; w++){ 
-            create_alley_walls(alleyWalls[w]); 
+            create_walls(alleyWalls[w]); 
         }
         
         create_alley_items();
@@ -109,32 +109,9 @@ alley.prototype = {
         
         factor = (1.5 + (man.body.y / 80)) * 0.17; //scale man size
         man.scale.set(factor, factor);  
-        sfxSteps.volume = factor / 1.5; // change step volume by distance from camera   
+        sfxSteps.volume = factor / 1.5;
     },
 };
-
-function create_alley_walls(cords){
-    var x0, x1, y0, y1, startX, startY, sizeX, sizeY;
-    
-    x0 = cords[0];
-    x1 = cords[2];
-   
-    y0 = cords[1];
-    y1 = cords[3];
-
-    if (x0 > x1) startX = x1;
-    else { startX = x0; }
-
-    if (y0 > y1) startY = y1;
-    else { startY = y0; }
-    
-    sizeX = Math.abs(x1 - x0);
-    sizeY = Math.abs(y1 - y0);;
-
-    wall = walls.create(startX, startY, '');
-    wall.body.setSize(sizeX, sizeY);
-    wall.body.immovable = true;
-}
 
 function create_alley_items(){
     reset_inventory();

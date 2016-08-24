@@ -42,19 +42,19 @@ room.prototype = {
                
         walk_update();
         
-        var pub_vel_x = 20 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var pub_vel_y = 20 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var room_vel_x = 20 + (Math.abs(man.body.x - placeToGoX) / 1.7);
+        var room_vel_y = 20 + (Math.abs(man.body.y - placeToGoY) / 1.7);
 
         if (placeToGoX != null){ 
             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
-               man.body.velocity.x = pub_vel_x; 
+               man.body.velocity.x = room_vel_x; 
                dir = 'right';
                manWalk = man.animations.play(dir);
             } 
             else if (man.body.x - placeToGoX > DISTANCE){
-               man.body.velocity.x = -pub_vel_x; 
+               man.body.velocity.x = -room_vel_x; 
                dir = 'left';
                manWalk = man.animations.play(dir);
             } 
@@ -65,11 +65,11 @@ room.prototype = {
             if (!(sfxSteps_pub.isPlaying)) sfxSteps_pub.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
-                man.body.velocity.y = pub_vel_y; 
+                man.body.velocity.y = room_vel_y; 
                 manWalk = man.animations.play(dir);
             }
             else if (man.body.y - placeToGoY > DISTANCE){
-                man.body.velocity.y = -pub_vel_y;  
+                man.body.velocity.y = -room_vel_y;  
                 manWalk = man.animations.play(dir); 
             }
             else{ placeToGoY = 'null'; } 

@@ -17,11 +17,6 @@ pub.prototype = {
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
         pub_bound_u.body.setSize(TOTAL_WIDTH, 285);
         pub_bound_u.body.immovable = true;
-
-        if (first_visit['Pub']){
-            showManText('This pub seems abonded, just like the rest of the town', 1400);
-            suspend(total_text_time);
-        }
         
         create_pub_items();
         
@@ -31,6 +26,12 @@ pub.prototype = {
             x = 782;
             y = 327;
         }
+        
+        else if(coming_from == 'Wc_roof'){
+            x = 815;
+            y = 150;    
+        }
+        
         else{
             x = 690;
             y = 405;
@@ -46,7 +47,7 @@ pub.prototype = {
     },
     
     update: function(){
-        
+
         walk_update();
         
         var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.35);
@@ -89,8 +90,16 @@ pub.prototype = {
 
         factor = (1.7 + (man.body.y / 100)) * 0.2; //scale man size
         man.scale.set(factor, factor);  
+        sfxSteps.volume = factor;
 
         game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
+    
+        if (coming_from == 'Wc_roof'){
+            man.scale.set(0.7, 0.7);
+            man.body.velocity.x = 0;  
+            man.body.velocity.y = 0;
+            man.animations.stop();  
+        }
     },
 };
 
@@ -104,6 +113,10 @@ function create_pub_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
+        
+        showManText('The pub seems abandoned, just like the rest of the town', 1400);
+        suspend(total_text_time);
+            
         store.set("stickman-item0" + thisPlace, [ 'glass', true, true, 610, 417, true ]);
         store.set("stickman-item1" + thisPlace, [ 'barrel', true, false, 653, 260, true ]);
         store.set("stickman-item2" + thisPlace, [ 'barrel_glass', true, false, 653, 260, false ]);
@@ -117,9 +130,7 @@ function create_pub_items(){
         store.set("stickman-item10" + thisPlace, [ 'secret_door', true, false, 877, 420, false ]);
         store.set("stickman-item11" + thisPlace, [ 'chandelier', false, false, 364, 0, true ]);
         store.set("stickman-item12" + thisPlace, [ 'wc_door', false, false, 788, 200, true ]);
-        store.set("stickman-item13" + thisPlace, [ 'poster', false, false, 694, 170, true ]);
-        //store.set("stickman-item15" + thisPlace, [ 'stool', true, false, 305, 283, true ]);
-        
+        store.set("stickman-item13" + thisPlace, [ 'poster', false, false, 694, 170, true ]);   
         
         first_visit[thisPlace] = false;
         store.set("stickman-first_visit_to" + thisPlace, false);

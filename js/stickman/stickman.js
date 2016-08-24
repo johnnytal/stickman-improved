@@ -313,6 +313,38 @@ function mission_complete(_mission){
     store.set("stickman-mission_complete_" + _mission, true);
 }
 
+function check_mission(_mission){
+    if (missions[_mission + '_mission'] == true){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function create_walls(cords){
+    var x0, x1, y0, y1, startX, startY, sizeX, sizeY;
+    
+    x0 = cords[0];
+    x1 = cords[2];
+   
+    y0 = cords[1];
+    y1 = cords[3];
+
+    if (x0 > x1) startX = x1;
+    else { startX = x0; }
+
+    if (y0 > y1) startY = y1;
+    else { startY = y0; }
+    
+    sizeX = Math.abs(x1 - x0);
+    sizeY = Math.abs(y1 - y0);;
+
+    wall = walls.create(startX, startY, '');
+    wall.body.setSize(sizeX, sizeY);
+    wall.body.immovable = true;
+}
+
 function end_game(){ 
     suspended = true;
 
@@ -334,14 +366,10 @@ function end_game(){
     image2 = game.add.image(351, 0, 'image2');
     image3 = game.add.image(0, 0, 'image3');
     image4 = game.add.image(351, 0, 'image4');
-    image1.alpha = 0;
-    image2.alpha = 0;
-    image3.alpha = 0;
-    image4.alpha = 0;
-    image1.fixedToCamera = true;
-    image2.fixedToCamera = true;
-    image3.fixedToCamera = true;
-    image4.fixedToCamera = true;
+    
+    image1.alpha = 0; image2.alpha = 0; image3.alpha = 0; image4.alpha = 0;
+    
+    image1.fixedToCamera = true; image2.fixedToCamera = true; image3.fixedToCamera = true; image4.fixedToCamera = true;
     
     setTimeout(function(){
         game.add.tween(timePassedText).to( { alpha: 0}, 4500, Phaser.Easing.Sinusoidal.InOut, true); 
@@ -368,17 +396,11 @@ function end_game(){
         gameOverTxt2.alpha = 0;
         tween_alpha(gameOverTxt, 1, 4500); 
      
-        setTimeout(function(){
-            tween_alpha(gameOverTxt2, 1, 4500);
-        }, 2000); 
+        setTimeout(function(){ tween_alpha(gameOverTxt2, 1, 4500); }, 2000); 
         
-        setTimeout(function(){
-            tween_alpha(gameOverTxt, 0, 4500);  
-        }, 10000);  
+        setTimeout(function(){ tween_alpha(gameOverTxt, 0, 4500);   }, 10000);  
         
-        setTimeout(function(){
-            tween_alpha(gameOverTxt2, 0, 4500);  
-        }, 14500);  
+        setTimeout(function(){ tween_alpha(gameOverTxt2, 0, 4500);   }, 14500);  
     }, 24000);              
 }
 

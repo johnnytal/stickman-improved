@@ -12,10 +12,10 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'ladder_b':
-            if (missions['stone_mission'] == false){
+            if (!check_mission('stone')){
                 showManText("No point, the window seems closed from the inside", 0);
             }
-            else if (missions['stone_mission'] == true){
+            else{
                 complete_window_mission();
             }
         break;
@@ -35,10 +35,10 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'window':
-             if (missions['ladder_mission'] == false){
+             if (!check_mission('ladder')){
                  showManText("Stickmen can't jump", 0);
              }
-             else if (missions['ladder_mission'] == true && missions['stone_mission'] == false){
+             else if (check_mission('ladder') && !check_mission('stone')){
                  showManText("No point, the window seems closed from the inside", 0);
              }
              
@@ -46,10 +46,10 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'broken_window': 
-             if (missions['stone_mission'] == true && missions['ladder_mission'] == false){
+             if (check_mission('stone') && !check_mission('ladder')){
                  showManText("Stickmen can't jump", 0);
              }
-             else if (missions['stone_mission'] == true && missions['ladder_mission'] == true) {
+             else if (check_mission('stone') && check_mission('ladder')) {
                 complete_window_mission();
              }
              
@@ -91,12 +91,64 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'wc_door':
-            //showManText("Stickmen bodily functions don't work that way", 0);
             tween_black(500, 0, "Wc", 'Pub');
         break;
         
+        case 'roof_door':
+            if ( get_item('name', 'wc_flood').visible == false ){
+                showManText("It leads to the roof of the toilet, but I can't reach");
+            }
+            else{
+                showManText("Well, now I can reach!", 0);
+                suspend(total_text_time);
+                tween_black(500, total_text_time, "Pub", 'Wc_roof');
+            }
+        break;
+        
+        case 'string':
+            if ( get_item('name', 'wc_flood').visible == false ){
+            
+                _static_item_clicked.frame = 1;
+                
+                if (!check_mission('plug')){
+                    setTimeout(function(){
+                        _static_item_clicked.frame = 0;
+                        mission_complete('plug_mission');
+                    },1500);
+                }
+                
+                else{
+                    showManText('Uh oh...', 1000); 
+                    suspend(8000);
+                        
+                    setTimeout(function(){
+                        theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2500, Phaser.Easing.Sinusoidal.InOut, true);
+                        
+                        theTween.onComplete.add(function(){
+                           tween_alpha(bigBlack, 0, 2500);
+                           
+                           man.frame = 0;
+                           _static_item_clicked.frame = 0;
+                           
+                           get_item('name', 'wc_flood').visible = true;
+                           
+                           man.body.angularVelocity = -20;
+                           man.body.gravity.y = -30;
+                           man.alpha = 0.6;
+                           
+                        }, this);
+                    }, 2000);
+                }
+            }
+            
+            else{
+                showManText("I've done enough damage already", 0);
+            }
+            
+        break;
+        
         case 'chandelier':
-            showManText("That's one big lamp", 0);
+            showManText("It's a chandelier made of many small lamps,\nIt gives warm, comforting light", 0);
         break;
         
         case 'poster':
@@ -112,7 +164,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'switch':
-            if (missions['switch_mission'] == false){
+            if (!check_mission('switch')){
                 
                 sfxLight_switch.play();
                 line.kill();
@@ -145,9 +197,7 @@ function interact_item(_static_item_clicked){
             setTimeout(function(){
                 
                 change_music(street_music);
-                 
-                /*bigBlack = game.add.sprite(0, 0, 'bigBlack');
-                bigBlack.alpha = 0;*/
+
                 theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true); 
                 
                 theTween.onComplete.add(function(){
@@ -226,7 +276,7 @@ function take_item(item){
         break;
         
         case 'dart':
-            if (missions['drunk_mission'] == false){
+            if (!check_mission('drunk')){
                 showManText("Someone carelessly left this dart here", 0);
             }
             else{
@@ -268,7 +318,7 @@ function use_item(inventory_item, static_item){
 
             get_item('name', 'ladder_b').visible = true;
             kill_inventory_item(inventory_item);
-            showManText("I'm sure that won't look suspicious to anyone", 300);
+            showManText("I'm sure that won't look suspicious", 300);
             suspend(total_text_time);
             
             mission_complete('ladder_mission');
@@ -340,7 +390,7 @@ function use_item(inventory_item, static_item){
         case ('dart + dart_board'):
             sfxDart.play();
             
-            if (missions['drunk_mission'] == false){
+            if (!check_mission('drunk')){
                 suspend(1000);
                 
                 setTimeout(function(){  
@@ -497,7 +547,7 @@ function complete_window_mission(){
         delay_time = total_text_time;
     }
     store_game_state(items, 'Street');
-    tween_black(1000, delay_time, "Pub");
+    tween_black(1000, delay_time, "Pub", "Street");
 }
 
 function put_item_away(_item1, _item2){

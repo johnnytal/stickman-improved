@@ -6,19 +6,24 @@ wc.prototype = {
     preload: function(){},
     
     create: function(){
-        pub = game.add.tileSprite(TOTAL_WIDTH / 8, 0, TOTAL_WIDTH / 2, TOTAL_HEIGHT, 'wc');
-        
+
+        wc = game.add.tileSprite(TOTAL_WIDTH / 8, 0, TOTAL_WIDTH / 2, TOTAL_HEIGHT, 'wc');
+
         thisPlace = 'Wc';
         items = [];
        
         pub_bound_u = game.add.sprite(0, 0, null);
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
-        pub_bound_u.body.setSize(TOTAL_WIDTH, 385);
+        pub_bound_u.body.setSize(TOTAL_WIDTH, 380);
         pub_bound_u.body.immovable = true;
 
         if (first_visit['Wc']){
-            showManText("I'ts dirty", 1500);
+            showManText("No one bothered to clean before they left", 2000);
             suspend(total_text_time);
+        }
+        
+        if (coming_from != 'Pub'){
+            change_music(pub_music);
         }
         
         create_wc_items();
@@ -40,7 +45,7 @@ wc.prototype = {
         var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.6);
         
         var boundsR = 430;
-        var boundsL = 200;
+        var boundsL = 190;
 
         if (placeToGoX != null){ 
             if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
@@ -72,7 +77,7 @@ wc.prototype = {
             else{ placeToGoY = 'null'; } 
         }
         
-        if (placeToGoX == 'null' && placeToGoY == 'null') stop_man();
+        if (placeToGoX == 'null' && placeToGoY == 'null' && man.body.gravity.y == 0) stop_man();
         
         if (man.y > 570){
             store_game_state(items, thisPlace);
@@ -81,10 +86,21 @@ wc.prototype = {
             placeToGoX = 'null';
         }
 
-        factor = (1.7 + (man.body.y / 100)) * 0.32; //scale man size
-        man.scale.set(factor, factor);  
+        if (man.body.angularVelocity != -20 && man.y >= 183){
+            factor = (1.7 + (man.body.y / 100)) * 0.32; 
+            man.scale.set(factor, factor);  
 
-        game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
+            game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
+        }
+        
+        if (man.y < 183){
+            stop_man();
+            
+            man.frame = 0;
+            man.alpha = 0.8;
+            man.body.angularVelocity = 0;
+            man.body.gravity.y = 0;
+        }
     },
 };
 
@@ -98,15 +114,17 @@ function create_wc_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-       // store.set("stickman-item0" + thisPlace, [ 'glass', true, true, 610, 417, true ]);  
+        store.set("stickman-item0" + thisPlace, [ 'string', true, false, 280, 300, true, false ]); 
+        store.set("stickman-item1" + thisPlace, [ 'wc_flood', true, false, TOTAL_WIDTH / 8, 150, false, false ]); 
+        store.set("stickman-item2" + thisPlace, [ 'roof_door', false, false, 250, 50, true, false ]); 
         
         first_visit[thisPlace] = false;
         store.set("stickman-first_visit_to" + thisPlace, false);
         
-        load_items_state(0);
+        load_items_state(3);
     }
     
-    else{
-        load_items_state(null);
+    else{ 
+        load_items_state(null);  
     }
 }
