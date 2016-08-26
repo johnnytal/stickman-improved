@@ -3,8 +3,8 @@ function interact_item(_static_item_clicked){
     
     switch(_static_item_clicked.key){    
         case 'door':
+        complete_window_mission()
             showManText("The door is locked", 200);
-            _static_item_clicked.alpha = 0;
         break;
         
         case 'bar_sign':
@@ -20,9 +20,7 @@ function interact_item(_static_item_clicked){
             }
         break;
         
-        case 'alley_entrance':
-            store_game_state(items, 'Street');
-            
+        case 'alley_entrance':        
             if (first_visit['Alley']){
                 showManText("There's a narrow alley here", 0);
                 suspend(total_text_time);
@@ -57,7 +55,6 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pub_door':
-            store_game_state(items, 'Pub');
             tween_black(700, 200, "Street", "Pub");
         break;
         
@@ -86,12 +83,64 @@ function interact_item(_static_item_clicked){
             showManText("I'ts empty now. someone must have drank it! * Hic *", 0);
         break;
         
-        case 'stool':
-            showManText("It's a bar stool", 0);
+        case 'chain':
+            if (man.y > 160){
+                showManText("I think this chain holds the chandelier", 0);
+            }
+            
+            else{
+                showManText("That's for not cleaning the toilet!", 0);
+                
+                suspend(11000);
+                    
+                setTimeout(function(){
+                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2500, Phaser.Easing.Sinusoidal.InOut, true);
+                    
+                    theTween.onComplete.add(function(){
+                       tween_alpha(bigBlack, 0, 2500);
+                       
+                       man.x = 782;
+                       man.y = 327;
+
+                       get_item('name', 'broken_chandelier').visible = true;
+                       get_item('name', 'candle').visible = true;
+                       
+                       get_item('name', 'chandelier').visible = false;
+                       get_item('name', 'chain').visible = false;
+
+                       store_game_state('Pub');
+                       coming_from = 'Wc';
+
+                       showManText("Hmm.. Bringing the ladder from outside\ncould have made more sense. Oh well", 1000);
+                       
+                    }, this);
+                }, 3000);
+            }
+        break;
+        
+        case 'candle':
+            showManText("It's still lit. I hope it won't burn my pocket", 0);
+            add_item_to_inventory(inventory_item);
+        break;
+        
+        case 'broken_chandelier':
+            showManText("Maybe that's my purpose in life?\nInflicting damage on abandoned pubs?", 0);
         break;
         
         case 'wc_door':
-            tween_black(500, 0, "Wc", 'Pub');
+            if ( get_item('name', 'broken_chandelier').visible == true ){
+                showManText("I'm wet enough");
+            }
+            
+            else{
+                if (man.y > 160){
+                    tween_black(500, 0, "Wc", 'Pub');
+                    
+                }
+                else{
+                    _static_item_clicked.alpha = 0;
+                }
+            }
         break;
         
         case 'roof_door':
@@ -101,6 +150,7 @@ function interact_item(_static_item_clicked){
             else{
                 showManText("Well, now I can reach!", 0);
                 suspend(total_text_time);
+
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');
             }
         break;
@@ -158,9 +208,7 @@ function interact_item(_static_item_clicked){
         case 'secret_door':
             suspend(9000);
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
-            showManText("Let's go, Maybe that's where they keep the extra barrels", total_text_time);
-            
-            tween_black(2000, 9000, "Maze", "Pub");
+            showManText("But it's way too dark, I'm afraid something will bite me", total_text_time);
         break;
         
         case 'switch':
@@ -318,7 +366,7 @@ function use_item(inventory_item, static_item){
 
             get_item('name', 'ladder_b').visible = true;
             kill_inventory_item(inventory_item);
-            showManText("I'm sure that won't look suspicious", 300);
+            showManText("Might look a bit suspicious i guess", 300);
             suspend(total_text_time);
             
             mission_complete('ladder_mission');
@@ -383,7 +431,7 @@ function use_item(inventory_item, static_item){
         break;
 
         case ('rock_pub + pub_door'):
-            showManText("Stickmen who lives in abonded pubs shouldn't throw stones", 0);
+            showManText("Stickmen who lives in abandoned pubs shouldn't throw stones", 0);
             put_item_away(inventory_item, static_item);
         break;
         
@@ -507,6 +555,11 @@ function use_item(inventory_item, static_item){
             mission_complete('drunk_mission');
         break;
         
+        case ('candle + secret_door'):
+            showManText("OK let's go, maybe that's where they keep the extra barrels", 0);
+            tween_black(2000, total_text_time, "Maze", "Pub");
+        break;
+        
         case ('rock_hall + hall_window'):
             suspend(1150);
             showManText("That feels awfully familiar", 200);
@@ -540,13 +593,13 @@ function complete_window_mission(){
     var delay_time = 100;
     
     if (first_visit['Pub']){
-        showManText("Broken window, here I come!", 0); 
+        showManText("I hope it was worth it...", 0); 
         suspend(total_text_time);
 
         mission_complete('window_mission');
         delay_time = total_text_time;
     }
-    store_game_state(items, 'Street');
+
     tween_black(1000, delay_time, "Pub", "Street");
 }
 

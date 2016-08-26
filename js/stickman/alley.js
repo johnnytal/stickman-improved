@@ -101,7 +101,6 @@ alley.prototype = {
         }, null, this);
         
         if (man.x > 730){
-            store_game_state(items, thisPlace);
             tween_black(500, 0, "Street", thisPlace);
             placeToGoY = 'null';
             placeToGoX = 'null';

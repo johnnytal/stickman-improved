@@ -227,6 +227,9 @@ function reset_inventory(){
 }
 
 function tween_black(time, delay, going_to, _coming_from){
+    
+    store_game_state(_coming_from);
+    
     setTimeout(function(){
         bigBlack = game.add.sprite(0, 0, 'bigBlack');
         bigBlack.alpha = 0;
@@ -240,7 +243,7 @@ function tween_black(time, delay, going_to, _coming_from){
     }, delay);
 }
 
-function store_game_state(items, place){    
+function store_game_state(place){    
     
     var last_item = "stickman-item" + (items.length) + place;
      

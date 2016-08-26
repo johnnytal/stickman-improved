@@ -7,7 +7,7 @@ pub.prototype = {
     
     create: function(){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
-
+        
         change_music(pub_music);
         
         thisPlace = 'Pub';
@@ -44,6 +44,11 @@ pub.prototype = {
         store.set("stickman-location", thisPlace);
 
         fadeInScreen();
+        
+        if (first_visit[thisPlace] == true){
+            showManText('The pub seems abandoned, just like the rest of the town', 1400);
+            suspend(total_text_time);
+        }
     },
     
     update: function(){
@@ -94,11 +99,25 @@ pub.prototype = {
 
         game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
     
-        if (coming_from == 'Wc_roof'){
-            man.scale.set(0.7, 0.7);
+        if (man.y < 160 && get_item('name', 'broken_chandelier').visible == false){
+            man.scale.set(0.85, 0.85);
             man.body.velocity.x = 0;  
             man.body.velocity.y = 0;
-            man.animations.stop();  
+            man.animations.stop();
+           
+            if (static_item_clicked != null){ 
+                if (static_item_clicked.key != 'chain'){
+                    interact_item(static_item_clicked);
+                } 
+                
+                else if (static_item_clicked.tint != 0xffffff){
+                    static_item_clicked.tint = 0xffffff;
+                }
+                
+                else{
+                    static_item_clicked.alpha = 0;
+                }
+            } 
         }
     },
 };
@@ -113,9 +132,6 @@ function create_pub_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-        
-        showManText('The pub seems abandoned, just like the rest of the town', 1400);
-        suspend(total_text_time);
             
         store.set("stickman-item0" + thisPlace, [ 'glass', true, true, 610, 417, true ]);
         store.set("stickman-item1" + thisPlace, [ 'barrel', true, false, 653, 260, true ]);
@@ -128,14 +144,19 @@ function create_pub_items(){
         store.set("stickman-item8" + thisPlace, [ 'dart_board', true, false, 558, 185, true ]);
         store.set("stickman-item9" + thisPlace, [ 'rock_pub', true, true, 588, 440, true ]);
         store.set("stickman-item10" + thisPlace, [ 'secret_door', true, false, 877, 420, false ]);
-        store.set("stickman-item11" + thisPlace, [ 'chandelier', false, false, 364, 0, true ]);
+        store.set("stickman-item11" + thisPlace, [ 'chandelier', true, false, 364, 0, true ]);
         store.set("stickman-item12" + thisPlace, [ 'wc_door', false, false, 788, 200, true ]);
         store.set("stickman-item13" + thisPlace, [ 'poster', false, false, 694, 170, true ]);   
+        store.set("stickman-item14" + thisPlace, [ 'chain', true, false, 743, 0, true ]);   
+        store.set("stickman-item16" + thisPlace, [ 'candle', true, true, 564, 487, false ]);
+        store.set("stickman-item15" + thisPlace, [ 'broken_chandelier', true, false, 364, 360, false ]);  
         
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
-        
-        load_items_state(14);
+        setTimeout(function(){
+            first_visit[thisPlace] = false;
+            store.set("stickman-first_visit_to" + thisPlace, false); 
+        },200);
+
+        load_items_state(17);
     }
     
     else{

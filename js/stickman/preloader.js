@@ -56,6 +56,9 @@ preloader.prototype = {
         game.load.image('poster', img_path + 'poster.png');
         game.load.image('wc_door', img_path + 'wc_door.png');
         game.load.image('secret_door', img_path + 'secret_door.png');
+        game.load.image('chain', img_path + 'chain.png');
+        game.load.image('broken_chandelier', img_path + 'broken_chandelier.png');
+        game.load.image('candle', img_path + 'candle.png');
         
         // wc
         game.load.image('wc_flood', img_path + 'wc_flood.png');

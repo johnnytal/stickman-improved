@@ -16,11 +16,6 @@ wc.prototype = {
         game.physics.enable(pub_bound_u, Phaser.Physics.ARCADE);
         pub_bound_u.body.setSize(TOTAL_WIDTH, 380);
         pub_bound_u.body.immovable = true;
-
-        if (first_visit['Wc']){
-            showManText("No one bothered to clean before they left", 2000);
-            suspend(total_text_time);
-        }
         
         if (coming_from != 'Pub'){
             change_music(pub_music);
@@ -35,6 +30,11 @@ wc.prototype = {
         line.scale.set(0.9, 0.85);
         
         fadeInScreen();
+        
+        if (first_visit[thisPlace] == true){
+            showManText("No one bothered to clean before they left", 2000);
+            suspend(total_text_time);
+        }
     },
     
     update: function(){
@@ -46,41 +46,42 @@ wc.prototype = {
         
         var boundsR = 430;
         var boundsL = 190;
-
-        if (placeToGoX != null){ 
-            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
-            
-            if (man.body.x - placeToGoX < -DISTANCE && man.body.x < boundsR){ // man walk right
-               man.body.velocity.x = pub_vel_x; 
-               dir = 'right';
-               manWalk = man.animations.play(dir);
-            } 
-            else if (man.body.x - placeToGoX > DISTANCE && man.body.x > boundsL){ // man walk left
-               man.body.velocity.x = -pub_vel_x; 
-               dir = 'left';
-               manWalk = man.animations.play(dir);
-            } 
-            else{ placeToGoX = 'null'; }
-        } 
         
-        if (placeToGoY != null){
-            if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
+        if (get_item('name', 'wc_flood').visible == false){
+            if (placeToGoX != null){ 
+                if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
+                
+                if (man.body.x - placeToGoX < -DISTANCE && man.body.x < boundsR){ // man walk right
+                   man.body.velocity.x = pub_vel_x; 
+                   dir = 'right';
+                   manWalk = man.animations.play(dir);
+                } 
+                else if (man.body.x - placeToGoX > DISTANCE && man.body.x > boundsL){ // man walk left
+                   man.body.velocity.x = -pub_vel_x; 
+                   dir = 'left';
+                   manWalk = man.animations.play(dir);
+                } 
+                else{ placeToGoX = 'null'; }
+            } 
             
-            if (man.body.y - placeToGoY < -DISTANCE && man.body.x > boundsL + 100 && man.body.x < boundsR){ // man walk up
-                man.body.velocity.y = pub_vel_y; 
-                manWalk = man.animations.play(dir);
+            if (placeToGoY != null){
+                if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
+                
+                if (man.body.y - placeToGoY < -DISTANCE && man.body.x > boundsL + 100 && man.body.x < boundsR){ // man walk up
+                    man.body.velocity.y = pub_vel_y; 
+                    manWalk = man.animations.play(dir);
+                }
+                else if (man.body.y - placeToGoY > DISTANCE && man.body.x > boundsL + 100 && man.body.x < boundsR){ // man walk down
+                    man.body.velocity.y = -pub_vel_y;  
+                    manWalk = man.animations.play(dir); 
+                }
+                else{ placeToGoY = 'null'; } 
             }
-            else if (man.body.y - placeToGoY > DISTANCE && man.body.x > boundsL + 100 && man.body.x < boundsR){ // man walk down
-                man.body.velocity.y = -pub_vel_y;  
-                manWalk = man.animations.play(dir); 
-            }
-            else{ placeToGoY = 'null'; } 
         }
         
         if (placeToGoX == 'null' && placeToGoY == 'null' && man.body.gravity.y == 0) stop_man();
         
         if (man.y > 570){
-            store_game_state(items, thisPlace);
             tween_black(500, 0, "Pub", thisPlace);
             placeToGoY = 'null';
             placeToGoX = 'null';
@@ -110,16 +111,19 @@ function hitPubBounds(){
 }
 
 function create_wc_items(){
-    
+          
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
+    
         store.set("stickman-item0" + thisPlace, [ 'string', true, false, 280, 300, true, false ]); 
         store.set("stickman-item1" + thisPlace, [ 'wc_flood', true, false, TOTAL_WIDTH / 8, 150, false, false ]); 
-        store.set("stickman-item2" + thisPlace, [ 'roof_door', false, false, 250, 50, true, false ]); 
+        store.set("stickman-item2" + thisPlace, [ 'roof_door', false, false, 229, 14, true, false ]); 
         
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
+        setTimeout(function(){
+            first_visit[thisPlace] = false;
+            store.set("stickman-first_visit_to" + thisPlace, false);
+        }, 200);
         
         load_items_state(3);
     }
