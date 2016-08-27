@@ -43,7 +43,7 @@ street.prototype = {
         
         store.set("stickman-location", thisPlace);
         
-        if (banner_not_created){
+        /*if (banner_not_created){
             try{
                 Cocoon.Ad.AdMob.configure({
                     android: { 
@@ -55,7 +55,7 @@ street.prototype = {
                 
                 banner_not_created = false;
             } catch(e){}
-        }
+        }*/
     },
     
     update: function(){

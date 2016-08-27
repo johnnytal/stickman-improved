@@ -157,7 +157,7 @@ function startGame(){
         sfxclick.play();
     }
     credits_music.fadeOut();
-    showAd();
+    //showAd();
     
     this.game.state.start('Game');    
 }
@@ -181,6 +181,9 @@ function loadSfx(){
     sfxOpen_barrel = game.add.audio('sfxOpen_barrel', 1, false);
     sfxSecret_door = game.add.audio('sfxSecret_door', 1, false);
     sfxLight_switch = game.add.audio('sfxLight_switch', 0.6, false);    
+    sfxFall = game.add.audio('sfxFall', 0.4, false);    
+    sfxFlush1 = game.add.audio('sfxFlush1', 1, false);    
+    sfxFlush2 = game.add.audio('sfxFlush2', 0.8, false);    
 }
 
 function change_music(music_to_play){
@@ -208,7 +211,7 @@ function change_music(music_to_play){
         }   
     }, 1500);
 }
-
+/*
 function showAd(){
     var timeToShow = game.rnd.integerInRange(30000, 75000);
     var timeToHide = game.rnd.integerInRange(10000, 30000);
@@ -226,3 +229,4 @@ function showAd(){
         }, timeToHide);
     }, timeToShow);     
 }
+*/

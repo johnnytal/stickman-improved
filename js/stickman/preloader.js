@@ -63,6 +63,8 @@ preloader.prototype = {
         // wc
         game.load.image('wc_flood', img_path + 'wc_flood.png');
         game.load.image('roof_door', img_path + 'roof_door.png');
+        game.load.image('brush', img_path + 'brush.png');
+        game.load.image('toilet', img_path + 'toilet.png');
         
         // maze
         game.load.image('switch', img_path + 'switch.png');
@@ -102,6 +104,9 @@ preloader.prototype = {
         game.load.audio('sfxSteps_pub', sfx_path + 'steps_pub.ogg');
         game.load.audio('sfxLight_switch', sfx_path + 'switch.ogg');
         game.load.audio('sfxclick', sfx_path + 'click.ogg');
+        game.load.audio('sfxFall', sfx_path + 'fall.ogg');
+        game.load.audio('sfxFlush1', sfx_path + 'flush1.ogg');
+        game.load.audio('sfxFlush2', sfx_path + 'flush2.ogg');
     },
     
     create: function(){

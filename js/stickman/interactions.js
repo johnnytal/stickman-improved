@@ -3,14 +3,14 @@ function interact_item(_static_item_clicked){
     
     switch(_static_item_clicked.key){    
         case 'door':
-        complete_window_mission()
+        //complete_window_mission()
             showManText("The door is locked", 200);
         break;
         
         case 'bar_sign':
             showManText('It reads: "BAR"', 200);
         break;
-        
+
         case 'ladder_b':
             if (!check_mission('stone')){
                 showManText("No point, the window seems closed from the inside", 0);
@@ -31,7 +31,7 @@ function interact_item(_static_item_clicked){
                 tween_black(500, 150, "Alley", "Street"); 
             }
         break;
-        
+
         case 'window':
              if (!check_mission('ladder')){
                  showManText("Stickmen can't jump", 0);
@@ -63,7 +63,7 @@ function interact_item(_static_item_clicked){
         break;
        
         case 'barrel':
-            showManText("I wouldn't mind getting drunk,\nbut i'd had to open it first", 0);
+            showManText("Getting drunk can give my life a purpose,\nbut i'll have to open the barrel first", 0);
         break;
         
         case 'dart_board':
@@ -91,16 +91,18 @@ function interact_item(_static_item_clicked){
             else{
                 showManText("That's for not cleaning the toilet!", 0);
                 
-                suspend(11000);
+                suspend(10000);
                     
                 setTimeout(function(){
-                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2500, Phaser.Easing.Sinusoidal.InOut, true);
+                    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 2000, Phaser.Easing.Sinusoidal.InOut, true);
                     
                     theTween.onComplete.add(function(){
-                       tween_alpha(bigBlack, 0, 2500);
+                       sfxFall.play();
+                       tween_alpha(bigBlack, 0, 3500);
                        
                        man.x = 782;
                        man.y = 327;
+                       man.frame = 4;
 
                        get_item('name', 'broken_chandelier').visible = true;
                        get_item('name', 'candle').visible = true;
@@ -111,20 +113,27 @@ function interact_item(_static_item_clicked){
                        store_game_state('Pub');
                        coming_from = 'Wc';
 
-                       showManText("Hmm.. Bringing the ladder from outside\ncould have made more sense. Oh well", 1000);
-                       
+                       showManText("Bringing the ladder from outside\ncould have been easier i guess", 1000);
+
                     }, this);
-                }, 3000);
+                }, 2500);
             }
-        break;
-        
-        case 'candle':
-            showManText("It's still lit. I hope it won't burn my pocket", 0);
-            add_item_to_inventory(inventory_item);
         break;
         
         case 'broken_chandelier':
             showManText("Maybe that's my purpose in life?\nInflicting damage on abandoned pubs?", 0);
+        break;
+        
+        case 'wc_flood':
+            showManText("Please stop! It gets dirtier when you click on it!", 0);
+        break;
+        
+        case 'toilet':
+            showManText("Stickmen bodily functions don't work that way", 0);
+        break;
+        
+        case 'brush':
+            showManText("Whatever purpose my life has, I'm sure that's not it", 0);
         break;
         
         case 'wc_door':
@@ -148,7 +157,7 @@ function interact_item(_static_item_clicked){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
-                showManText("Well, now I can reach!", 0);
+                showManText("Well, now I can reach it!", 0);
                 suspend(total_text_time);
 
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');
@@ -159,15 +168,19 @@ function interact_item(_static_item_clicked){
             if ( get_item('name', 'wc_flood').visible == false ){
             
                 _static_item_clicked.frame = 1;
+                man.frame = 4;
                 
                 if (!check_mission('plug')){
                     setTimeout(function(){
                         _static_item_clicked.frame = 0;
                         mission_complete('plug_mission');
+                        sfxFlush1.play();
+                        showManText("That doesn't sound so good...", 500); 
                     },1500);
                 }
                 
                 else{
+                    sfxFlush2.play();
                     showManText('Uh oh...', 1000); 
                     suspend(8000);
                         
@@ -206,7 +219,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'secret_door':
-            suspend(9000);
+            suspend(7000);
             showManText("It's a tunnel that leads into a system of catacombs!", 300);
             showManText("But it's way too dark, I'm afraid something will bite me", total_text_time);
         break;
@@ -331,6 +344,10 @@ function take_item(item){
                 showManText("Someone carelessly left this dart here. * Hic *", 0);
             }
         break;
+    
+        case 'candle':
+            showManText("Still lit. Hope it won't make a hole in my bottomless pocket", 0);
+        break;
     }  
     
     item.isTaken = true;
@@ -410,6 +427,17 @@ function use_item(inventory_item, static_item){
             showManText("I'ts already very much broken", 0);
         break;
         
+        case ('candle + pub_door'):
+        case ('candle + poster'):
+            showManText("I have caused enough damage for now", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('candle + barrel'):
+            showManText("I want to open it, not burn it!", 0);
+            add_item_to_inventory(inventory_item);
+        break;
+
         case ('glass + pub_door'):
             showManText('"Stickman was here". There. I did it.', 200);
             put_item_away(inventory_item, static_item);
@@ -557,6 +585,8 @@ function use_item(inventory_item, static_item){
         
         case ('candle + secret_door'):
             showManText("OK let's go, maybe that's where they keep the extra barrels", 0);
+            suspend(total_text_time);
+
             tween_black(2000, total_text_time, "Maze", "Pub");
         break;
         

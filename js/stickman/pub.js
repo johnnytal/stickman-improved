@@ -106,16 +106,12 @@ pub.prototype = {
             man.animations.stop();
            
             if (static_item_clicked != null){ 
-                if (static_item_clicked.key != 'chain'){
+                if (static_item_clicked.key == 'chain'){
                     interact_item(static_item_clicked);
                 } 
                 
-                else if (static_item_clicked.tint != 0xffffff){
+                else if (static_item_clicked.tint != 0xffffff){ /* still not perfect */
                     static_item_clicked.tint = 0xffffff;
-                }
-                
-                else{
-                    static_item_clicked.alpha = 0;
                 }
             } 
         }

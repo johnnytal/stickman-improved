@@ -119,16 +119,18 @@ function create_wc_items(){
         store.set("stickman-item0" + thisPlace, [ 'string', true, false, 280, 300, true, false ]); 
         store.set("stickman-item1" + thisPlace, [ 'wc_flood', true, false, TOTAL_WIDTH / 8, 150, false, false ]); 
         store.set("stickman-item2" + thisPlace, [ 'roof_door', false, false, 229, 14, true, false ]); 
+        store.set("stickman-item3" + thisPlace, [ 'brush', false, false, 428, 395, true, false ]); 
+        store.set("stickman-item4" + thisPlace, [ 'toilet', false, false, 303, 276, true, false ]); 
         
         setTimeout(function(){
             first_visit[thisPlace] = false;
             store.set("stickman-first_visit_to" + thisPlace, false);
         }, 200);
         
-        load_items_state(3);
+        load_items_state(5);
     }
     
-    else{ 
+    else{    
         load_items_state(null);  
     }
 }

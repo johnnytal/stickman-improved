@@ -49,8 +49,8 @@ alley.prototype = {
     update: function(){
         walk_update();
         
-        var maze_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var maze_vel_y = 55 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var alley_vel_x = 45 + (Math.abs(man.body.x - placeToGoX) / 1.5);
+        var alley_vel_y = 75 + (Math.abs(man.body.y - placeToGoY) / 1.5);
         
         if (poly.contains(man.x, man.y)){
             if (!stopped || stopped && poly.contains(placeToGoX, placeToGoY)){
@@ -67,12 +67,12 @@ alley.prototype = {
             if (!sfxSteps.isPlaying) sfxSteps.play();
             
             if (man.body.x - placeToGoX < -DISTANCE){
-               man.body.velocity.x = maze_vel_x; 
+               man.body.velocity.x = alley_vel_x; 
                dir = 'right';
                manWalk = man.animations.play(dir);
             } 
             else if (man.body.x - placeToGoX > DISTANCE){
-               man.body.velocity.x = -maze_vel_x; 
+               man.body.velocity.x = -alley_vel_x; 
                dir = 'left';
                manWalk = man.animations.play(dir);
             } 
@@ -83,11 +83,11 @@ alley.prototype = {
             if (!sfxSteps.isPlaying) sfxSteps.play();
           
             if (man.body.y - placeToGoY < -DISTANCE){
-                man.body.velocity.y = maze_vel_y; 
+                man.body.velocity.y = alley_vel_y; 
                 manWalk = man.animations.play(dir);
             }
             else if (man.body.y - placeToGoY > DISTANCE){
-                man.body.velocity.y = -maze_vel_y;  
+                man.body.velocity.y = -alley_vel_y;  
                 manWalk = man.animations.play(dir); 
             }
             else{ placeToGoY = 'null'; } 
@@ -100,7 +100,7 @@ alley.prototype = {
             placeToGoX = 'null';
         }, null, this);
         
-        if (man.x > 730){
+        if (man.x > 715){
             tween_black(500, 0, "Street", thisPlace);
             placeToGoY = 'null';
             placeToGoX = 'null';
@@ -122,7 +122,7 @@ function create_alley_items(){
         first_visit[thisPlace] = false;
         store.set("stickman-first_visit_to" + thisPlace, false);
         
-        load_items_state(2);
+        load_items_state(3);
     }
     
     else{

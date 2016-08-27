@@ -53,7 +53,7 @@ maze.prototype = {
         
         fadeInScreen();
 
-        mazeText = showManText('Sure is dark here!', 1200);   
+        mazeText = showManText('Scarry...', 1200);   
     },
     
     update: function(){
