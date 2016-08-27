@@ -43,6 +43,12 @@ street.prototype = {
         
         store.set("stickman-location", thisPlace);
         
+        if (first_visit[thisPlace] == true){
+            man.alpha = 0;
+            tween_alpha(man, 1, 6000);
+            showManText('Where am I? WHO am I? What is this place?', 2500);
+            suspend(total_text_time);
+        }
         /*if (banner_not_created){
             try{
                 Cocoon.Ad.AdMob.configure({
@@ -115,9 +121,11 @@ function create_street_items(){
         store.set("stickman-item3" + thisPlace, [ 'ladder_b', true, false, 493, 245, false ]);
         store.set("stickman-item4" + thisPlace, [ 'bar_sign', true, false, 600, 174, true ]);
         store.set("stickman-item5" + thisPlace, [ 'alley_entrance', false, false, 144, 267, true ]);
-
-        first_visit[thisPlace] = false; // for this game
-        store.set("stickman-first_visit_to" + thisPlace, false); // for continues
+        
+        setTimeout(function(){
+            first_visit[thisPlace] = false; first_visit[thisPlace] = false; // for this game
+            store.set("stickman-first_visit_to" + thisPlace, false); // for continues
+        },200);
         
         load_items_state(6);
     }
