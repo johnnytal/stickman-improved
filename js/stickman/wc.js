@@ -8,7 +8,9 @@ wc.prototype = {
     create: function(){
 
         wc = game.add.tileSprite(TOTAL_WIDTH / 8, 0, TOTAL_WIDTH / 2, TOTAL_HEIGHT, 'wc');
-
+        
+        createBmd(this);
+        
         thisPlace = 'Wc';
         items = [];
        
@@ -122,10 +124,7 @@ function create_wc_items(){
         store.set("stickman-item3" + thisPlace, [ 'brush', false, false, 428, 395, true, false ]); 
         store.set("stickman-item4" + thisPlace, [ 'toilet', false, false, 303, 276, true, false ]); 
         
-        setTimeout(function(){
-            first_visit[thisPlace] = false;
-            store.set("stickman-first_visit_to" + thisPlace, false);
-        }, 200);
+        not_first_visit(thisPlace);
         
         load_items_state(5);
     }

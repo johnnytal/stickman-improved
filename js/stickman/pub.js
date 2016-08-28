@@ -8,6 +8,8 @@ pub.prototype = {
     create: function(){
         pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
         
+        createBmd(this);
+        
         change_music(pub_music);
         
         thisPlace = 'Pub';
@@ -55,8 +57,8 @@ pub.prototype = {
 
         walk_update();
         
-        var pub_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.35);
-        var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.6);
+        var pub_vel_x = 35 + (Math.abs(man.body.x - placeToGoX) / 1.25);
+        var pub_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.30);
         
         var boundsR = 760;
         var boundsL = 260;
@@ -147,10 +149,7 @@ function create_pub_items(){
         store.set("stickman-item16" + thisPlace, [ 'candle', true, true, 564, 487, false ]);
         store.set("stickman-item15" + thisPlace, [ 'broken_chandelier', true, false, 364, 360, false ]);  
         
-        setTimeout(function(){
-            first_visit[thisPlace] = false;
-            store.set("stickman-first_visit_to" + thisPlace, false); 
-        },200);
+        not_first_visit(thisPlace);
 
         load_items_state(17);
     }

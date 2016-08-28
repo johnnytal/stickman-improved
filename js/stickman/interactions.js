@@ -157,7 +157,7 @@ function interact_item(_static_item_clicked){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
-                showManText("Well, now I can reach it!", 0);
+                showManText("Now I can reach it, but at what price?", 0);
                 suspend(total_text_time);
 
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');
@@ -228,7 +228,6 @@ function interact_item(_static_item_clicked){
             if (!check_mission('switch')){
                 
                 sfxLight_switch.play();
-                line.kill();
                 
                 showManText("Too bad there was no switch on the other side", 750);
                 suspend(total_text_time);

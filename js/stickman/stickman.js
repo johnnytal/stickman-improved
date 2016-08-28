@@ -112,6 +112,7 @@ function create_man(x, y, _frame){
     man.enableBody = true;
     man.inputEnabled = true;
     man.anchor.setTo(0.5, 0.5);
+    man.body.collideWorldBounds = true;
     
     if (_frame < 4){
         dir = 'right';
@@ -346,6 +347,33 @@ function create_walls(cords){
     wall = walls.create(startX, startY, '');
     wall.body.setSize(sizeX, sizeY);
     wall.body.immovable = true;
+}
+
+function not_first_visit(_place){
+    setTimeout(function(){
+        first_visit[_place] = false;
+        store.set("stickman-first_visit_to" + _place, false);
+    }, 100);
+}
+
+function createBmd(_game){ // to make static item null if clicked on empty space
+     var bmd = _game.make.bitmapData(950, 600);
+     var tabZone = _game.add.sprite(0, 0, bmd);
+     
+     tabZone.inputEnabled = true;
+     tabZone.events.onInputDown.add(function(){
+         if (static_item_clicked != null){
+             if (static_item_clicked.tint != '0xffffff'){
+                 static_item_clicked.tint = '0xffffff';  
+             }
+                
+             else {      
+                 static_item_clicked.alpha = 0; 
+             }
+           
+             static_item_clicked = null;
+         }
+     }, this);
 }
 
 function end_game(){ 

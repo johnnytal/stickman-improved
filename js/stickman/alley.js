@@ -15,7 +15,9 @@ alley.prototype = {
     
     create: function(){
         alley = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'alley');    
-
+        
+        createBmd(this);
+        
         poly = new Phaser.Polygon([ 
             new Phaser.Point(64, 600), new Phaser.Point(0, 600), new Phaser.Point(0, 0),
             new Phaser.Point(540, 0), new Phaser.Point(540, 286)
@@ -33,7 +35,7 @@ alley.prototype = {
         
         create_alley_items();
 
-        create_man(590, 503, 4);
+        create_man(595, 503, 4);
         
         store.set("stickman-location", thisPlace);
         
@@ -49,8 +51,8 @@ alley.prototype = {
     update: function(){
         walk_update();
         
-        var alley_vel_x = 45 + (Math.abs(man.body.x - placeToGoX) / 1.5);
-        var alley_vel_y = 75 + (Math.abs(man.body.y - placeToGoY) / 1.5);
+        var alley_vel_x = 26 + (Math.abs(man.body.x - placeToGoX) / 0.85);
+        var alley_vel_y = 45 + (Math.abs(man.body.y - placeToGoY) / 0.85);
         
         if (poly.contains(man.x, man.y)){
             if (!stopped || stopped && poly.contains(placeToGoX, placeToGoY)){
@@ -116,11 +118,10 @@ function create_alley_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-        store.set("stickman-item0" + thisPlace, [ 'ladder_s', true, true, 590, 242, true, false ]);
+        store.set("stickman-item0" + thisPlace, [ 'ladder_s', true, true, 575, 242, true, false ]);
         store.set("stickman-item1" + thisPlace, [ 'rock_alley', true, true, 365, 415, true, false ]);
 
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
+        not_first_visit(thisPlace);
         
         load_items_state(3);
     }

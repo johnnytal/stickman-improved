@@ -11,6 +11,8 @@ street.prototype = {
     create: function(){
         street = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'street');    
         
+        createBmd(this);
+        
         thisPlace = 'Street';
 
         floor = game.add.sprite(TOTAL_WIDTH/2-27, 450, null);
@@ -122,10 +124,7 @@ function create_street_items(){
         store.set("stickman-item4" + thisPlace, [ 'bar_sign', true, false, 600, 174, true ]);
         store.set("stickman-item5" + thisPlace, [ 'alley_entrance', false, false, 144, 267, true ]);
         
-        setTimeout(function(){
-            first_visit[thisPlace] = false; first_visit[thisPlace] = false; // for this game
-            store.set("stickman-first_visit_to" + thisPlace, false); // for continues
-        },200);
+        not_first_visit(thisPlace);
         
         load_items_state(6);
     }

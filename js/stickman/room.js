@@ -8,6 +8,8 @@ room.prototype = {
     create: function(){
         room = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'room');   
 
+        createBmd(this);
+        
         thisPlace = 'Room';
         
         create_room_items();
@@ -99,10 +101,9 @@ function create_room_items(){
 
     if (first_visit[thisPlace] == true){
         store.set("stickman-item0" + thisPlace, [ 'computer', false, false, 246, 12, true ]);
-        store.set("stickman-item1" + thisPlace, [ 'rock_room', true, true, 70, 462, true ]);
+        store.set("stickman-item1" + thisPlace, [ 'rock_room', true, true, 70, 462, true, false ]);
         
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
+        not_first_visit(thisPlace);
         
         load_items_state(2);
     }

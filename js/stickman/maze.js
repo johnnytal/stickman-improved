@@ -18,6 +18,8 @@ maze.prototype = {
     create: function(){
         maze = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'maze');
         
+        createBmd(this);
+        
         change_music(maze_music);
         
         thisPlace = 'Maze';
@@ -53,7 +55,11 @@ maze.prototype = {
         
         fadeInScreen();
 
-        mazeText = showManText('Scarry...', 1200);   
+        if (first_visit[thisPlace] == true){
+            showManText("Scary... I can hardly see anything", 1200);   
+            suspend(total_text_time);
+        }
+
     },
     
     update: function(){
@@ -142,8 +148,7 @@ function create_maze_items(){
     if (first_visit[thisPlace] == true){
         store.set("stickman-item0" + thisPlace, [ 'switch', true, false, 831, 358, true ]);
         
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
+        not_first_visit(thisPlace);
         
         load_items_state(1);
     }

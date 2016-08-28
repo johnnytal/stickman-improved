@@ -4,7 +4,7 @@ var hall = function(game){
    hallWalls = [
        [0, 375, 91, 310], [91, 361, 51, 244], [51, 244, 169, 253], 
        [169, 253, 433, 304], [433, 304, 475, 338], [475, 338, 477, 311], [477, 311, 786, 230], [786, 210, 950, 231],
-       [0, TOTAL_HEIGHT - 70, TOTAL_WIDTH, TOTAL_HEIGHT - 70], [TOTAL_WIDTH, 0, TOTAL_WIDTH, TOTAL_HEIGHT]
+       [0, TOTAL_HEIGHT - 70, TOTAL_WIDTH - 1, TOTAL_HEIGHT - 70], [TOTAL_WIDTH - 1, 0, TOTAL_WIDTH - 1, TOTAL_HEIGHT]
    ]; 
 };
 
@@ -13,7 +13,9 @@ hall.prototype = {
     
     create: function(){
         hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');  
-            
+        
+        createBmd(this);
+        
         change_music(hall_music);
         
         thisPlace = 'Hall'; 
@@ -33,16 +35,19 @@ hall.prototype = {
 
         fadeInScreen();
         
-        showManText('That was kinda fun!', 1000);
-        suspend(total_text_time);
+        if (first_visit[thisPlace] == true){
+            showManText('That was kinda fun!', 1000);
+            suspend(total_text_time);
+        }
+
     },
     
     update: function(){
                
         walk_update();
         
-        var hall_vel_x = 40 + (Math.abs(man.body.x - placeToGoX) / 1.7);
-        var hall_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.7);
+        var hall_vel_x = 50 + (Math.abs(man.body.x - placeToGoX) / 1.45);
+        var hall_vel_y = 40 + (Math.abs(man.body.y - placeToGoY) / 1.55);
 
         if (placeToGoX != null){ 
             if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
@@ -99,8 +104,7 @@ function create_hall_items(){
         store.set("stickman-item2" + thisPlace, [ 'hall_window_broken', true, false, 887, 163, false ]);
         store.set("stickman-item3" + thisPlace, [ 'rock_hall', true, true, 800, 340, true ]);
         
-        first_visit[thisPlace] = false;
-        store.set("stickman-first_visit_to" + thisPlace, false);
+        not_first_visit(thisPlace);
         
         load_items_state(4);
     }
