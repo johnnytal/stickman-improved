@@ -157,7 +157,7 @@ function interact_item(_static_item_clicked){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
-                showManText("Now I can reach it, but at what price?", 0);
+                showManText("Now I can reach it, but at what cost?", 0);
                 suspend(total_text_time);
 
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');

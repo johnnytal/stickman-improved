@@ -25,7 +25,7 @@ wc.prototype = {
         
         create_wc_items();
         
-        create_man(356, 523, 3);
+        create_man(356, 510, 3);
 
         store.set("stickman-location", thisPlace);
         
@@ -83,7 +83,7 @@ wc.prototype = {
         
         if (placeToGoX == 'null' && placeToGoY == 'null' && man.body.gravity.y == 0) stop_man();
         
-        if (man.y > 570){
+        if (man.y > 525){
             tween_black(500, 0, "Pub", thisPlace);
             placeToGoY = 'null';
             placeToGoX = 'null';
