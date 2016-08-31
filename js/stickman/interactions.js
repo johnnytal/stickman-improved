@@ -22,7 +22,7 @@ function interact_item(_static_item_clicked){
         
         case 'alley_entrance':        
             if (first_visit['Alley']){
-                showManText("There's a narrow alley here", 0);
+                showManText("It leads to a narrow alley", 0);
                 suspend(total_text_time);
                 tween_black(500, total_text_time, "Alley", "Street"); 
             }
@@ -67,7 +67,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'dart_board':
-            if (!get_item('name', 'secret_door').visible){
+            if (!get_item('name', 'secret_door', 'sprite').visible){
                 showManText("It's a dartboard.\nhmm, there's something funny about that bullseye", 0);  
             }
             else{ 
@@ -102,19 +102,19 @@ function interact_item(_static_item_clicked){
                        
                        man.x = 782;
                        man.y = 327;
-                       man.frame = 4;
 
-                       get_item('name', 'broken_chandelier').visible = true;
-                       get_item('name', 'candle').visible = true;
+                       get_item('name', 'broken_chandelier', 'sprite').visible = true;
+                       get_item('name', 'candle', 'sprite').visible = true;
                        
-                       get_item('name', 'chandelier').visible = false;
-                       get_item('name', 'chain').visible = false;
+                       get_item('name', 'chandelier', 'sprite').visible = false;
+                       get_item('name', 'chain', 'sprite').visible = false;
 
                        store_game_state('Pub');
                        coming_from = 'Wc';
 
                        showManText("Bringing the ladder from outside\ncould have been easier i guess", 1000);
-
+                       man.frame = 4;
+                       
                     }, this);
                 }, 2500);
             }
@@ -137,7 +137,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'wc_door':
-            if ( get_item('name', 'broken_chandelier').visible == true ){
+            if ( get_item('name', 'broken_chandelier', 'sprite').visible == true ){
                 showManText("I'm wet enough");
             }
             
@@ -153,7 +153,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'roof_door':
-            if ( get_item('name', 'wc_flood').visible == false ){
+            if ( get_item('name', 'wc_flood', 'sprite').visible == false ){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
@@ -165,7 +165,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'string':
-            if ( get_item('name', 'wc_flood').visible == false ){
+            if ( get_item('name', 'wc_flood', 'sprite').visible == false ){
             
                 _static_item_clicked.frame = 1;
                 man.frame = 4;
@@ -193,7 +193,7 @@ function interact_item(_static_item_clicked){
                            man.frame = 0;
                            _static_item_clicked.frame = 0;
                            
-                           get_item('name', 'wc_flood').visible = true;
+                           get_item('name', 'wc_flood', 'sprite').visible = true;
                            
                            man.body.angularVelocity = -20;
                            man.body.gravity.y = -30;
@@ -345,7 +345,7 @@ function take_item(item){
         break;
     
         case 'candle':
-            showManText("Still lit. Hope it won't make a hole in my bottomless pocket", 0);
+            showManText("Still lit. Hope it won't burn a hole in my bottomless pocket", 0);
         break;
     }  
     
@@ -380,7 +380,7 @@ function use_item(inventory_item, static_item){
         case("ladder_s + broken_window"):
             sfxPut_ladder.play();
 
-            get_item('name', 'ladder_b').visible = true;
+            get_item('name', 'ladder_b', 'sprite').visible = true;
             kill_inventory_item(inventory_item);
             showManText("Might look a bit suspicious i guess", 300);
             suspend(total_text_time);
@@ -402,7 +402,7 @@ function use_item(inventory_item, static_item){
         case("rock_alley + ladder_b"):
         case("rock_pub + ladder_b"):
             showManText("That might break the ladder", 0);
-            add_item_to_inventory(inventory_item); 
+            put_item_away(inventory_item, static_item);
         break;
         
         case('rock_alley + window'):
@@ -416,7 +416,7 @@ function use_item(inventory_item, static_item){
             setTimeout(function(){                    
                 kill_inventory_item(inventory_item);
                 static_item.destroy();
-                get_item('name', 'broken_window').visible = true;
+                get_item('name', 'broken_window', 'sprite').visible = true;
                 
                 mission_complete('stone_mission');
             }, 1150);
@@ -434,7 +434,7 @@ function use_item(inventory_item, static_item){
         
         case ('candle + barrel'):
             showManText("I want to open it, not burn it!", 0);
-            add_item_to_inventory(inventory_item);
+            put_item_away(inventory_item, static_item);
         break;
 
         case ('glass + pub_door'):
@@ -479,7 +479,7 @@ function use_item(inventory_item, static_item){
                 suspend(5300);
                 
                 create_item( game, 'dart', true, false, 555, 196, true );
-                get_item('name', 'dart').tint = 0xffddff; 
+                get_item('name', 'dart', 'sprite').tint = 0xffddff; 
 
                 showManText("Bullseye! i'm alot better at this when i'm drunk!", 500);
                 showManText("Hey what's that noise?", 4500);
@@ -487,7 +487,7 @@ function use_item(inventory_item, static_item){
                 setTimeout(function(){ sfxSecret_door.play(); }, 2000);
                 
                 setTimeout(function(){ 
-                    get_item('name', 'secret_door').visible = true; 
+                    get_item('name', 'secret_door', 'sprite').visible = true; 
                }, 5300);
             }
             
@@ -504,7 +504,7 @@ function use_item(inventory_item, static_item){
             showManText("Nope. poking the barrel just makes it angrier", 3000);
             
             setTimeout(function(){ 
-                add_item_to_inventory(inventory_item); 
+                put_item_away(inventory_item, static_item);
             }, 3000);
         break;
         
@@ -515,13 +515,13 @@ function use_item(inventory_item, static_item){
         
         case ('rock_pub + barrel'):
             showManText("That's a bad way to open a barrel,\nI need something sharp... hmmm...", 0);
-            add_item_to_inventory(inventory_item); 
+            put_item_away(inventory_item, static_item);
         break;
         
         case ('glass + dart_board'):
         case ('rock_pub + dart_board'):
             showManText("That might damage the dartboard", 0);
-            add_item_to_inventory(inventory_item); 
+            put_item_away(inventory_item, static_item);
         break;
         
         case ('glass + barrel'):
@@ -533,8 +533,8 @@ function use_item(inventory_item, static_item){
                 sfxPut_glass.play();
                 kill_inventory_item(inventory_item);
                 
-                get_item('name', 'barrel').kill();
-                get_item('name', 'barrel_glass').visible = true;
+                get_item('name', 'barrel', 'sprite').kill();
+                get_item('name', 'barrel_glass', 'sprite').visible = true;
             }, 700);
         break;
         
@@ -549,8 +549,8 @@ function use_item(inventory_item, static_item){
             }, 1500);
             
             setTimeout(function(){
-                get_item('name', 'barrel_glass').kill();
-                get_item('name', 'barrel_open').visible = true;
+                get_item('name', 'barrel_glass', 'sprite').kill();
+                get_item('name', 'barrel_open', 'sprite').visible = true;
 
                 timePassedText = game.add.text(300, 200, '2 Hours Later' , {font: "72px " + font, fill: "#f7f7f7", align:'center'});
                 timePassedText.alpha = 0;
@@ -568,8 +568,8 @@ function use_item(inventory_item, static_item){
             showManText("Just a little sip...", 2800);
 
             setTimeout(function(){
-                get_item('name', 'barrel_open').kill();
-                get_item('name', 'barrel_empty').visible = true;
+                get_item('name', 'barrel_open', 'sprite').kill();
+                get_item('name', 'barrel_empty', 'sprite').visible = true;
                 
                 man.x = 728;
                 man.y = 320;
@@ -600,9 +600,9 @@ function use_item(inventory_item, static_item){
             setTimeout(function(){                    
                 kill_inventory_item(inventory_item);
                 static_item.destroy();
-                get_item('name', 'hall_window_broken').visible = true;
+                get_item('name', 'hall_window_broken', 'sprite').visible = true;
                 
-                mission_complete('stone_hall_mission');
+                mission_complete('stone_hall_mission', 'sprite');
             }, 1150);
         break;
         
@@ -613,7 +613,7 @@ function use_item(inventory_item, static_item){
         
         default:
             showManText("I don't see how this is possible", 0);
-            add_item_to_inventory(inventory_item);     
+            put_item_away(inventory_item, static_item);
         break;
     }
 }
@@ -634,5 +634,8 @@ function complete_window_mission(){
 
 function put_item_away(_item1, _item2){
     add_item_to_inventory(_item1); 
-    _item2.alpha = 0;   
+    
+    if (_item2 != null && get_item('name', _item2.key, 'item').isLayered == false){
+        _item2.alpha = 0; 
+    }    
 }

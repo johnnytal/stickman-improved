@@ -9,9 +9,9 @@ street.prototype = {
     preload: function(){},
     
     create: function(){
-        street = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'street');    
+        street = game.add.sprite(0, 0, 'street');    
         
-        createBmd(this);
+        reset_click(street);
         
         thisPlace = 'Street';
 

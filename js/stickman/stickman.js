@@ -86,12 +86,12 @@ function add_item_to_inventory(_item, v){
     if (!v){
         for (i = 0; i < inventory.length; i++){
             try{
-                get_item('name', inventory[i].key).fixedToCamera = false; // to move back the rest of the items
-                get_item('name', inventory[i].key).y = 535;
+                get_item('name', inventory[i].key, 'sprite').fixedToCamera = false; // to move back the rest of the items
+                get_item('name', inventory[i].key, 'sprite').y = 535;
                 
                 inventory[i].x = ((i + 1) * 50) + 100; 
                 
-                get_item('name', inventory[i].key).fixedToCamera = true;
+                get_item('name', inventory[i].key, 'sprite').fixedToCamera = true;
             } catch(e){}
         }
     }
@@ -134,11 +134,16 @@ function create_man(x, y, _frame){
     walkingIcon = game.add.sprite(350, 290, 'walkingIcon');
     walkingIcon.anchor.set(0.5, 0);
     
-    if (thisPlace == 'maze'){
-        walkingIcon.scale.set(0.45, 0.45);
+    if (thisPlace == 'Maze'){
+        walkingIcon.scale.set(0.6, 0.6);
     }
     
-    game.camera.follow(man, Phaser.Camera.topdownFollow);
+    if (thisPlace != 'Wc'){
+        game.camera.follow(man, Phaser.Camera.topdownFollow);
+    }
+    else{
+        game.camera.follow(null);
+    }
 }
 
 function walk_update(){
@@ -181,10 +186,13 @@ function showManText(textToShow, timeToWait){
     }, timeToWait);
 }
 
-function get_item(attr, value) {
+function get_item(attr, value, what) {
     for(var i = 0; i < items.length; i++) {
-        if(items[i][attr] === value) {
+        if(items[i][attr] === value && what == 'sprite') {
             return items[i].sprite;
+        }
+        else if (items[i][attr] === value && what == 'item'){
+             return items[i];
         }
     }
 }
@@ -356,12 +364,9 @@ function not_first_visit(_place){
     }, 100);
 }
 
-function createBmd(_game){ // to make static item null if clicked on empty space
-     var bmd = _game.make.bitmapData(950, 600);
-     var tabZone = _game.add.sprite(0, 0, bmd);
-     
-     tabZone.inputEnabled = true;
-     tabZone.events.onInputDown.add(function(){
+function reset_click(location){ // to make static item null if clicked on empty space
+     location.inputEnabled = true;
+     location.events.onInputDown.add(function(){
          if (static_item_clicked != null){
              if (static_item_clicked.tint != '0xffffff'){
                  static_item_clicked.tint = '0xffffff';  

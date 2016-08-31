@@ -16,9 +16,9 @@ var maze = function(game){
 
 maze.prototype = {
     create: function(){
-        maze = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'maze');
+        maze = game.add.sprite(0, 0, 'maze');
         
-        createBmd(this);
+        reset_click(maze);
         
         change_music(maze_music);
         
@@ -97,7 +97,7 @@ maze.prototype = {
             }
             
             if (man.x > 878){
-                item = get_item('name', 'switch');
+                item = get_item('name', 'switch', 'sprite');
                 
                 item.tint = 0xc9a279;   
                 interact_item(item);

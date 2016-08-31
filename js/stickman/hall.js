@@ -12,9 +12,9 @@ hall.prototype = {
     preload: function(){},
     
     create: function(){
-        hall = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'hall');  
+        hall = game.add.sprite(0, 0, 'hall');  
         
-        createBmd(this);
+        reset_click(hall);
         
         change_music(hall_music);
         

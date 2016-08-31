@@ -6,9 +6,9 @@ room.prototype = {
     preload: function(){},
     
     create: function(){
-        room = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'room');   
+        room = game.add.sprite(0, 0, 'room');   
 
-        createBmd(this);
+        reset_click(room);
         
         thisPlace = 'Room';
         

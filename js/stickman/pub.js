@@ -6,9 +6,9 @@ pub.prototype = {
     preload: function(){},
     
     create: function(){
-        pub = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'pub');
+        pub = game.add.sprite(0, 0, 'pub');
         
-        createBmd(this);
+        reset_click(pub);
         
         change_music(pub_music);
         
@@ -101,7 +101,7 @@ pub.prototype = {
 
         game.physics.arcade.collide(man, pub_bound_u, hitPubBounds, null, this); 
     
-        if (man.y < 160 && get_item('name', 'broken_chandelier').visible == false){
+        if (man.y < 160 && get_item('name', 'broken_chandelier', 'sprite').visible == false){
             man.scale.set(0.85, 0.85);
             man.body.velocity.x = 0;  
             man.body.velocity.y = 0;
@@ -114,6 +114,7 @@ pub.prototype = {
                 
                 else if (static_item_clicked.tint != 0xffffff){ /* still not perfect */
                     static_item_clicked.tint = 0xffffff;
+                    showManText("Can't reach", 0);
                 }
             } 
         }

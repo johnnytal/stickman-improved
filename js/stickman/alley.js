@@ -14,9 +14,9 @@ alley.prototype = {
     preload: function(){},
     
     create: function(){
-        alley = game.add.tileSprite(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT, 'alley');    
+        alley = game.add.sprite(0, 0, 'alley');    
         
-        createBmd(this);
+        reset_click(alley);
         
         poly = new Phaser.Polygon([ 
             new Phaser.Point(64, 600), new Phaser.Point(0, 600), new Phaser.Point(0, 0),

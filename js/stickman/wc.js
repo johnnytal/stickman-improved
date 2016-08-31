@@ -7,9 +7,9 @@ wc.prototype = {
     
     create: function(){
 
-        wc = game.add.tileSprite(TOTAL_WIDTH / 8, 0, TOTAL_WIDTH / 2, TOTAL_HEIGHT, 'wc');
+        wc = game.add.sprite(TOTAL_WIDTH / 8, 0, 'wc');
         
-        createBmd(this);
+        reset_click(wc);
         
         thisPlace = 'Wc';
         items = [];
@@ -49,7 +49,7 @@ wc.prototype = {
         var boundsR = 430;
         var boundsL = 190;
         
-        if (get_item('name', 'wc_flood').visible == false){
+        if (get_item('name', 'wc_flood', 'sprite').visible == false){
             if (placeToGoX != null){ 
                 if (!sfxSteps_pub.isPlaying) sfxSteps_pub.play();
                 
