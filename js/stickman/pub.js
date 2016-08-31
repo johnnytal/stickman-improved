@@ -112,7 +112,11 @@ pub.prototype = {
                     interact_item(static_item_clicked);
                 } 
                 
-                else if (static_item_clicked.tint != 0xffffff){ /* still not perfect */
+                else if (get_item('name', static_item_clicked.key, 'item').isLayered == false){
+                    static_item_clicked.alpha = 0; 
+                    showManText("Can't reach", 0);
+                }
+                else if (get_item('name', static_item_clicked.key, 'item').isLayered == true){
                     static_item_clicked.tint = 0xffffff;
                     showManText("Can't reach", 0);
                 }
