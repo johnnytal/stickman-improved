@@ -6,8 +6,8 @@ menu.prototype = {
     create: function(){   
         this.game.add.sprite(0, 0, 'opening');
 
-        startBtn = this.game.add.sprite(70, 395, 'startBtn');
-        contBtn = this.game.add.sprite(390, 395, 'contBtn');
+        startBtn = this.game.add.sprite(75, 350, 'startBtn');
+        contBtn = this.game.add.sprite(370, 335, 'contBtn');
 
         startBtn.inputEnabled = true;
         contBtn.inputEnabled = true;
@@ -158,8 +158,12 @@ function startGame(){
     }
     credits_music.fadeOut();
     //showAd();
+
+    theTween = game.add.tween(bigBlack).to( { alpha: 1}, 700, Phaser.Easing.Sinusoidal.InOut, true); 
+    theTween.onComplete.add(function(){
+        this.game.state.start('Game');    
+    });
     
-    this.game.state.start('Game');    
 }
 
 function loadSfx(){
