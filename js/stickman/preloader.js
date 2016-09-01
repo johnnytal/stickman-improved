@@ -12,9 +12,9 @@ preloader.prototype = {
         game.load.spritesheet('string', img_path + 'string.png',70/2, 140);
         
         // general
-        game.load.image('opening', img_path + 'opening2.png');
-        game.load.image('contBtn', img_path + 'contBtn2.png');
-        game.load.image('startBtn', img_path + 'startBtn.png');
+        game.load.image('opening', img_path + 'menu.jpg');
+        game.load.image('contBtn', img_path + 'old_btn.png');
+        game.load.image('startBtn', img_path + 'new_btn.png');
         
         game.load.image('rain', img_path + 'rain.png');
         game.load.image('bigBlack', img_path + 'blackBig.png');
