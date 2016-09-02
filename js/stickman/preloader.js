@@ -10,6 +10,7 @@ preloader.prototype = {
         game.load.spritesheet('man', img_path + 'man.png', 54, 72.5);
         game.load.spritesheet('walkingIcon', img_path + 'man_icon.png',20, 32);
         game.load.spritesheet('string', img_path + 'string.png',70/2, 140);
+        game.load.spritesheet('towel', img_path + 'towel.png', 23, 59);
         
         // general
         game.load.image('opening', img_path + 'menu.jpg');
@@ -36,10 +37,10 @@ preloader.prototype = {
         game.load.image('alley_entrance', img_path + 'alley_entrance.png');
         game.load.image('bar_sign', img_path + 'bar_sign.png');
         game.load.image('ladder_b', img_path + 'ladder_b.png');
+        game.load.image('rock_alley', img_path + 'rock_alley.png');
         
         // alley
         game.load.image('ladder_s', img_path + 'ladder_s.png');
-        game.load.image('rock_alley', img_path + 'rock_alley.png');
         
         // pub
         game.load.image('pub_door', img_path + 'pub_door.png');

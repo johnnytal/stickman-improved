@@ -22,7 +22,7 @@ function interact_item(_static_item_clicked){
         
         case 'alley_entrance':        
             if (first_visit['Alley']){
-                showManText("It leads to a narrow alley", 0);
+                showManText("It leads into a narrow alley", 0);
                 suspend(total_text_time);
                 tween_black(500, total_text_time, "Alley", "Street"); 
             }
@@ -173,10 +173,9 @@ function interact_item(_static_item_clicked){
                 if (!check_mission('plug')){
                     setTimeout(function(){
                         _static_item_clicked.frame = 0;
-                        mission_complete('plug_mission');
                         sfxFlush1.play();
                         showManText("That doesn't sound so good...", 500); 
-                    },1500);
+                    }, 1500);
                 }
                 
                 else{
@@ -319,6 +318,11 @@ function take_item(item){
            showManText('I will take this rock. because it rocks.', 0);
         break;
         
+        case 'towel':
+            showManText("Always good to have a dirty towel", 0);
+            item.frame = 1;
+        break;
+        
         case 'rock_pub':
            showManText("Sticks and stones, best friends forever", 0);
         break;
@@ -371,40 +375,9 @@ function use_item(inventory_item, static_item){
     }
     
     switch(combined_items){
-        case("ladder_s + door"):
-            showManText("I can reach it without the ladder", 0);
-            put_item_away(inventory_item, static_item);
-        break;
         
-        case("ladder_s + window"):
-        case("ladder_s + broken_window"):
-            sfxPut_ladder.play();
-
-            get_item('name', 'ladder_b', 'sprite').visible = true;
-            kill_inventory_item(inventory_item);
-            showManText("Might look a bit suspicious i guess", 300);
-            suspend(total_text_time);
-            
-            mission_complete('ladder_mission');
-            
-            if (static_item.key == 'window'){
-                static_item.alpha = 0; 
-            }
-        break;
-        
-        case("rock_alley + door"):
-        case("rock_hall + hall_door"):
-        case("rock_pub + door"):
-            showManText("Stoning the door won't help", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case("rock_alley + ladder_b"):
-        case("rock_pub + ladder_b"):
-            showManText("That might break the ladder", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
+        /* stuff that works */
+       
         case('rock_alley + window'):
             suspend(1200);
             showManText("Take that window!", 200);
@@ -422,108 +395,30 @@ function use_item(inventory_item, static_item){
             }, 1150);
         break;
         
-        case('rock_pub + broken_window'):
-            showManText("I'ts already very much broken", 0);
-        break;
-        
-        case ('candle + pub_door'):
-        case ('candle + poster'):
-            showManText("I have caused enough damage for now", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('candle + barrel'):
-            showManText("I want to open it, not burn it!", 0);
-            put_item_away(inventory_item, static_item);
-        break;
+        case("ladder_s + window"):
+        case("ladder_s + broken_window"):
+            sfxPut_ladder.play();
 
-        case ('glass + pub_door'):
-            showManText('"Stickman was here". There. I did it.', 200);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('glass + broken_pub_window'):
-            showManText("It's only fair, But I'll need some kind of super glue", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('rock_pub + broken_pub_window'):
-            showManText("Already did it, it was a great success", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('dart + broken_pub_window'):
-            showManText('I think the window had suffered enough', 0);
-            put_item_away(inventory_item, static_item);
-        break;
-
-        case ('rock_pub + pub_door'):
-            showManText("Stickmen who lives in abandoned pubs shouldn't throw stones", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('dart + dart_board'):
-            sfxDart.play();
+            get_item('name', 'ladder_b', 'sprite').visible = true;
+            kill_inventory_item(inventory_item);
+            showManText("Might look a bit suspicious i guess", 300);
+            suspend(total_text_time);
             
-            if (!check_mission('drunk')){
-                suspend(1000);
-                
-                setTimeout(function(){  
-                    create_item( game, 'dart', true, true, 474, 224, true );
-                },300);
-
-                showManText("I suck at this", 1000);
-            }
+            mission_complete('ladder_mission');
             
-            else{
-                suspend(5300);
-                
-                create_item( game, 'dart', true, false, 555, 196, true );
-                get_item('name', 'dart', 'sprite').tint = 0xffddff; 
-
-                showManText("Bullseye! i'm alot better at this when i'm drunk!", 500);
-                showManText("Hey what's that noise?", 4500);
-                
-                setTimeout(function(){ sfxSecret_door.play(); }, 2000);
-                
-                setTimeout(function(){ 
-                    get_item('name', 'secret_door', 'sprite').visible = true; 
-               }, 5300);
+            if (static_item.key == 'window'){
+                static_item.alpha = 0; 
             }
+        break;
+  
+        case('towel + toilet'):                    
+            showManText("Bye bye towel", 500); 
+            suspend(total_text_time);
             
             kill_inventory_item(inventory_item);
-            static_item_clicked = null;
-            itemToTake = null;
+            mission_complete('plug_mission');
         break;
-        
-        case ('dart + barrel'):
-        case ('dart + barrel_glass'):
-            suspend(3000);
-            
-            showManText("I guess that makes sense", 0);
-            showManText("Nope. poking the barrel just makes it angrier", 3000);
-            
-            setTimeout(function(){ 
-                put_item_away(inventory_item, static_item);
-            }, 3000);
-        break;
-        
-        case ('dart + pub_door'):
-            showManText("The owner might catch me do it", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('rock_pub + barrel'):
-            showManText("That's a bad way to open a barrel,\nI need something sharp... hmmm...", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
-        case ('glass + dart_board'):
-        case ('rock_pub + dart_board'):
-            showManText("That might damage the dartboard", 0);
-            put_item_away(inventory_item, static_item);
-        break;
-        
+         
         case ('glass + barrel'):
             suspend(700);
             showManText("It's worth a shot", 0);
@@ -582,6 +477,40 @@ function use_item(inventory_item, static_item){
             mission_complete('drunk_mission');
         break;
         
+        case ('dart + dart_board'):
+            sfxDart.play();
+            
+            if (!check_mission('drunk')){
+                suspend(1000);
+                
+                setTimeout(function(){  
+                    create_item( game, 'dart', true, true, 474, 224, true );
+                },300);
+
+                showManText("I suck at this", 1000);
+            }
+            
+            else{
+                suspend(5300);
+                
+                create_item( game, 'dart', true, false, 555, 196, true );
+                get_item('name', 'dart', 'sprite').tint = 0xffddff; 
+
+                showManText("Bullseye! i'm alot better at this when i'm drunk!", 500);
+                showManText("Hey what's that noise?", 4500);
+                
+                setTimeout(function(){ sfxSecret_door.play(); }, 2000);
+                
+                setTimeout(function(){ 
+                    get_item('name', 'secret_door', 'sprite').visible = true; 
+               }, 5300);
+            }
+            
+            kill_inventory_item(inventory_item);
+            static_item_clicked = null;
+            itemToTake = null;
+        break;
+ 
         case ('candle + secret_door'):
             showManText("OK let's go, maybe that's where they keep the extra barrels", 0);
             suspend(total_text_time);
@@ -604,6 +533,94 @@ function use_item(inventory_item, static_item){
                 
                 mission_complete('stone_hall_mission', 'sprite');
             }, 1150);
+        break;
+       
+        /* stuff that doesn't work */
+       
+        case("ladder_s + door"):
+            showManText("I can reach it without the ladder", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+
+        case("rock_alley + door"):
+        case("rock_hall + hall_door"):
+        case("rock_pub + door"):
+            showManText("Stoning the door won't help", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case("rock_alley + ladder_b"):
+        case("rock_pub + ladder_b"):
+            showManText("That might break the ladder", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+
+        case('rock_pub + broken_window'):
+            showManText("I'ts already very much broken", 0);
+        break;
+        
+        case ('candle + pub_door'):
+        case ('candle + poster'):
+            showManText("I have caused enough damage for now", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('candle + barrel'):
+            showManText("I want to open it, not burn it!", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+
+        case ('glass + pub_door'):
+            showManText('"Stickman was here". There. I did it.', 200);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('glass + broken_pub_window'):
+            showManText("It's only fair, But I'll need some kind of super glue", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('rock_pub + broken_pub_window'):
+            showManText("Already did it, it was a great success", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('dart + broken_pub_window'):
+            showManText('I think the window had suffered enough', 0);
+            put_item_away(inventory_item, static_item);
+        break;
+
+        case ('rock_pub + pub_door'):
+            showManText("Stickmen who lives in abandoned pubs shouldn't throw stones", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('dart + barrel'):
+        case ('dart + barrel_glass'):
+            suspend(3000);
+            
+            showManText("I guess that makes sense", 0);
+            showManText("Nope. poking the barrel just makes it angrier", 3000);
+            
+            setTimeout(function(){ 
+                put_item_away(inventory_item, static_item);
+            }, 3000);
+        break;
+        
+        case ('dart + pub_door'):
+            showManText("The owner might catch me do it", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('rock_pub + barrel'):
+            showManText("That's a bad way to open a barrel,\nI need something sharp... hmmm...", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('glass + dart_board'):
+        case ('rock_pub + dart_board'):
+            showManText("That might damage the dartboard", 0);
+            put_item_away(inventory_item, static_item);
         break;
         
         case("rock_room + computer"):

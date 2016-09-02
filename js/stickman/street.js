@@ -123,10 +123,11 @@ function create_street_items(){
         store.set("stickman-item3" + thisPlace, [ 'ladder_b', true, false, 493, 245, false ]);
         store.set("stickman-item4" + thisPlace, [ 'bar_sign', true, false, 600, 174, true ]);
         store.set("stickman-item5" + thisPlace, [ 'alley_entrance', false, false, 144, 267, true ]);
+        store.set("stickman-item6" + thisPlace, [ 'rock_alley', true, true, 375, 410, true, false ]);
         
         not_first_visit(thisPlace);
         
-        load_items_state(6);
+        load_items_state(7);
     }
     
     else{

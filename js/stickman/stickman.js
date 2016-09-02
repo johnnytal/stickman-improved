@@ -232,7 +232,11 @@ function reset_inventory(){
         var name = pseudoInventory[i].key;
 
         items.push(new Item(game, name, true, true, x, 535, true, true));
-    }    
+    }   
+    
+    if(pseudoInventory.length > 0){
+        get_item('name', 'towel', 'sprite').frame = 1; 
+    };
 }
 
 function tween_black(time, delay, going_to, _coming_from){

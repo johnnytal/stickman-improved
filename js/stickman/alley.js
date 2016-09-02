@@ -20,7 +20,7 @@ alley.prototype = {
         
         poly = new Phaser.Polygon([ 
             new Phaser.Point(64, 600), new Phaser.Point(0, 600), new Phaser.Point(0, 0),
-            new Phaser.Point(540, 0), new Phaser.Point(540, 286)
+            new Phaser.Point(540, 0), new Phaser.Point(540, 280)
         ]);
         
         thisPlace = 'Alley';
@@ -119,11 +119,11 @@ function create_alley_items(){
 
     if (first_visit[thisPlace] == true){
         store.set("stickman-item0" + thisPlace, [ 'ladder_s', true, true, 575, 242, true, false ]);
-        store.set("stickman-item1" + thisPlace, [ 'rock_alley', true, true, 365, 415, true, false ]);
-
+        store.set("stickman-item1" + thisPlace, [ 'towel', true, true, 423, 280, true, false ]);
+        
         not_first_visit(thisPlace);
         
-        load_items_state(3);
+        load_items_state(2);
     }
     
     else{
