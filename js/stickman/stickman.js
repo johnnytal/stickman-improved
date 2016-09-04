@@ -234,7 +234,7 @@ function reset_inventory(){
         items.push(new Item(game, name, true, true, x, 535, true, true));
     }   
     
-    if(pseudoInventory.length > 0){
+    if(pseudoInventory.length > 0 && get_item('name', 'towel', 'sprite') != undefined){
         get_item('name', 'towel', 'sprite').frame = 1; 
     };
 }

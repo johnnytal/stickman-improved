@@ -157,7 +157,7 @@ function interact_item(_static_item_clicked){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
-                showManText("Now I can reach it, but at what cost?", 0);
+                showManText("I can reach it now, but at what cost?", 0);
                 suspend(total_text_time);
 
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');
@@ -174,7 +174,7 @@ function interact_item(_static_item_clicked){
                     setTimeout(function(){
                         _static_item_clicked.frame = 0;
                         sfxFlush1.play();
-                        showManText("That doesn't sound so good...", 500); 
+                        showManText("That doesn't sound too good...", 700); 
                     }, 1500);
                 }
                 
@@ -319,7 +319,7 @@ function take_item(item){
         break;
         
         case 'towel':
-            showManText("Always good to have a dirty towel", 0);
+            showManText("Always good to carry a dirty towel around", 0);
             item.frame = 1;
         break;
         
@@ -559,6 +559,14 @@ function use_item(inventory_item, static_item){
             showManText("I'ts already very much broken", 0);
         break;
         
+        case('towel + door'):
+            showManText("The door doesn't need cleaning", 0);
+        break;
+        
+        case('towel + door'):
+            showManText("The door doesn't need cleaning", 0);
+        break;
+        
         case ('candle + pub_door'):
         case ('candle + poster'):
             showManText("I have caused enough damage for now", 0);
@@ -571,7 +579,7 @@ function use_item(inventory_item, static_item){
         break;
 
         case ('glass + pub_door'):
-            showManText('"Stickman was here". There. I did it.', 200);
+            showManText('"Stickman was here". There. I did it.', 300);
             put_item_away(inventory_item, static_item);
         break;
         
@@ -582,6 +590,28 @@ function use_item(inventory_item, static_item){
         
         case ('rock_pub + broken_pub_window'):
             showManText("Already did it, it was a great success", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('towel + barrel_empty'):
+            showManText("I'm not cleaning that, someone else spilt it! * Hic *", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('rock_pub + chandelier'):
+            showManText("That's kinda dangerous", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('rock_pub + broken_chandelier'):
+        case ('glass + broken_chandelier'):
+        case ('dart + broken_chandelier'):
+            showManText("The chandelier has suffered enough", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('candle + broken_chandelier'):
+            showManText("I'm not gonna fix it\nafter I went through so much trouble breaking it!", 0);
             put_item_away(inventory_item, static_item);
         break;
         
@@ -620,6 +650,11 @@ function use_item(inventory_item, static_item){
         case ('glass + dart_board'):
         case ('rock_pub + dart_board'):
             showManText("That might damage the dartboard", 0);
+            put_item_away(inventory_item, static_item);
+        break;
+        
+        case ('glass + poster'):
+            showManText("I won't damage the poster,\neven though it's kind of insulting", 0);
             put_item_away(inventory_item, static_item);
         break;
         
