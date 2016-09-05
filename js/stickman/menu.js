@@ -129,10 +129,12 @@ menu.prototype = {
                 
         startBtn.events.onInputDown.add(function(){ 
             startBtn.tint = 0xc9a279;  
+            document.getElementById('game').style.cursor = 'none';
         }, this);
         
         contBtn.events.onInputDown.add(function(){ 
             contBtn.tint = 0xc9a279;  
+            document.getElementById('game').style.cursor = 'none';
         }, this);
         
         credits_music.play();

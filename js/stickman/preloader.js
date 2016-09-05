@@ -6,11 +6,22 @@ var preloader = function(game){
  
 preloader.prototype = {
     preload: function(){ 
+        progressTxt = this.progress = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 30, '0%',{
+             font: '25px ' + font, fill: 'white', fontWeight: 'normal', align: 'center'
+        });
+        this.progress.anchor.setTo(0.5, 0.5);
+        this.game.load.onFileComplete.add(this.fileComplete, this);
+  
+        loadingTxt = this.add.text(this.game.world.centerX - 37,  this.game.world.centerY - 150, "Loading...", {
+            font: '18px ' + font, fill: 'lightgrey', fontWeight: 'normal', align: 'center'
+        });
+  
         // sprites
         game.load.spritesheet('man', img_path + 'man.png', 54, 72.5);
         game.load.spritesheet('walkingIcon', img_path + 'man_icon.png',20, 32);
         game.load.spritesheet('string', img_path + 'string.png',70/2, 140);
         game.load.spritesheet('towel', img_path + 'towel.png', 23, 59);
+        game.load.spritesheet('letters', img_path + 'metal_spritesheet.png', 600/4, 1050/7);
         
         // general
         game.load.image('opening', img_path + 'menu.jpg');
@@ -114,4 +125,8 @@ preloader.prototype = {
         this.game.state.start("Menu");
         loadSfx();  
     }
+};
+
+preloader.prototype.fileComplete = function (progress, cacheKey, success, totalLoaded, totalFiles) {
+    this.progress.text = progress+"%";
 };

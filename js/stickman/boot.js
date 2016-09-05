@@ -1,5 +1,5 @@
-//window.onload = start;
-document.addEventListener("deviceready", start, false);
+window.onload = start;
+//document.addEventListener("deviceready", start, false);
 
 function start(){
     var place, thisPlace; 
@@ -22,6 +22,7 @@ function start(){
     game.state.add("Wc", wc);
     game.state.add("Maze", maze);
     game.state.add("Hall", hall);
+    //game.state.add("Password", password);
     game.state.add("Room", room);
     
     game.state.start("Boot");  
