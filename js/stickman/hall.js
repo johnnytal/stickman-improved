@@ -29,7 +29,35 @@ hall.prototype = {
         }
         
         create_hall_items();
-        create_man(60, 470, 3);
+        
+        var x, y;
+        
+        if(coming_from == 'Password' && check_mission('password')){
+            x = 352;
+            y = 352;    
+            
+            setTimeout(function(){
+                showManText('Ah. Yes of course', 100);
+                suspend(total_text_time);                
+            }, 2000);
+        }
+        
+        else if(coming_from == 'Password' && !check_mission('password')){
+            x = 352;
+            y = 352;    
+            
+            setTimeout(function(){
+                showManText('How am I supposed to know?', 100);
+                suspend(total_text_time);                
+            }, 2000);
+        }
+        
+        else{
+            x = 60;
+            y = 470;
+        }
+        
+        create_man(x, y, 3);
         
         store.set("stickman-location", thisPlace);
 
@@ -39,7 +67,7 @@ hall.prototype = {
             showManText('That was kinda fun!', 1000);
             suspend(total_text_time);
         }
-
+        
     },
     
     update: function(){
@@ -99,15 +127,15 @@ function create_hall_items(){
     reset_inventory();
 
     if (first_visit[thisPlace] == true){
-        store.set("stickman-item0" + thisPlace, [ 'hall_door', false, false, 269, 184, true ]);
-        store.set("stickman-item1" + thisPlace, [ 'hall_window', false, false, 887, 162, true ]);
-        store.set("stickman-item2" + thisPlace, [ 'hall_window_broken', true, false, 887, 163, false ]);
-        store.set("stickman-item3" + thisPlace, [ 'rock_hall', true, true, 800, 340, true ]);
+        store.set("stickman-item0" + thisPlace, [ 'hall_door', false, false, 269, 184, true, false ]);
+        store.set("stickman-item1" + thisPlace, [ 'hall_window', false, false, 887, 162, true, false ]);
+        store.set("stickman-item2" + thisPlace, [ 'hall_window_broken', true, false, 887, 163, false, false ]);
+        store.set("stickman-item3" + thisPlace, [ 'pass_frame', true, false, 400, 260, true, false ]);
         
         not_first_visit(thisPlace);
         
         load_items_state(4);
     }
-    
-    load_items_state();
+    store.set("stickman-item4" + thisPlace, [ 'rock_hall', true, true, 800, 340, false, false ]);
+    load_items_state(5);
 }

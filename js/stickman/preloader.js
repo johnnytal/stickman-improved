@@ -21,7 +21,7 @@ preloader.prototype = {
         game.load.spritesheet('walkingIcon', img_path + 'man_icon.png',20, 32);
         game.load.spritesheet('string', img_path + 'string.png',70/2, 140);
         game.load.spritesheet('towel', img_path + 'towel.png', 23, 59);
-        game.load.spritesheet('letters', img_path + 'metal_spritesheet.png', 600/4, 1050/7);
+        game.load.spritesheet('letters', img_path + 'letters.png', 540/9, 210/3);
         
         // general
         game.load.image('opening', img_path + 'menu.jpg');
@@ -86,6 +86,9 @@ preloader.prototype = {
         game.load.image('hall_door', img_path + 'hall_door.png');
         game.load.image('hall_window', img_path + 'hall_window.png');
         game.load.image('hall_window_broken', img_path + 'hall_window_broken.png');
+        game.load.image('pass_frame', img_path + 'pass_frame.png');
+        game.load.image('frame', img_path + 'frame.jpg');
+        game.load.image('rate', img_path + 'rate.png');
         
         // room
         game.load.image('rock_room', img_path + 'rock_room.png');

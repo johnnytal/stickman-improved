@@ -157,7 +157,7 @@ function interact_item(_static_item_clicked){
                 showManText("It leads to the roof of the toilet, but I can't reach");
             }
             else{
-                showManText("I can reach it now, but at what cost?", 0);
+                showManText("I can reach it now, but at what cost?!", 0);
                 suspend(total_text_time);
 
                 tween_black(500, total_text_time, "Pub", 'Wc_roof');
@@ -242,7 +242,33 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'hall_door':
-            showManText("I don't have a key, and it's way too heavy to break down", 200);
+            if (!check_mission('password')){
+                showManText("I don't have a key, and it's way too heavy to break down", 200);
+            }
+            else{
+                showManText("Let's see what's the big secret", 0);
+
+                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4200, Phaser.Easing.Sinusoidal.InOut, true); 
+
+                theTween.onComplete.add(function(){
+                   get_item('name', 'rock_hall', 'sprite').visible = true;
+                   take_item(get_item('name', 'rock_hall', 'sprite'));
+                   tween_alpha(bigBlack, 0, 3000);
+                }, this);
+            }
+        break;
+        
+        case 'pass_frame':
+            if (!check_mission('password')){
+                showManText("Password panel, how fancy", 0);
+                
+                setTimeout(function(){
+                    tween_black(1000, total_text_time, "Password", "Hall");
+                }, 50); 
+            }
+            else{
+               showManText("Password... is incorrect... HA!", 0); 
+            }
         break;
         
         case 'hall_window':
@@ -328,7 +354,7 @@ function take_item(item){
         break;
         
         case 'rock_hall':
-           showManText("Stone ex-machina.\nHow did it even get here?!", 0);
+           showManText("There was a stone there. that's it.\nIt's not even worth seeing. Trust me", 1500);
         break;
         
         case 'rock_room':

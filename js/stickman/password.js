@@ -1,12 +1,52 @@
-/*var password = function(game){
+var password = function(game){
     PASSWORD = 'incorrect';
+    PASS_LENGTH = 9;
+    right_pass = [24, 14, 21, 10, 5, 5, 3, 21, 17];
+    pass_validation = [];
+    textLength = 0;
 };
 
 password.prototype = {
     preload: function(){},
     
     create: function(){
-        password = game.add.sprite(0, 0, 'hall');  
+        var letters = [];
+        var num_of_letters = 27;
+        var letter_to_number = {
+          z:0, s:1, l:2, e:3, y:4, r:5, k:6, d:7, f:8, v:9, o:10, h:11, a:12, u:13, n:14, g:15, m:16, t:17, x:18, q:19, j:20, c:21, w:22, p:23, i:24, b:25
+        };
+
+        frame = game.add.sprite(0, 0, 'frame'); 
+        frame.inputEnabled = true;
+        frame.events.onInputDown.add(function(){
+            tween_black(1000, 0, "Hall", "Password");
+        }, this);
+        
+        game.add.text(150, 60, 'Enter Password' , {font: "44px " + font, fill: "#ffffff", align:'center'});
+        passText = game.add.text(150 + (textLength * 50), 165, '' , {font: "44px " + font, fill: "#ffffff", align:'center'});
+        incorrectText = game.add.text(160, 230, 'Password is incorrect' , {font: "30px " + font, fill: "#ffffff", align:'center'});
+        incorrectText.visible = false;
+        
+        for (n = 1; n < num_of_letters; n++){
+    
+            var letterSprite = 'letters';
+            
+            var space = 55;
+            var y;
+            
+            if (n < 10) y = 0;
+            else if (n >= 10 && n < 19) y = 55;
+            else if (n >= 19) y = 110;
+
+            letters[n] = game.add.sprite((75 + space * (n-1)) - (y*8), 370 + y, letterSprite);
+            letters[n].frame = (n - 1);
+            letters[n].scale.set(0.7,0.7);
+            letters[n].inputEnabled = true;
+           
+            letters[n].input.useHandCursor = true;
+            letters[n].events.onInputDown.add(validate, this);
+        }
+       
     },
     
     update: function(){
@@ -15,16 +55,38 @@ password.prototype = {
     },
 };
 
-function create_pass_items(){
-    reset_inventory();
-
-    if (first_visit[thisPlace] == true){
-        store.set("stickman-item0" + thisPlace, [ 'hall_door', false, false, 269, 184, true ]);
+function validate(_letter){
+    if (textLength < PASS_LENGTH - 1){
+        passText.text = passText.text + "* ";
+        textLength++;
+        incorrectText.visible = false;
         
-        not_first_visit(thisPlace);
-        
-        load_items_state(4);
+        pass_validation.push(_letter.frame);
     }
     
-    load_items_state();
-}*/
+    else{
+        passText.text = passText.text + "* ";
+        
+        for(var i = pass_validation.length; i--;) {
+            if(pass_validation[i] !== right_pass[i]){
+                passText.text = '';
+                textLength = 0;
+                incorrectText.visible = true;
+                pass_validation = [];
+
+                return false;
+                
+            }
+            
+            else{
+                incorrectText.text = "Password correct!";
+                incorrectText.visible = true;  
+                mission_complete('password_mission');
+                
+                tween_black(1000 ,1500, 'Hall', 'Password');
+                
+                return true;
+            }
+        }
+    }
+}

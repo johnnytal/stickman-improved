@@ -45,6 +45,7 @@ menu.prototype = {
                 drunk_mission: false,
                 plug_mission: false,
                 switch_mission: false,
+                password_mission: false,
                 stone_hall_mission: false
                  
             };
@@ -55,6 +56,7 @@ menu.prototype = {
             store.set("stickman-mission_complete_drunk_mission", false),
             store.set("stickman-mission_complete_plug_mission", false),
             store.set("stickman-mission_complete_switch_mission", false),
+            store.set("stickman-mission_complete_password_mission", false),
             store.set("stickman-mission_complete_stone_hall_mission", false),
 
             inventory = [];
@@ -90,6 +92,7 @@ menu.prototype = {
                  drunk_mission: store.get("stickman-mission_complete_drunk_mission"),
                  plug_mission: store.get("stickman-mission_complete_plug_mission"),
                  switch_mission: store.get("stickman-mission_complete_switch_mission"),
+                 password_mission: store.get("stickman-mission_complete_password_mission"),
                  stone_hall_mission: store.get("stickman-mission_complete_stone_hall_mission"),
                  
             };
