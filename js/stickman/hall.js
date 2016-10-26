@@ -137,5 +137,5 @@ function create_hall_items(){
         load_items_state(4);
     }
     store.set("stickman-item4" + thisPlace, [ 'rock_hall', true, true, 800, 340, false, false ]);
-    load_items_state(5);
+    load_items_state();
 }
