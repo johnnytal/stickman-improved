@@ -259,20 +259,20 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pass_frame':
-            if (coming_from != 'Password'){
-                if (!check_mission('password')){
-                    showManText("Password panel, how fancy", 0);
-                    
-                    setTimeout(function(){
-                        tween_black(1000, total_text_time, "Password", "Hall");
-                    }, 50); 
-                }
-                else{
-                   showManText("Password... is incorrect... HA!", 0); 
-                }
+            if (!check_mission('password') && coming_from != 'Password'){
+                showManText("Password panel, how fancy", 0);
+                
+                setTimeout(function(){
+                    tween_black(1000, total_text_time, "Password", "Hall");
+                }, 50); 
             }
-            else{
+            
+            else if (!check_mission('password') && coming_from == 'Password' ){
                 tween_black(750, 0, "Password", "Hall");
+            }
+            
+            else if (check_mission('password')){
+                showManText("Password... is incorrect... HA!", 0); 
             }
         break;
         
