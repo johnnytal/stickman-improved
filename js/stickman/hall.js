@@ -47,7 +47,7 @@ hall.prototype = {
             y = 352;    
             
             setTimeout(function(){
-                showManText('How am I supposed to know?', 100);
+                showManText("Seems the password is incorrect... hmmm", 100);
                 suspend(total_text_time);                
             }, 2000);
         }

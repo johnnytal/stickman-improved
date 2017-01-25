@@ -17,11 +17,7 @@ password.prototype = {
         };
 
         frame = game.add.sprite(0, 0, 'frame'); 
-        frame.inputEnabled = true;
-        frame.events.onInputDown.add(function(){
-            tween_black(1000, 0, "Hall", "Password");
-        }, this);
-        
+
         game.add.text(150, 60, 'Enter Password' , {font: "44px " + font, fill: "#ffffff", align:'center'});
         passText = game.add.text(150 + (textLength * 50), 165, '' , {font: "44px " + font, fill: "#ffffff", align:'center'});
         incorrectText = game.add.text(160, 230, 'Password is incorrect' , {font: "30px " + font, fill: "#ffffff", align:'center'});
@@ -31,16 +27,16 @@ password.prototype = {
     
             var letterSprite = 'letters';
             
-            var space = 55;
+            var space = 58;
             var y;
             
             if (n < 10) y = 0;
-            else if (n >= 10 && n < 19) y = 55;
-            else if (n >= 19) y = 110;
+            else if (n >= 10 && n < 19) y = 63;
+            else if (n >= 19) y = 126;
 
-            letters[n] = game.add.sprite((75 + space * (n-1)) - (y*8), 370 + y, letterSprite);
+            letters[n] = game.add.sprite((70 + space * (n-1)) - (y*8), 350 + y, letterSprite);
             letters[n].frame = (n - 1);
-            letters[n].scale.set(0.7,0.7);
+            letters[n].scale.set(0.82, 0.82);
             letters[n].inputEnabled = true;
            
             letters[n].input.useHandCursor = true;
@@ -50,8 +46,7 @@ password.prototype = {
     },
     
     update: function(){
-
-         
+        
     },
 };
 
@@ -73,12 +68,16 @@ function validate(_letter){
                 textLength = 0;
                 incorrectText.visible = true;
                 pass_validation = [];
+                
+                setTimeout(function(){
+                    tween_black(1000, 0, "Hall", "Password");    
+                }, 2500);
 
                 return false;
-                
             }
             
             else{
+                incorrectText.x += 40;
                 incorrectText.text = "Password correct!";
                 incorrectText.visible = true;  
                 mission_complete('password_mission');

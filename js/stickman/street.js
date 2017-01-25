@@ -47,8 +47,8 @@ street.prototype = {
         
         if (first_visit[thisPlace] == true){
             man.alpha = 0;
-            tween_alpha(man, 1, 6000);
-            showManText('Where am I? WHO am I? What is this place?', 2500);
+            tween_alpha(man, 1, 5000);
+            showManText("Where am I? WHO am I? What is this place? \n What's the purpose of life?!", 2800);
             suspend(total_text_time);
         }
         /*if (banner_not_created){

@@ -63,7 +63,7 @@ function interact_item(_static_item_clicked){
         break;
        
         case 'barrel':
-            showManText("Getting drunk can give my life a purpose,\nbut i'll have to open the barrel first", 0);
+            showManText("Beer could give my life some purpose,\nbut i'll have to open the barrel first", 0);
         break;
         
         case 'dart_board':
@@ -259,15 +259,20 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'pass_frame':
-            if (!check_mission('password')){
-                showManText("Password panel, how fancy", 0);
-                
-                setTimeout(function(){
-                    tween_black(1000, total_text_time, "Password", "Hall");
-                }, 50); 
+            if (coming_from != 'Password'){
+                if (!check_mission('password')){
+                    showManText("Password panel, how fancy", 0);
+                    
+                    setTimeout(function(){
+                        tween_black(1000, total_text_time, "Password", "Hall");
+                    }, 50); 
+                }
+                else{
+                   showManText("Password... is incorrect... HA!", 0); 
+                }
             }
             else{
-               showManText("Password... is incorrect... HA!", 0); 
+                tween_black(750, 0, "Password", "Hall");
             }
         break;
         
@@ -680,7 +685,7 @@ function use_item(inventory_item, static_item){
         break;
         
         case ('glass + poster'):
-            showManText("I won't damage the poster,\neven though it's kind of insulting", 0);
+            showManText("I won't damage the poster,\neven though it is kind of offensive", 0);
             put_item_away(inventory_item, static_item);
         break;
         
