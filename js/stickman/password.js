@@ -10,6 +10,8 @@ password.prototype = {
     preload: function(){},
     
     create: function(){
+        textLength = 0;
+        pass_validation = [];
         var letters = [];
         var num_of_letters = 27;
         var letter_to_number = {
@@ -18,7 +20,7 @@ password.prototype = {
 
         frame = game.add.sprite(0, 0, 'frame'); 
 
-        game.add.text(150, 60, 'Enter Password' , {font: "44px " + font, fill: "#ffffff", align:'center'});
+        game.add.text(85, 60, 'Enter 9 letter Password' , {font: "44px " + font, fill: "#ffffff", align:'center'});
         passText = game.add.text(150 + (textLength * 50), 165, '' , {font: "44px " + font, fill: "#ffffff", align:'center'});
         incorrectText = game.add.text(160, 230, 'Password is incorrect' , {font: "30px " + font, fill: "#ffffff", align:'center'});
         incorrectText.visible = false;
@@ -34,19 +36,14 @@ password.prototype = {
             else if (n >= 10 && n < 19) y = 63;
             else if (n >= 19) y = 126;
 
-            letters[n] = game.add.sprite((70 + space * (n-1)) - (y*8), 350 + y, letterSprite);
+            letters[n] = game.add.sprite((80 + space * (n-1)) - (y*8), 350 + y, letterSprite);
             letters[n].frame = (n - 1);
-            letters[n].scale.set(0.82, 0.82);
+            letters[n].scale.set(0.84, 0.84);
             letters[n].inputEnabled = true;
            
             letters[n].input.useHandCursor = true;
             letters[n].events.onInputDown.add(validate, this);
         }
-       
-    },
-    
-    update: function(){
-        
     },
 };
 
@@ -57,19 +54,24 @@ function validate(_letter){
         incorrectText.visible = false;
         
         pass_validation.push(_letter.frame);
+        sfxType.play();
     }
     
-    else{
+    else if (textLength == PASS_LENGTH - 1){
+        textLength++;
         passText.text = passText.text + "* ";
+        sfxType.play();
         
         for(var i = pass_validation.length; i--;) {
             if(pass_validation[i] !== right_pass[i]){
-                passText.text = '';
-                textLength = 0;
+
                 incorrectText.visible = true;
-                pass_validation = [];
-                
+                sfxWrong.play();
+
                 setTimeout(function(){
+                    passText.text = '';
+                    textLength = 0;
+                    pass_validation = [];
                     tween_black(1000, 0, "Hall", "Password");    
                 }, 2500);
 
@@ -77,6 +79,7 @@ function validate(_letter){
             }
             
             else{
+                sfxRight.play();
                 incorrectText.x += 40;
                 incorrectText.text = "Password correct!";
                 incorrectText.visible = true;  

@@ -122,6 +122,9 @@ preloader.prototype = {
         game.load.audio('sfxFall', sfx_path + 'fall.ogg');
         game.load.audio('sfxFlush1', sfx_path + 'flush1.ogg');
         game.load.audio('sfxFlush2', sfx_path + 'flush2.ogg');
+        game.load.audio('sfxType', sfx_path + 'type.ogg');
+        game.load.audio('sfxWrong', sfx_path + 'wrong.ogg');
+        game.load.audio('sfxRight', sfx_path + 'right.ogg');
     },
     
     create: function(){

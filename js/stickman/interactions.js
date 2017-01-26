@@ -133,7 +133,7 @@ function interact_item(_static_item_clicked){
         break;
         
         case 'brush':
-            showManText("Whatever purpose my life has, I'm sure that's not it", 0);
+            showManText("Cleaning the toilet can't be my life's purpose", 0);
         break;
         
         case 'wc_door':
@@ -215,6 +215,7 @@ function interact_item(_static_item_clicked){
         
         case 'poster':
             showManText('"Beer. Helping ugly Stickmen get laid since 1862"', 0);
+            showManText("That's offensive towards Stickmen", total_text_time);
         break;
         
         case 'secret_door':
@@ -245,16 +246,41 @@ function interact_item(_static_item_clicked){
             if (!check_mission('password')){
                 showManText("I don't have a key, and it's way too heavy to break down", 200);
             }
-            else{
+            else if (check_mission('password') && !get_item('name', 'rock_hall', 'sprite').visible){
                 showManText("Let's see what's the big secret", 0);
 
-                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 4200, Phaser.Easing.Sinusoidal.InOut, true); 
+                theTween = game.add.tween(bigBlack).to( { alpha: 1}, 3700, Phaser.Easing.Sinusoidal.InOut, true); 
 
                 theTween.onComplete.add(function(){
-                   get_item('name', 'rock_hall', 'sprite').visible = true;
-                   take_item(get_item('name', 'rock_hall', 'sprite'));
-                   tween_alpha(bigBlack, 0, 3000);
-                }, this);
+                    roomText = game.add.text(100, 100, "Sure is dark here..." , {font: "25px " + font, fill: "#f7f7f7", align:'center'});
+                    roomText.alpha = 0;
+                    tween_alpha(roomText, 1, 1000);
+                    
+                    roomText2 = game.add.text(150, 200, "Hey what's this?" , {font: "25px " + font, fill: "#f7f7f7", align:'center'});
+                    roomText2.alpha = 0;
+                    setTimeout(function(){
+                        tween_alpha(roomText2, 1, 2000);    
+                    }, 2000);
+
+                    roomText3 = game.add.text(200, 300, "Oh my god this is amazing!!!" , {font: "28px " + font, fill: "#f7f7f7", align:'center'});
+                    roomText3.alpha = 0;
+                    setTimeout(function(){
+                        tween_alpha(roomText3, 1, 2000);    
+                    }, 5000);
+
+                    setTimeout(function(){
+                       tween_alpha(bigBlack, 0, 2500);
+                       tween_alpha(roomText, 0, 1000);
+                       tween_alpha(roomText2, 0, 1500);
+                       tween_alpha(roomText3, 0, 2000);
+                       get_item('name', 'rock_hall', 'sprite').visible = true;
+                       take_item(get_item('name', 'rock_hall', 'sprite'));
+                    }, 8000);
+                 }, this);  
+            }
+            
+            else if (check_mission('password') && get_item('name', 'rock_hall', 'sprite').visible){
+                showManText("I made enough amazing discoveries in there", 200);
             }
         break;
         
@@ -350,16 +376,17 @@ function take_item(item){
         break;
         
         case 'towel':
-            showManText("Always good to carry a dirty towel around", 0);
+            showManText("Always fun to carry around a dirty towel", 0);
             item.frame = 1;
         break;
         
         case 'rock_pub':
-           showManText("Sticks and stones, best friends forever", 0);
+           showManText("Sticks and stones, always go together", 0);
         break;
         
         case 'rock_hall':
-           showManText("There was a stone there. that's it.\nIt's not even worth seeing. Trust me", 1500);
+           showManText("I found another stone.\nNothing else to see in there. Trust me", 1500);
+           suspend(total_text_time);
         break;
         
         case 'rock_room':
@@ -562,7 +589,7 @@ function use_item(inventory_item, static_item){
                 static_item.destroy();
                 get_item('name', 'hall_window_broken', 'sprite').visible = true;
                 
-                mission_complete('stone_hall_mission', 'sprite');
+                mission_complete('stone_hall_mission');
             }, 1150);
         break;
        

@@ -16,7 +16,9 @@ hall.prototype = {
         
         reset_click(hall);
         
-        change_music(hall_music);
+        if(coming_from != 'Password'){
+            change_music(hall_music);
+        }
         
         thisPlace = 'Hall'; 
         
@@ -131,11 +133,14 @@ function create_hall_items(){
         store.set("stickman-item1" + thisPlace, [ 'hall_window', false, false, 887, 162, true, false ]);
         store.set("stickman-item2" + thisPlace, [ 'hall_window_broken', true, false, 887, 163, false, false ]);
         store.set("stickman-item3" + thisPlace, [ 'pass_frame', true, false, 400, 260, true, false ]);
+        store.set("stickman-item4" + thisPlace, [ 'rock_hall', true, true, 800, 340, false, false ]);
         
         not_first_visit(thisPlace);
         
-        load_items_state(4);
+        load_items_state(5);
     }
-    store.set("stickman-item4" + thisPlace, [ 'rock_hall', true, true, 800, 340, false, false ]);
-    load_items_state();
+    
+    else{
+        load_items_state(null);
+    }
 }

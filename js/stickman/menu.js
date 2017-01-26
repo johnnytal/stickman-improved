@@ -150,10 +150,11 @@ menu.prototype = {
 
 function fadeInScreen(){
     bigBlack = game.add.sprite(0, 0, 'bigBlack');
-    tween_alpha(bigBlack, 0, 2500);
+    tween_alpha(bigBlack, 0, 2500, 1);
 }
 
-function tween_alpha(what, where, time){
+function tween_alpha(what, where, time, from){
+    if (from) what.alpha = from;
     game.add.tween(what).to( { alpha: where}, time, Phaser.Easing.Sinusoidal.InOut, true); 
 }
 
@@ -168,7 +169,6 @@ function startGame(){
     theTween.onComplete.add(function(){
         this.game.state.start('Game');    
     });
-    
 }
 
 function loadSfx(){
@@ -193,6 +193,9 @@ function loadSfx(){
     sfxFall = game.add.audio('sfxFall', 0.4, false);    
     sfxFlush1 = game.add.audio('sfxFlush1', 1, false);    
     sfxFlush2 = game.add.audio('sfxFlush2', 0.8, false);    
+    sfxWrong = game.add.audio('sfxWrong', 1, false);    
+    sfxRight = game.add.audio('sfxRight', 1, false);    
+    sfxType = game.add.audio('sfxType', 0.8, false);    
 }
 
 function change_music(music_to_play){

@@ -19,7 +19,7 @@ var game_main = function(game){
 game_main.prototype = {
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
-        game.state.start(place);
+        game.state.start('Pub');
     },
 };
 
@@ -393,7 +393,7 @@ function end_game(){
     timePassedText = game.add.text(40 + game.camera.x, 120, 'To be continued...' , {font: "68px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText.alpha = 0;
 
-    timePassedText2 = game.add.text(100 + game.camera.x, 245, "Please rate\nif you'd like more..." , {font: "48px " + font, fill: "#f7f7f7", align:'center'});
+    timePassedText2 = game.add.text(100 + game.camera.x, 245, "Please rate\nif you'd like to see more..." , {font: "37px " + font, fill: "#f7f7f7", align:'center'});
     timePassedText2.alpha = 0;
 
     tween_alpha(timePassedText, 1, 4500);            
