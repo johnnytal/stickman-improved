@@ -19,7 +19,7 @@ var game_main = function(game){
 game_main.prototype = {
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
-        game.state.start('Pub');
+        game.state.start(place);
     },
 };
 
