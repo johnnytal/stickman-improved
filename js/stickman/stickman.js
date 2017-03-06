@@ -25,10 +25,10 @@ game_main.prototype = {
         try{
             Cocoon.Ad.AdMob.configure({
                 android: { 
-                    interstitial:"ca-app-pub-9795366520625065/7161001430 "
+                    interstitial:"ca-app-pub-9795366520625065/7161001430"
                 }
             });
-            interstitial = Cocoon.Ad.AdMob.createBanner();
+            interstitial = Cocoon.Ad.AdMob.createInterstitial();
             interstitial.load();
         } catch(e){}
     },
