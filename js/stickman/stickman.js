@@ -10,6 +10,7 @@ var game_main = function(game){
      
      suspended = false;
      total_text_time = 0;
+     total_other_text_time = 0;
 
      items = [];
      
@@ -20,6 +21,16 @@ game_main.prototype = {
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         game.state.start(place);
+
+        try{
+            Cocoon.Ad.AdMob.configure({
+                android: { 
+                    interstitial:"ca-app-pub-9795366520625065/7161001430 "
+                }
+            });
+            interstitial = Cocoon.Ad.AdMob.createBanner();
+            interstitial.load();
+        } catch(e){}
     },
 };
 
@@ -130,6 +141,9 @@ function create_man(x, y, _frame){
     
     manText = game.add.text(0, 70, '' , {font: "20px " + font, fill: "#f9d5b2", align:'center', stroke: "0x000000", strokeThickness: 3});
     manText.anchor.setTo(0.5, 0.5);
+    
+    otherManText = game.add.text(300, 250, '' , {font: "22px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
+    otherManText.anchor.setTo(0.5, 0.5);
 
     walkingIcon = game.add.sprite(350, 290, 'walkingIcon');
     walkingIcon.anchor.set(0.5, 0);
@@ -163,9 +177,8 @@ function walk_update(){
 function showManText(textToShow, timeToWait){    
     try{ clearTimeout(textTimer); } catch(e){}
     
-    fade_text_time = 350;
     text_show_time = textToShow.length * 60;
-    total_text_time = timeToWait + text_show_time + (fade_text_time * 1.5) + 50; 
+    total_text_time = timeToWait + text_show_time + 575; 
 
     setTimeout(function(){
         manText.text = textToShow;
@@ -176,12 +189,38 @@ function showManText(textToShow, timeToWait){
         manText.fixedToCamera = true;
         manText.alpha = 1;
          
-        showTextTween = game.add.tween(manText).from( { alpha: 0}, fade_text_time, Phaser.Easing.Sinusoidal.InOut, true); 
+        showTextTween = game.add.tween(manText).from({ alpha: 0}, 350, Phaser.Easing.Sinusoidal.InOut, true); 
         
         showTextTween.onComplete.add(function(){
             textTimer = setTimeout(function(){ 
-                alphaOut = game.add.tween(manText).to( { alpha: 0}, fade_text_time / 2, Phaser.Easing.Sinusoidal.InOut, true); 
+                alphaOut = game.add.tween(manText).to({ alpha: 0}, 175, Phaser.Easing.Sinusoidal.InOut, true); 
             }, text_show_time);
+        });
+    }, timeToWait);
+}
+
+function showOtherManText(textToShow, timeToWait, color){    
+    try{ clearTimeout(otherTextTimer); } catch(e){}
+    
+    fade_Other_text_time = 350;
+    other_text_show_time = textToShow.length * 60;
+    total_other_text_time = timeToWait + other_text_show_time + (fade_Other_text_time * 1.5) + 50; 
+
+    setTimeout(function(){
+        otherManText.text = textToShow;
+
+        otherManText.x = game.world.centerX - textToShow.length * 2;
+        otherManText.y = 360;
+
+        otherManText.fixedToCamera = true;
+        otherManText.alpha = 1;
+         
+        showOtherTextTween = game.add.tween(otherManText).from( { alpha: 0}, fade_Other_text_time, Phaser.Easing.Sinusoidal.InOut, true); 
+        
+        showOtherTextTween.onComplete.add(function(){
+            otherTextTimer = setTimeout(function(){ 
+                alphaOut = game.add.tween(otherManText).to( { alpha: 0}, fade_Other_text_time / 2, Phaser.Easing.Sinusoidal.InOut, true); 
+            }, other_text_show_time);
         });
     }, timeToWait);
 }
@@ -462,4 +501,11 @@ function create_rain(){
     emitter.maxRotation = 0;
 
     emitter.start(false, 1600, 5, 0);
+}
+
+function dialog(_textA, _textB){
+     setTimeout(function(){
+        showManText(_textA, total_other_text_time);
+        showOtherManText(_textB, total_text_time);   
+     }, total_other_text_time);
 }

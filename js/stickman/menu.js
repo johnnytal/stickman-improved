@@ -163,7 +163,6 @@ function startGame(){
         sfxclick.play();
     }
     credits_music.fadeOut();
-    //showAd();
 
     theTween = game.add.tween(bigBlack).to( { alpha: 1}, 700, Phaser.Easing.Sinusoidal.InOut, true); 
     theTween.onComplete.add(function(){
@@ -223,22 +222,7 @@ function change_music(music_to_play){
         }   
     }, 1500);
 }
-/*
+
 function showAd(){
-    var timeToShow = game.rnd.integerInRange(30000, 75000);
-    var timeToHide = game.rnd.integerInRange(10000, 30000);
-    
-    setTimeout(function(){  
-        try{
-            banner.show();
-        } catch(e){}
-        
-        setTimeout(function(){
-           try{
-               banner.hide(); 
-               showAd();
-           } catch(e){}
-        }, timeToHide);
-    }, timeToShow);     
+    interstitial.show();
 }
-*/

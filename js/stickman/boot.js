@@ -1,9 +1,9 @@
-window.onload = start;
-//document.addEventListener("deviceready", start, false);
+//window.onload = start;
+document.addEventListener("deviceready", start, false);
 
 function start(){
     var place, thisPlace; 
-    //var banner;
+    var interstitial;
     var first_visit, missions, inventory;
     var emitter, polyLine;
 
@@ -34,7 +34,6 @@ boot.prototype = {
     create: function(){
                
         font = 'Fontdiner Swanky';
-        //banner_not_created = true;
         coming_from = null;
 
         try{

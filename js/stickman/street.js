@@ -9,7 +9,7 @@ street.prototype = {
     preload: function(){},
     
     create: function(){
-        street = game.add.sprite(0, 0, 'street');    
+        street = game.add.sprite(0, 0, 'street');  
         
         reset_click(street);
         
@@ -50,20 +50,7 @@ street.prototype = {
             tween_alpha(man, 1, 5000);
             showManText("Where am I? WHO am I? What is this place? \n What's the purpose of life?!", 2800);
             suspend(total_text_time);
-        }
-        /*if (banner_not_created){
-            try{
-                Cocoon.Ad.AdMob.configure({
-                    android: { 
-                        banner:"ca-app-pub-9795366520625065/9752537037"
-                    }
-                });
-                banner = Cocoon.Ad.AdMob.createBanner();
-                banner.load();
-                
-                banner_not_created = false;
-            } catch(e){}
-        }*/
+        }       
     },
     
     update: function(){

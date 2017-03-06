@@ -333,19 +333,68 @@ function interact_item(_static_item_clicked){
         
         case 'computer':
             showManText("Hey, this looks exactly like...", 0);
-            suspend(total_text_time);
+            showOtherManText("...You", total_text_time);
+            
+            dialog("What... who said that?!", "It is I Stickman.\nI am your creator.");
             
             setTimeout(function(){
-                johnnyText = game.add.text(300, 250, '...You' 
-                ,{font: "22px " + font, fill: "#d5f9a4", align:'center', stroke: "0x000000", strokeThickness: 3});
-                johnnyText.alpha = 0;
-                tween_alpha(johnnyText, 1, 1000);
-            }, 1400);
+                showManText("What... who said that?!", total_other_text_time);
+                showOtherManText("It is I Stickman.\nI am your creator.", total_text_time);    
+                                
+                setTimeout(function(){
+                    showManText("Ah great, I have some important questions...", 0);
+                    showOtherManText("I know, you want to know who are you,\nwhere did you come from, what is your purpose.", total_text_time);
 
-            setTimeout(function(){
-                tween_alpha(johnnyText, 0, 2750);
+                    setTimeout(function(){
+                        showManText("Well, ye...", 0);
+                        showOtherManText("Well Stickman,\nyou are a charachter in a point & click game", total_text_time);
+                    }, total_other_text_time);
+                
+                }, total_other_text_time);
+                
+            }, total_text_time);
+
+/*
+            showManText("Continue...      ", total_other_text_time);
+            showOtherManText("I'd love to chat about it but my research\nshows users don't like long dialogs", total_text_time);
+            
+            showManText("...      ", total_other_text_time);
+            showOtherManText("So, ye. Let me just write this last line of code and it's Game Over.\nGreat success by the way", total_text_time);
+            
+            showManText("What?! You can't end it now! I still haven't seen anything!", total_other_text_time);
+            showOtherManText("Ye I added this last line for you, that way users may think there will be a sequale", total_text_time);
+            
+            showManText("Oh... ", total_other_text_time);
+            showOtherManText("There wouldn't be. Bye", total_text_time);
+            
+            showManText("Look behind you! a three headed monkey!", total_other_text_time);
+            showOtherManText("You know your lucasarts refrences so well. I'm so proud...", total_text_time);
+             */
+            /*showOtherManText("So this looks like a happy ending for you, Bye!", total_other_text_time + 50);
+            showManText("What?", total_other_text_time);*/
+            
+            /*setTimeout(function(){
+                var color = 'white';
+                text1 = game.add.text(game.world.centerX - 200, 70, 'What is my purpose in life?' , {font: "20px " + font, fill: color, align:'center', stroke: "0x000000", strokeThickness: 3});
+                text2 = game.add.text(game.world.centerX - 200, 120, 'Why did you make me?' , {font: "20px " + font, fill: color, align:'center', stroke: "0x000000", strokeThickness: 3});
+                text3 = game.add.text(game.world.centerX - 200, 170, 'Who are you?' , {font: "20px " + font, fill: color, align:'center', stroke: "0x000000", strokeThickness: 3});
+                text4 = game.add.text(game.world.centerX - 200, 220, 'Look! A three-headed monkey!' , {font: "20px " + font, fill: color, align:'center', stroke: "0x000000", strokeThickness: 3});   
+                
+                text1.inputEnabled = true;
+                text2.inputEnabled = true;
+                text3.inputEnabled = true;
+                text4.inputEnabled = true;
+
+                text1.events.onInputDown.add(down, this);
+                text2.events.onInputDown.add(down, this);
+                text3.events.onInputDown.add(down, this);
+                text4.events.onInputDown.add(down, this);
+
+            }, total_text_time);*/
+
+           /* setTimeout(function(){
                 end_game();
-            }, 4900);
+            }, 4900);*/
         break;
     }   
     
@@ -593,7 +642,7 @@ function use_item(inventory_item, static_item){
             }, 1150);
         break;
        
-        /* stuff that doesn't work */
+        /* interact stuff that doesn't work */
        
         case("ladder_s + door"):
             showManText("I can reach it without the ladder", 0);
@@ -748,4 +797,21 @@ function put_item_away(_item1, _item2){
     if (_item2 != null && get_item('name', _item2.key, 'item').isLayered == false){
         _item2.alpha = 0; 
     }    
+}
+
+function down(_text){
+    stop_man();
+    placeToGoX = 'null'; 
+    placeToGoY = 'null';
+    _text.fill = "#f9d5b2";
+    
+    setTimeout(function(){
+        if (_text.text == 'What is my purpose in life?'){
+            showOtherManText("You have fulfilled your purpose", 0);
+            showOtherManText("To be a charachter in a point and click adventure game.", total_other_text_time);
+            showOtherManText("And now, It's time for you to disappear.", total_other_text_time);
+        }
+        _text.destroy();
+    }, 2000);
+
 }

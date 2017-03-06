@@ -7,6 +7,18 @@ pub.prototype = {
     
     create: function(){
         pub = game.add.sprite(0, 0, 'pub');
+     
+        supportText = game.add.text(600, 510, 'Watch ad\nto support!' , {font: "12px " + font, fill: "#ffffff", align:'center', stroke: "0x000000", strokeThickness: 4});  
+        supportText.fixedToCamera = true;
+        supportText.alpha = 0.8;
+        supportText.inputEnabled = true;
+        supportText.events.onInputDown.add(function(){
+           supportText.text = 'Thank you!';
+           setTimeout(function(){
+               supportText.destroy();
+               showAd();    
+           }, 1000);
+        });
         
         reset_click(pub);
         
