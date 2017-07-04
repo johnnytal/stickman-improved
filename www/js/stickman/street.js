@@ -20,6 +20,11 @@ street.prototype = {
         floor.body.setSize(0, 100);
         floor.body.immovable = true;
         
+        watchAD = game.add.sprite(5, 10, 'watchAd');
+        watchAD.inputEnabled = true;
+        watchAD.events.onInputDown.add(showAd, this);
+        watchAD.fixedToCamera = true;
+        
         create_street_items();
         
         var x, y;

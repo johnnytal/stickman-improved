@@ -19,6 +19,11 @@ wc.prototype = {
         pub_bound_u.body.setSize(TOTAL_WIDTH, 380);
         pub_bound_u.body.immovable = true;
         
+        watchAD = game.add.sprite(5, 10, 'watchAd');
+        watchAD.inputEnabled = true;
+        watchAD.events.onInputDown.add(showAd, this);
+        watchAD.fixedToCamera = true;
+        
         if (coming_from != 'Pub'){
             change_music(pub_music);
         }

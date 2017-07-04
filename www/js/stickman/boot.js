@@ -1,5 +1,7 @@
 //window.onload = start;
 document.addEventListener("deviceready", start, false);
+document.addEventListener("pause", onPause, false);
+document.addEventListener("resume", onResume, false);
 
 function start(){
     var place, thisPlace; 
@@ -26,6 +28,19 @@ function start(){
     game.state.add("Room", room);
     
     game.state.start("Boot");  
+}
+
+function onPause(){
+    game.paused = true;
+}
+
+function onResume(){
+    game.paused = false;
+    setTimeout(function(){
+        try{
+            StatusBar.hide();
+        }catch(e){}   
+    }, 1000);
 }
 
 var boot = function(game){};

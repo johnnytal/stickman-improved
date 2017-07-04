@@ -8,17 +8,11 @@ room.prototype = {
     create: function(){
         room = game.add.sprite(0, 0, 'room'); 
    
-        supportText = game.add.text(600, 510, 'Watch ad\nto support!' , {font: "12px " + font, fill: "#ffffff", align:'center', stroke: "0x000000", strokeThickness: 4});  
-        supportText.fixedToCamera = true;
-        supportText.alpha = 0.8;
-        supportText.inputEnabled = true;
-        supportText.events.onInputDown.add(function(){
-           supportText.text = 'Thank you!';
-           setTimeout(function(){
-               supportText.destroy();
-               showAd();    
-           }, 1000);
-        });
+        watchAD = game.add.sprite(5, 10, 'watchAd');
+        watchAD.inputEnabled = true;
+        watchAD.events.onInputDown.add(showAd, this);
+        watchAD.fixedToCamera = true;
+        
         reset_click(room);
         
         thisPlace = 'Room';

@@ -27,6 +27,7 @@ preloader.prototype = {
         game.load.image('opening', img_path + 'menu.jpg');
         game.load.image('contBtn', img_path + 'old_btn.png');
         game.load.image('startBtn', img_path + 'new_btn.png');
+        game.load.image('watchAd', img_path + 'watchAd.png');
         
         game.load.image('rain', img_path + 'rain.png');
         game.load.image('bigBlack', img_path + 'blackBig.png');

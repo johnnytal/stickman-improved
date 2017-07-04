@@ -221,8 +221,38 @@ function change_music(music_to_play){
             music_to_play.play();
         }   
     }, 1500);
+    
+    setTimeout(function(){
+        try{
+            StatusBar.hide();
+        }catch(e){}    
+    }, 1000);
+    
+    try{
+        window.plugins.insomnia.keepAwake();
+    } catch(e){}
 }
 
-function showAd(){
-    interstitial.show();
+function showAd(){    
+    texts = [
+        'Short commercial breaks are part of life I guess',
+        'I feel a sudden urge to thank someone',
+        'I suddenly remember! The meaning of life is...',
+        'Ye, perfect time to go for commercials',
+        'Not bad, now lets see if you can click it...',
+        'Come on, I bet this guy\nmakes millions on our backs!',
+        'I bet this 0.002 cents will be put to good use',
+        'An angel just got his wings',
+        'Oh look! A three headed monkey!',
+        'I think I wanna be a pirate!',
+        'Viva la Revolución!',
+    
+    ];
+
+    showManText(texts[game.rnd.integerInRange(0, texts.length-1)], 0);
+    
+    
+    setTimeout(function(){
+        interstitial.show();   
+    }, total_text_time); 
 }

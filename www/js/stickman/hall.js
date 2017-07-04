@@ -22,6 +22,11 @@ hall.prototype = {
         
         thisPlace = 'Hall'; 
         
+        watchAD = game.add.sprite(5, 10, 'watchAd');
+        watchAD.inputEnabled = true;
+        watchAD.events.onInputDown.add(showAd, this);
+        watchAD.fixedToCamera = true;
+        
         walls = game.add.group();
         walls.enableBody = true;
         walls.physicsBodyType = Phaser.Physics.ARCADE;
