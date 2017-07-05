@@ -425,7 +425,7 @@ function take_item(item){
         break;
         
         case 'towel':
-            showManText("Always fun to carry around a dirty towel", 0);
+            showManText("Always fun to carry a dirty towel around", 0);
             item.frame = 1;
         break;
         
@@ -723,7 +723,7 @@ function use_item(inventory_item, static_item){
         break;
         
         case ('dart + broken_pub_window'):
-            showManText('I think the window had suffered enough', 0);
+            showManText('I think the window suffered enough', 0);
             put_item_away(inventory_item, static_item);
         break;
 
@@ -737,7 +737,7 @@ function use_item(inventory_item, static_item){
             suspend(3000);
             
             showManText("I guess that makes sense", 0);
-            showManText("Nope. poking the barrel just makes it angrier", 3000);
+            showManText("Nope. poking the barrel just makes it angry", 3000);
             
             setTimeout(function(){ 
                 put_item_away(inventory_item, static_item);

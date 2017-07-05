@@ -233,7 +233,9 @@ function change_music(music_to_play){
     } catch(e){}
 }
 
-function showAd(){    
+function showAd(){  
+    stop_man();
+    
     texts = [
         'Short commercial breaks are part of life I guess',
         'I feel a sudden urge to thank someone',
@@ -246,13 +248,15 @@ function showAd(){
         'Oh look! A three headed monkey!',
         'I think I wanna be a pirate!',
         'Viva la Revolución!',
-    
+        'You are a friend of the revolution',
+        'I am Chaos. Join me. '
     ];
 
     showManText(texts[game.rnd.integerInRange(0, texts.length-1)], 0);
     
-    
     setTimeout(function(){
-        interstitial.show();   
+        if(AdMob) AdMob.showInterstitial();
     }, total_text_time); 
+
+    sfxclick.play();
 }

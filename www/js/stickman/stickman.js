@@ -21,16 +21,8 @@ game_main.prototype = {
     create: function(){
         game.world.setBounds(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         game.state.start(place);
-
-        try{
-            Cocoon.Ad.AdMob.configure({
-                android: { 
-                    interstitial:"ca-app-pub-9795366520625065/7161001430"
-                }
-            });
-            interstitial = Cocoon.Ad.AdMob.createInterstitial();
-            interstitial.load();
-        } catch(e){}
+        
+        initAd();
     },
 };
 
@@ -508,4 +500,14 @@ function dialog(_textA, _textB){
         showManText(_textA, total_other_text_time);
         showOtherManText(_textB, total_text_time);   
      }, total_other_text_time);
+}
+
+function initAd(){           
+    var admobid = {};
+
+    admobid = {
+        interstitial:"ca-app-pub-9795366520625065/7161001430"
+    };
+
+    if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );   
 }
